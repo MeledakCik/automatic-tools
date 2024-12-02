@@ -1,5 +1,4 @@
-# username dan password + login lms bisi lengit : 0076497918 pw : Kakangkasyaf123
-# 0082627431 si ami
+
 import requests
 import time
 import re,os,json
