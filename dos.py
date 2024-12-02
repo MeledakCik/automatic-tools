@@ -32,8 +32,8 @@ def login():
         }
         data = {
             "logintoken": logintoken,
-            "username": "0076497918",
-            "password": "Kakangkasyaf123"
+            "username": "USERNAME_LMS",
+            "password": "PASS_LMS"
         }
         response = session.post(
             "https://lms.smkn4padalarang.sch.id/login/index.php",
@@ -75,9 +75,9 @@ def login():
                     'sesskey': 'ArwHAUPPR5',
                     '_qf__login_change_password_form': '1',
                     'id': '1',
-                    'password': 'Kakangkasyaf123',  # Password lama
-                    'newpassword1': 'Kakangkasyaf321',  # Password baru
-                    'newpassword2': 'Kakangkasyaf321',  # Konfirmasi password baru
+                    'password': 'PAS_LMS',  # Password lama
+                    'newpassword1': 'PAS_NEW_LMS',  # Password baru
+                    'newpassword2': 'PAS_NEW_LMS',  # Konfirmasi password baru
                     'submit': 'submitbutton'
                 }
                 change_response = session.post(url, data=password_change_payload,headers=heade,verify=False)
