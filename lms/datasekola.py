@@ -10,6 +10,11 @@ from rich.table import Table
 from rich.tree import Tree
 import urllib3
 import certifi
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 os.environ['REQUESTS_CA_BUNDLE'] = certifi.where()
@@ -118,7 +123,7 @@ def menu():
     else:
         user_name = "Pengguna Tidak Diketahui"
     prints(Panel.fit(f"[bold green] Selamat Menggunakan Script Scraping Web LMS SMKN4 PADALARANG [bold white]\n\n\t Selamat Datang [bold blue]{user_name}[bold white] "))
-    prints(Panel.fit("[bold white]1.[bold green] Cek Profile\n[bold white]2.[bold green] Edit Profile\n[bold white]3.[bold green] Cek Kehadiran\n[bold white]4.[bold green] Cek kelas\n[bold white]5.[bold green] Cek Report\n[bold white]6.[bold green] Change Password\n[bold white]7.[bold red] exit[bold white]"))
+    prints(Panel.fit("[bold white]1.[bold green] Cek Profile\n[bold white]2.[bold green] Edit Profile\n[bold white]3.[bold green] Cek Kehadiran\n[bold white]4.[bold green] Cek kelas\n[bold white]5.[bold green] Cek Report\n[bold white]6.[bold green] Change Password\n[bold white]7.[bold green] Automatic Absen\n[bold white]0.[bold red] exit[bold white]"))
     i = input(f"Pilih Menu : ")
     if i == "1":
         profile()
@@ -133,6 +138,8 @@ def menu():
     elif i == "6":
         autochangepas()
     elif i == "7":
+        absensi()
+    elif i == "0":
         exit()
         
         
@@ -415,55 +422,91 @@ def report():
         
         
 def absensi():
-    prints(Panel.fit(f"link absen h 1 : https://lms.smkn4padalarang.sch.id/mod/attendance/attendance.php?sessid=1729&sesskey=ygKTOmtsiw"))
+    try:
+        driver = webdriver.Chrome()  # or webdriver.Firefox(), etc.
+        driver.get("https://lms.smkn4padalarang.sch.id/login/index.php")
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, 'logintoken')))
+        logintoken_element = driver.find_element(By.NAME, 'logintoken')
+        logintoken = logintoken_element.get_attribute("value")
+        if not logintoken:
+            print("Gagal mendapatkan logintoken, silakan coba lagi!")
+            driver.quit()
+            return
+        username_input = driver.find_element(By.ID, "username")
+        password_input = driver.find_element(By.ID, "password")
+        username_input.send_keys("0076497918")
+        password_input.send_keys("Kakangkasyaf123")
+        password_input.send_keys(Keys.RETURN)
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, 'Dashboard')))
+        print(f"Log in Success")
+        print(f"Username: 0076497918, Password: Kakangkasyaf123")
+        driver.get("https://lms.smkn4padalarang.sch.id/mod/attendance/view.php?id=990")
+        element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.LINK_TEXT, "Submit attendance"))
+        )
+        driver.execute_script("arguments[0].scrollIntoView(true);", element)
+        element.click()
+        time.sleep(4)
+        print("Attendance page loaded successfully")
+        try:
+            status_116 = WebDriverWait(driver, 5).until(
+                EC.presence_of_element_located((By.ID, "id_status_116"))
+            )
+            status_116.click()
+        except:
+            try:
+                status_118 = WebDriverWait(driver, 5).until(
+                    EC.presence_of_element_located((By.ID, "id_status_118"))
+                )
+                status_118.click()
+            except:
+                print("No valid options found, no changes saved.")
+        save_button = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.ID, "id_submitbutton"))
+        )
+        save_button.click()
+        print("Form submitted successfully.")
+        driver.quit()
+    except Exception as e:
+        print(f"Terjadi kesalahan: {str(e)}")
 
 def autochangepas():
-    console.print(Panel.fit("👨‍🎓 [bold green]Menu Merubah Password LMS [/bold green]"))
-    print("")
     try:
-        with open('.cookie.txt', 'r') as f:
-            cookie_data = f.read().strip()
-        with open('.token.txt', 'r') as f:
-            token = f.read().strip()
-    except FileNotFoundError:
-        console.print(Panel.fit("[bold red]File cookie atau token tidak ditemukan![bold white]"))
-        return
-    session = requests.Session()
-    cookies = {}
-    for item in cookie_data.split("; "):
-        key, value = item.split("=")
-        cookies[key] = value
-    session.cookies.update(cookies)
-    password_lama = input("Masukkan password lama: ")
-    console.print(Panel.fit("[bold green]Harus Ada Uppercase contoh `Kasyaf123` atau `Kakang123` Kapital di awal kalimat"))
-    password_baru = input("Masukkan password baru: ")
-    konfirmasi_password_baru = input("Konfirmasi password baru: ")
-    try:
-        url = 'https://lms.smkn4padalarang.sch.id/login/change_password.php'
-        response = session.get(url)
-        if response.status_code != 200:
-            raise Exception("Gagal mengakses halaman")
-        soup = BeautifulSoup(response.content, 'html.parser')
-        form = soup.find('form', {'method': 'post'})
-        data = {
-            'password': password_lama,
-            'newpassword1': password_baru,
-            'newpassword2': konfirmasi_password_baru,
-            'sesskey': 'ArwHAUPPR5',
-            '_qf__login_change_password_form': '1',
-            'id': '1',
-            'submitbutton': 'Save changes'
-        }
-        action_url = form['action']
-        result = session.post(action_url, data=data,verify=False)
-        result_soup = BeautifulSoup(result.content, 'html.parser')
-        title = result_soup.find('title').text.strip()
-        if "Kesalahan" in title or "diblokir" in title:
-            console.print(Panel.fit("[bold red]Gagal Mengganti Password. Periksa input Anda![bold white]"))
-        else:
-            console.print(Panel.fit("[bold green]Berhasil Mengganti Password![bold white]"))
+        driver = webdriver.Chrome()  # or webdriver.Firefox(), etc.
+        driver.get("https://lms.smkn4padalarang.sch.id/login/index.php")
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, 'logintoken')))
+        logintoken_element = driver.find_element(By.NAME, 'logintoken')
+        logintoken = logintoken_element.get_attribute("value")
+        if not logintoken:
+            print("Gagal mendapatkan logintoken, silakan coba lagi!")
+            driver.quit()
+            return
+        username_input = driver.find_element(By.ID, "username")
+        password_input = driver.find_element(By.ID, "password")
+        username_input.send_keys("0076497918")
+        password_input.send_keys("Kakangkasyaf123")
+        password_input.send_keys(Keys.RETURN)
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, 'Dashboard')))
+        print(f"Log in Success")
+        print(f"Username: 0076497918, Password: Kakangkasyaf123")
+        try:
+            driver.get("https://lms.smkn4padalarang.sch.id/login/change_password.php?id=1")
+            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'id_password')))
+            current_password_input = driver.find_element(By.ID, "id_password")
+            new_password1_input = driver.find_element(By.ID, "id_newpassword1")
+            new_password2_input = driver.find_element(By.ID, "id_newpassword2")
+            current_password_input.send_keys('Kakangkasyaf321')
+            new_password1_input.send_keys('Kakangkasyaf123')
+            new_password2_input.send_keys('Kakangkasyaf123')
+            new_password2_input.send_keys(Keys.RETURN)
+            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "submitbutton")))
+            print(f"change pass done")
+            print(f"Username: 0076497918, Password: {new_password1_input}")
+        except Exception as e:
+            print(f"Terjadi kesalahan saat mengubah password: {str(e)}")
+        driver.quit()
     except Exception as e:
-        console.print(Panel.fit(f"[bold red]Terjadi kesalahan: {e}[bold white]"))
+        print(f"Terjadi kesalahan: {str(e)}")
 
         
 if __name__ == "__main__":
