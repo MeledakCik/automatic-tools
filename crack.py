@@ -35,8 +35,6 @@ def login():
                 prints(Panel.fit("[bold red]Gagal mendapatkan logintoken, silakan coba lagi!"))
                 return
             logintoken = logintoken_match.group(1)
-            with open(".token.txt", "w") as file:
-                    file.write(logintoken)
             heade = {
                 'Sec-Fetch-Dest': 'document',
                 'Sec-Fetch-Mode': 'navigate',
@@ -72,19 +70,16 @@ def login():
                     f"{key}={value}"
                     for key, value in session.cookies.get_dict().items()
                 ])
-
-                with open(".cookie.txt", "w") as file:
-                    file.write(cookies)
-
                 # Output keberhasilan
                 Meledak = Tree(Panel.fit("[bold green]Log in Success"))
                 Meledak.add(Panel.fit(f"[bold green]Username: {idf}, Password: {idf}"))
                 Meledak.add(Panel.fit(f"[bold green]Cookies tersimpan: {cookies}"))
                 prints(Meledak)
+                open('data-success.txt','a').write(idf+"|"+idf+"\n")
                 break  # Exit loop if login is successful
             else:
-                prints(idf)
-                prints(Panel.fit("[bold red]Username atau password salah, coba lagi!"))
+                prints(Panel.fit(f"[bold red]Username {idf} atau password {idf} salah, coba lagi!"))
+                open('data-fail.txt','a').write(idf+"|"+idf+"\n")
         except Exception as e:
             prints(Panel.fit(f"[bold red]Terjadi kesalahan: {str(e)}"))
 
