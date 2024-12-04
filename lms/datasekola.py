@@ -448,6 +448,8 @@ def report():
         
         
 def absensi():
+    username = input("+ Masukan username : ")
+    password = input("+ Masukan password : ")
     try:
         driver = webdriver.Chrome()  # or webdriver.Firefox(), etc.
         driver.get("https://lms.smkn4padalarang.sch.id/login/index.php")
@@ -460,12 +462,12 @@ def absensi():
             return
         username_input = driver.find_element(By.ID, "username")
         password_input = driver.find_element(By.ID, "password")
-        username_input.send_keys("0076497918")
-        password_input.send_keys("Kakangkasyaf123")
+        username_input.send_keys(username)
+        password_input.send_keys(password)
         password_input.send_keys(Keys.RETURN)
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, 'Dashboard')))
         print(f"Log in Success")
-        print(f"Username: 0076497918, Password: Kakangkasyaf123")
+        print(f"Username: {username}, Password: {password}")
         driver.get("https://lms.smkn4padalarang.sch.id/mod/attendance/view.php?id=990")
         element = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.LINK_TEXT, "Submit attendance"))
@@ -497,6 +499,8 @@ def absensi():
         print(f"Terjadi kesalahan: {str(e)}")
 
 def autochangepas():
+    username = input("+ Masukan username : ")
+    password = input("+ Masukan password : ")
     try:
         driver = webdriver.Chrome()  # or webdriver.Firefox(), etc.
         driver.get("https://lms.smkn4padalarang.sch.id/login/index.php")
@@ -509,25 +513,27 @@ def autochangepas():
             return
         username_input = driver.find_element(By.ID, "username")
         password_input = driver.find_element(By.ID, "password")
-        username_input.send_keys("0076497918")
-        password_input.send_keys("Kakangkasyaf123")
+        username_input.send_keys(username)
+        password_input.send_keys(password)
         password_input.send_keys(Keys.RETURN)
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, 'Dashboard')))
         print(f"Log in Success")
-        print(f"Username: 0076497918, Password: Kakangkasyaf123")
+        print(f"Username: {username}, Password: {password}")
+        password_new = input("+ Masukan password baru : ")
+        password_new_again = input("+ Ulangi password yang baru : ")
         try:
             driver.get("https://lms.smkn4padalarang.sch.id/login/change_password.php?id=1")
             WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'id_password')))
             current_password_input = driver.find_element(By.ID, "id_password")
             new_password1_input = driver.find_element(By.ID, "id_newpassword1")
             new_password2_input = driver.find_element(By.ID, "id_newpassword2")
-            current_password_input.send_keys('Kakangkasyaf321')
-            new_password1_input.send_keys('Kakangkasyaf123')
-            new_password2_input.send_keys('Kakangkasyaf123')
+            current_password_input.send_keys(password)
+            new_password1_input.send_keys(password_new)
+            new_password2_input.send_keys(password_new_again)
             new_password2_input.send_keys(Keys.RETURN)
             WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "submitbutton")))
             print(f"change pass done")
-            print(f"Username: 0076497918, Password: {new_password1_input}")
+            print(f"Username: {username}, Password: {new_password1_input}")
         except Exception as e:
             print(f"Terjadi kesalahan saat mengubah password: {str(e)}")
         driver.quit()
