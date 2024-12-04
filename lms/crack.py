@@ -139,7 +139,6 @@ def save_result(folder, uid, password):
         
         
 if __name__ == "__main__":
-    os.system("clear")
     file_name = input("Masukkan nama file (contoh: akun.txt): ")
     load_ids(file_name)
     crack()

