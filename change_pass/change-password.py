@@ -25,8 +25,8 @@ def login():
         
         username_input = driver.find_element(By.ID, "username")
         password_input = driver.find_element(By.ID, "password")
-        username_input.send_keys("0076497918")
-        password_input.send_keys("Kakangkasyaf123")
+        username_input.send_keys("USERNAME")
+        password_input.send_keys("PASS")
         password_input.send_keys(Keys.RETURN)
 
         # Wait for login to complete and for the Dashboard to be visible
@@ -45,16 +45,16 @@ def login():
             new_password1_input = driver.find_element(By.ID, "id_newpassword1")
             new_password2_input = driver.find_element(By.ID, "id_newpassword2")
             
-            current_password_input.send_keys('Kakangkasyaf321')
-            new_password1_input.send_keys('Kakangkasyaf123')
-            new_password2_input.send_keys('Kakangkasyaf123')
+            current_password_input.send_keys('PASS')
+            new_password1_input.send_keys('PASS_NEW')
+            new_password2_input.send_keys('PASS_NEW')
             new_password2_input.send_keys(Keys.RETURN)
 
             # Wait for the page to respond after form submission
             WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "submitbutton")))
             
             print(f"change pass done")
-            print(f"Username: 0076497918, Password: {new_password1_input}")
+            print(f"Username: USERNAME, Password: {new_password1_input}")
         except Exception as e:
             print(f"Terjadi kesalahan saat mengubah password: {str(e)}")
         

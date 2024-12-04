@@ -25,15 +25,15 @@ def login():
         
         username_input = driver.find_element(By.ID, "username")
         password_input = driver.find_element(By.ID, "password")
-        username_input.send_keys("0076497918")
-        password_input.send_keys("Kakangkasyaf123")
+        username_input.send_keys("USERNAME")
+        password_input.send_keys("PASS")
         password_input.send_keys(Keys.RETURN)
 
         # Wait for login to complete and for the Dashboard to be visible
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, 'Dashboard')))
         
         print(f"Log in Success")
-        print(f"Username: 0076497918, Password: Kakangkasyaf123")
+        print(f"Username: USERNAME, Password: PASS")
         
         # Navigate to the attendance page
         driver.get("https://lms.smkn4padalarang.sch.id/mod/attendance/view.php?id=990")
