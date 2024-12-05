@@ -1,31 +1,43 @@
+# -------------[ IMPORT TO RELATION ]------------- #
 
 import requests,random
 import time
 import re,os,json
 from bs4 import BeautifulSoup
+import urllib3
+import certifi
+from concurrent.futures import ThreadPoolExecutor as tred
+
+# -------------[ IMPORT TO RICH ]------------- #
+
 from rich import print as prints
 from rich.panel import Panel
 from rich.table import Table as me
 from rich.tree import Tree
-import urllib3
-import certifi
+from rich.columns import Columns as col, Columns
+from rich.progress import Progress,BarColumn,TextColumn,TimeElapsedColumn, SpinnerColumn
+from rich.console import Console as sol,Console
+
+# -------------[ IMPORT TO SELENIUM ]------------- #
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from rich.console import Console as sol,Console
-from rich.progress import Progress,BarColumn,TextColumn,TimeElapsedColumn, SpinnerColumn
-from concurrent.futures import ThreadPoolExecutor as tred
-from rich.columns import Columns as col, Columns
 
+# -------------[ BLOCK TO LIB DISMISS ]------------- #
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 os.environ['REQUESTS_CA_BUNDLE'] = certifi.where()
+
+# -------------[ IMPORTANT ]------------- #
+
 console = Console()
 session = requests.Session()
 Meledakcik=[]
 
+# -------------[ CHECK TOKEN AND COOKIE ]------------- #
 
 def check_token_cookie():
     try:
@@ -40,8 +52,11 @@ def check_token_cookie():
             return True
     except (IOError, ValueError, Exception):
         prints(Panel.fit("[bold red]Token atau cookie tidak valid. Silakan login."))
+        os.system("rm -rf .cookie.txt")
+        os.system("rm -rf .token.txt")
         return False
 
+# -------------[ LOGIN ]------------- #
 
 def login():
     try:
@@ -70,11 +85,11 @@ def login():
             'Referer': 'https://lms.smkn4padalarang.sch.id/',
             'Sec-Ch-Ua': '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
             'Sec-Ch-Ua-Mobile': '?0',
-            'Sec-Ch-Ua-Platform': '"Windows"',
+            'Sec-Ch-Ua-Platform': '"macOS"',
             'Upgrade-Insecure-Requests': '1',
             'Accept-Language': 'en-US,en;q=0.9',
             'Cache-Control': 'max-age=0',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
         }
         data = {
             "logintoken": logintoken,
@@ -109,6 +124,7 @@ def login():
     except Exception as e:
         prints(Panel.fit(f"[bold red]Terjadi kesalahan: {str(e)}"))
 
+# -------------[ MENU ]------------- #
 
 def menu():
     os.system("clear")
@@ -140,7 +156,7 @@ def menu():
     Meledakcik.append(Panel(f"[bold green]Nama : [bold white]{user_name}\n[bold green]User NIK : [bold white]{user_name_2}",width=50,style=f"bold green"))
     console.print(Columns(Meledakcik))
     Tabel1 = f"[bold white]01\n02\n03\n04\n05\n06\n07\n08\n09\n00"
-    Tabel2 = f"Cek Profile\nEdit Profile\nCek Kehadiran\nCek Kelas\nCek Report\nChange Password\nAutomatic Absen\nCrack User\nCrack File User\nExit"
+    Tabel2 = f"Cek Profile\nEdit Profile\nCek Kehadiran\nCek Kelas\nCek Report\nChange Password\nAutomatic Absen ( [bold green]Khusus Pagi[bold white] ) [bold green]\nCrack User\nCrack File User\nExit"
     Tabel3 = f"[bold blue]ON\nON\nON\nON\nON\nON\nON\nON\nON\n[bold red]ON"
     cik = me()
     cik.add_column(f"[bold white]NO", style="bold green", justify='center')
@@ -170,6 +186,9 @@ def menu():
     elif i == "0":
         exit()
         
+        
+# -------------[ MENU PROFILE ]------------- #
+
 def profile():
     prints(Panel.fit("👨‍🎓 [bold green]Memeriksa Isi Data Profile[/bold green]"))
     try:
@@ -196,6 +215,7 @@ def profile():
     except Exception as e:
         prints(Panel.fit(f"[bold red]Terjadi kesalahan saat mengambil data profil: {str(e)}"))
         
+# -------------[ MENU EDIT PROFILE ]------------- #
 
 def editProfile():
     prints(Panel.fit("👨‍🎓 [bold green]Perubahan Edit Profile[/bold green]"))
@@ -285,6 +305,7 @@ def editProfile():
     except Exception as e:
         prints(Panel.fit(f"[bold red]Terjadi kesalahan saat mengedit profil: {str(e)}"))
 
+# -------------[ MENU KEHADIRAN ]------------- #
 
 def kehadiran():
     prints(Panel.fit("👨‍🎓 [bold green]Memeriksa Kehadiran[/bold green]"))
@@ -321,6 +342,7 @@ def kehadiran():
     except Exception as e:
         prints(Panel.fit(f"[bold red]Terjadi kesalahan: {str(e)}[/bold red]"))
 
+# -------------[ MENU KELAS ]------------- #
 
 def kelas():
     console.print(Panel.fit("👨‍🎓 [bold green]Mengecek Data Kelas Beserta Profilnya[/bold green]"))
@@ -409,6 +431,7 @@ def kelas():
     else:
         console.print(Panel.fit("[bold yellow]Tidak ada peserta ditemukan!"))
 
+# -------------[ MENU REPORT ]------------- #
 
 def report():
     console.print(Panel.fit("👨‍🎓 [bold green]Mengecek Data Kelas Beserta Profilnya[/bold green]"))
@@ -446,6 +469,7 @@ def report():
         tree.add(Panel.fit(f"[bold white]Range: [blue]{range_value}"))
         console.print(tree)
         
+# -------------[ MENU ABSENSI ]------------- #
         
 def absensi():
     username = input("+ Masukan username : ")
@@ -475,7 +499,7 @@ def absensi():
         driver.execute_script("arguments[0].scrollIntoView(true);", element)
         element.click()
         time.sleep(4)
-        print("Attendance page loaded successfully")
+        print("Attendance page absensi successfully")
         try:
             status_116 = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.ID, "id_status_116"))
@@ -498,9 +522,14 @@ def absensi():
     except Exception as e:
         print(f"Terjadi kesalahan: {str(e)}")
 
+# -------------[ MENU CHANGE PASSWORD ]------------- #
+
+
 def autochangepas():
     username = input("+ Masukan username : ")
     password = input("+ Masukan password : ")
+    password_new = input("+ Masukan password baru : ")
+    password_new_again = input("+ Ulangi password yang baru : ")
     try:
         driver = webdriver.Chrome()  # or webdriver.Firefox(), etc.
         driver.get("https://lms.smkn4padalarang.sch.id/login/index.php")
@@ -519,8 +548,6 @@ def autochangepas():
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, 'Dashboard')))
         print(f"Log in Success")
         print(f"Username: {username}, Password: {password}")
-        password_new = input("+ Masukan password baru : ")
-        password_new_again = input("+ Ulangi password yang baru : ")
         try:
             driver.get("https://lms.smkn4padalarang.sch.id/login/change_password.php?id=1")
             WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'id_password')))
@@ -532,18 +559,23 @@ def autochangepas():
             new_password2_input.send_keys(password_new_again)
             new_password2_input.send_keys(Keys.RETURN)
             WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "submitbutton")))
-            print(f"change pass done")
-            print(f"Username: {username}, Password: {new_password1_input}")
         except Exception as e:
-            print(f"Terjadi kesalahan saat mengubah password: {str(e)}")
+            prints(Panel.fit(f"Password has beenDone! Username: {username}, Password: {new_password1_input}"))
+            open("user/paschange.txt", "w").write(new_password1_input)
+            os.system("rm -rf .cookie.txt")
+            os.system("rm -rf .token.txt")
         driver.quit()
     except Exception as e:
-        print(f"Terjadi kesalahan: {str(e)}")
+        print(f"Terjadi kesalahan")
+
+# -------------[ GENERATOR CRACK TO USERNAME AND PASSWORD ]------------- #
 
 def generat():
     random_number = random.randint(10000000, 100000000 - 1)
     formatted_number = f"{random_number:010d}"
     return formatted_number
+
+# -------------[ MENU CRACK ]------------- #
 
 def crack():
     while True:
@@ -618,6 +650,8 @@ def crack():
                 open('data-fail.txt','a').write(idf+"|"+idf+"\n")
         except Exception as e:
             prints(Panel.fit(f"[bold red]Terjadi kesalahan: {str(e)}"))
+
+# -------------[ MENU RUN OVERFLOW ]------------- #
 
 if __name__ == "__main__":
     os.system("clear")
