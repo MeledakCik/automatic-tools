@@ -156,7 +156,7 @@ def menu():
     Meledakcik.append(Panel(f"[bold green]Nama : [bold white]{user_name}\n[bold green]User NIK : [bold white]{user_name_2}",width=50,style=f"bold green"))
     console.print(Columns(Meledakcik))
     Tabel1 = f"[bold white]01\n02\n03\n04\n05\n06\n07\n08\n09\n00"
-    Tabel2 = f"Cek Profile\nEdit Profile\nCek Kehadiran\nCek Kelas\nCek Report\nChange Password\nAutomatic Absen ( [bold green]Khusus Pagi[bold white] ) [bold green]\nCrack User\nCrack File User\nExit"
+    Tabel2 = f"Cek Profile\nEdit Profile\nCek Kehadiran\nCek Kelas\nCek Report\nChange Password\nAutomatic Absen [bold white]( [bold green]Pagi jam 6.15 - 7.00[bold white] ) [bold green]\nCrack User\nCrack File User\nExit"
     Tabel3 = f"[bold blue]ON\nON\nON\nON\nON\nON\nON\nON\nON\n[bold red]ON"
     cik = me()
     cik.add_column(f"[bold white]NO", style="bold green", justify='center')
