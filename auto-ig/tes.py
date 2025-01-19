@@ -109,7 +109,11 @@ def login_to_instagram(username, password):
 
             except Exception as e:
                 print(f"{M}Error: {e}{N}")
-        except:pass
+        except Exception as e:
+            print(f"{M}Error: {e}{N}")
+    else:
+        print(f"{M}Login failed! Please check your username or password.{N}")
+        
 
         
 def data_target(name,jumlah):
@@ -132,4 +136,7 @@ def data_target(name,jumlah):
         except Exception as e:
             print(f"Terjadi kesalahan saat memproses username {y}: {e}")
             
-login_to_instagram("dafa_ap_", "dafa1234")
+
+login_to_instagram("abcdello_047","Abcdello")
+# Usernames : dikanrch_ 
+# Passwords : Dika05 
