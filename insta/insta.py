@@ -27,6 +27,7 @@ day = datetime.now().strftime("%d-%b-%Y")
 nyMnD, nyMxD, menudump, = 5, 10, []
 current_GMT = time.gmtime(time.time())
 bulan_ttl = {"01": "Januari", "02": "Februari", "03": "Maret", "04": "April", "05": "Mei", "06": "Juni", "07": "Juli", "08": "Agustus", "09": "September", "10": "Oktober", "11": "November", "12": "Desember"}
+
 class Colors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
