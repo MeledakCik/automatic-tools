@@ -137,6 +137,6 @@ def data_target(name,jumlah):
             print(f"Terjadi kesalahan saat memproses username {y}: {e}")
             
 
-login_to_instagram("abcdello_047","Abcdello")
+login_to_instagram("dliigx","meledakcik123#")
 # Usernames : dikanrch_ 
 # Passwords : Dika05 
