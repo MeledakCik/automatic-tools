@@ -16,7 +16,7 @@ def banner():
 def login3():
     try:
         token = open('.token.txt', 'r').read()
-        cok = open('.cookie.txt', 'r').read()
+        cok = open('.cok.txt', 'r').read()
         tokenku.append(token)
         try:
             sy = requests.get(
@@ -42,7 +42,7 @@ def login_lagi334():
         os.system('clear')
         banner()
         cookie = input(f'  [•] Masukkan Cookie : ')
-        open(".cookie.txt", "w").write(cookie)
+        open(".cok.txt", "w").write(cookie)
         with requests.Session() as rsn:
             try:
                 rsn.headers.update({
@@ -72,7 +72,7 @@ def login_lagi334():
                 print(f"Kesalahan saat login: {e}")
     except Exception as e:
         os.system("rm -f .token.txt")
-        os.system("rm -f .cookie.txt")
+        os.system("rm -f .cok.txt")
         print("Login gagal. Silakan coba lagi.")
         print(e)
         exit()
@@ -80,7 +80,7 @@ def login_lagi334():
 def dump_massal():
     try:
         token = open('.token.txt', 'r').read().strip()
-        cok = open('.cookie.txt', 'r').read().strip()
+        cok = open('.cok.txt', 'r').read().strip()
     except IOError:
         print("Cookies Invalid")
         exit()

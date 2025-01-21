@@ -99,7 +99,6 @@ ses = requests.Session()
 X_IG_APP_ID = random.choice(["936619743392459" , "2763362503905702" , "1217981644879628"])
 IG_API = 'https://i.instagram.com/api/v1/'
 IG_URL = 'z.p42.www.instagram.com'
-HEADERS   = {'Host': 'www.instagram.com','x-ig-app-id': X_IG_APP_ID,'x-ig-www-claim': 'hmac.AR2bJKYJnPYmZqv19akfq13Zn4tplhuXb9TC9PwFk03DgxmT','sec-ch-ua-mobile': '?1','user-agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36','accept': '*/*','x-requested-with': 'XMLHttpRequest','x-asbd-id': '129477','x-csrftoken': 'TeWMHnpFe4nja5IPA2bBUjOiVMwndp5E','sec-fetch-site': 'same-origin','accept-language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7,ru;q=0.6,jv;q=0.5'}
 headers_log = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
     'Accept': 'application/json, text/javascript, */*; q=0.01',
@@ -191,80 +190,43 @@ def aguss():
     ua_oppo = f"Mozilla/5.0 (Linux; Android {str(rr(4,13))}; CPH{str(rr(1999,4999))} Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/{str(rr(59,159))}.0.{str(rr(2999,4999))}.{str(rr(55,159))} Mobile Safari/537.36 [FB_IAB/FB4A;FBAV/280.0.0.48.122;]"
     ya = random.choice([hir, asep4,asep5, asep10, asep6, asep7, asep8, asep9, v1, v2, v3, v4,ua_rmx,ua_oppo])
     return ya
-
-def login_to_instagram():
+def Aset_Ig():
     os.system('clear')
     if os.path.isfile('.Cokies-IG.txt') is True:
-        cookie = {'cookie': open('.Cokies-IG.txt', 'r').read()}
+        coki = {'cookie': open('.Cokies-IG.txt', 'r').read()}
     else:
-        username = input(" +_ Masukan Username :")
-        password = input(" +_ Masukan Password :")
-        url = 'https://www.instagram.com/accounts/login/ajax/'
-        response = ses.get('https://www.instagram.com/accounts/login/', headers=headers_log)
-        csrf_token = response.cookies.get('csrftoken')
-        login_headers = {
-            'User-Agent': generate_random_ua(),
-            'X-CSRFToken': csrf_token,
-            'Accept': 'application/json, text/javascript, */*; q=0.01',
-            'Accept-Encoding': 'gzip, deflate, br',
-            'Accept-Language': 'en-US,en;q=0.9',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-Requested-With': 'XMLHttpRequest',
-            'Referer': 'https://www.instagram.com/accounts/login/',
-        }
-
-        data = {
-            'username': username,
-            'enc_password': f'#PWD_INSTAGRAM_BROWSER:0:1605155817:{password}',  # Format the password with timestamp
-        }
-        login_response = ses.post(url, headers=login_headers, data=data, cookies={'csrftoken': csrf_token})
-        if login_response.status_code == 200 and 'authenticated' in login_response.json() and login_response.json()['authenticated']:
-            x = ses.get("https://i.instagram.com/api/v1/users/web_profile_info/?username=%s" % username, headers={"user-agent": generate_random_ua(), "x-ig-app-id": '936619743392459'})
-            usres = ses.get('https://www.instagram.com/push/web/get_push_info').json()['data']['user_id']
-            x_json = x.json()["data"]["user"]
-            pengikut = x_json["edge_followed_by"]["count"]
-            mengikut = x_json["edge_follow"]["count"]
-            postingan = x_json["edge_owner_to_timeline_media"]["count"]
-            cookie = ";".join([key + "=" + value.replace('"', '') for key, value in ses.cookies.get_dict().items()])
-            print(f"\n{B}{username} {password}{N}")
-            print(f"{H}Followers: {O}{pengikut}{N}")
-            print(f"{H}Posts: {O}{postingan}{N}")
-            print(f"{H}Following: {O}{mengikut}{N}")
-            print(f"{B}Cookies:{N}\n{P}{cookie}{N}")
-            print(f"{H}Login successful!{N}")
-            print(f"{H}User ID Akun: {O}{usres}{N}")
-            time.sleep(2)
+        prints(Panel.fit(f"[bold white]Silahkan Masukan Cookies Akun Instagram Pastikan Menggunakan Akun Tumbal!",style="bold blue"))
+        raraky = {'cookie':input("\n└──╭➣ cookie: ")}
+        if raraky['cookie'] == 'res':
+            coki = {'cookie':res()}
         else:
-            prints(Panel(f"{P2}opshh akun tumbal mu terkena checkpoint, silahkan login dengan akun lain.",width=80,style=f"bold green"));os.system('rm -rf .kukis.txt');exit()
-            return False
+            coki = raraky
     try:
-        uid = re.search(r'ds_user_id=(\d+)', str(cookie)).group(1)
-        req = requests.get(f'https://i.instagram.com/api/v1/users/{uid}/info/', headers=ua, cookies=cookie).json()
+        uid = re.search(r'ds_user_id=(\d+)', str(coki['cookie'])).group(1)
+        req = requests.get(f'https://i.instagram.com/api/v1/users/{uid}/info/', headers=ua, cookies=coki).json()
         if 'user' in req:
             req = req['user']
-            open('.Cokies-IG.txt', 'w').write(f'{cookie}')
+            open('.Cokies-IG.txt', 'w').write(f'{coki["cookie"]}')
             full_name = req['full_name']
             username = req['username']
             follower_count = req['follower_count']
             following_count = req['following_count']
             media_count = req['media_count']
-            return cookie, full_name, username, follower_count, following_count, media_count
+            return coki, full_name, username, follower_count, following_count, media_count
         else:
             os.system('rm -rf .Cokies-IG.txt')
-            print(f" {M}cookies Invalid Gunakan Cookies yang Lain!")
+            prints(Panel.fit(f"[bold white]cookies Invalid Gunakan Cookies yang Lain!",style="bold red"))
             time.sleep(3)
             return None, None, None, None, None, None  
     except Exception as e:
         os.system('rm -rf .Cokies-IG.txt')
-        print(f" {M}cookies Invalid Gunakan Cookies yang Lain!")
+        prints(Panel.fit(f"[bold white]cookies Invalid Gunakan Cookies yang Lain!",style="bold red"))
         time.sleep(3)
         return None, None, None, None, None, None 
-        
-
     
 def menu():
     os.system('clear')
-    aset = login_to_instagram()
+    aset = Aset_Ig()
     os.system('clear')
     tabel1 = "01\n02\n00"
     tabel2 = (
@@ -288,67 +250,111 @@ def menu():
         exit()
 
 def dumps(kuki, typess, xyz=[]):
+    # Validasi cookie untuk csrf_token
     if 'csrftoken' not in str(kuki):
         try:
-            memek = requests.get('https://www.instagram.com/data/shared_data/', cookies=kuki).json()
-            token = memek['config']['csrf_token']
-            kuki['cookie'] += ';csrftoken=%s;' % (token)
+            response = requests.get('https://www.instagram.com/data/shared_data/', cookies=kuki).json()
+            token = response['config']['csrf_token']
+            kuki['cookie'] += f';csrftoken={token};'
         except:
             os.system('rm -rf .Cokies-IG.txt')
-            exit()
-    print(f" \nYour Targets Usernames")         
-    users = input(f'Targets User [ bisa banyak ]: {b}').split(',')
-    namefile = input('Masukan Nama File [ txt ] : ')
-    print(f"\nProcess Collecting Username")         
+            exit("[!] Gagal mengambil csrf_token.")
+    
+    print(f"\n[INFO] Target Username(s)")         
+    users = input("Masukkan target username (pisahkan dengan koma): ").split(',')
+    namefile = input("Masukkan nama file (contoh: hasil.txt): ")
+    print(f"\n[INFO] Mulai mengumpulkan data username.")         
+    
     threads = []
-    for y in users:
-        thread = threading.Thread(target=process_user, args=(y, namefile,kuki, typess, xyz))
+    for user in users:
+        thread = threading.Thread(target=process_user, args=(user.strip(), namefile, kuki, typess, xyz))
         threads.append(thread)
         thread.start()
+
+    # Tunggu semua thread selesai
     for thread in threads:
         thread.join()
-    print("")
+    
+    print("\n[INFO] Proses selesai.")
     Metode(namefile)
 
-def process_user(user, namefile,kuki, typess, xyz):
+
+def process_user(user, namefile, kuki, typess, xyz):
     global xx
-    req = requests.get(f'https://www.instagram.com/{user}/', cookies=kuki).text
-    match = re.search(r'"user_id":"(\d+)"', str(req))
-    if match:
+    try:
+        # Ambil user_id berdasarkan username
+        req = requests.get(f'https://www.instagram.com/{user}/', cookies=kuki).text
+        match = re.search(r'"user_id":"(\d+)"', req)
+        if not match:
+            print(f"[WARNING] Tidak dapat menemukan user_id untuk {user}.")
+            return
+
         uid = match.group(1)
-        if uid not in xyz:
-            xyz.append(uid)
-        mode = 'followers' if typess is True else 'following'
+        if uid in xyz:
+            return  # Skip jika sudah diproses
+        xyz.append(uid)
+
+        mode = 'followers' if typess else 'following'
         after = ''
         api = "https://www.instagram.com/graphql/query/"
-        csr = 'variables={"id":"%s","first":24,"after":"%s"}' % (uid, after)
-        mek = "query_hash=58712303d941c6855d4e888c5f0cd22f&{}".format(csr) if typess is False else "query_hash=37479f2b8209594dde7facb0d904896a&{}".format(csr)
-        try:
-            ptk = {
-                "user-agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Mobile Safari/537.36",
-                "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-                "cookie": kuki
+        query_hash = (
+            "37479f2b8209594dde7facb0d904896a" if typess else "58712303d941c6855d4e888c5f0cd22f"
+        )
+
+        while True:
+            # Kirim request untuk followers/following
+            variables = {"id": uid, "first": 24, "after": after}
+            params = {
+                "query_hash": query_hash,
+                "variables": str(variables),
             }
-            req = requests.get(api, params=mek, headers=ptk).json()
-            if 'require_login' in req:
-                if len(Uuid) > 0:
-                    pass
-                else:
-                    exit(f'\n{B}[{b}●{B}]{M} Invalid Cookie')
-            khm = 'edge_followed_by' if typess is True else 'edge_follow'
-            for xyz in req['data']['user'][khm]['edges']:
-                xy = xyz['node']['username'] + '|' + xyz['node']['full_name']
-                if xy not in Uuid:
+            headers = {
+                "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+                "accept": "*/*",
+                "cookie": kuki,
+            }
+            response = requests.get(api, params=params, headers=headers).json()
+
+            # Validasi login
+            if 'require_login' in response:
+                print("[ERROR] Cookie tidak valid.")
+                return
+
+            # Proses data followers/following
+            edges = response.get("data", {}).get("user", {}).get(
+                'edge_followed_by' if typess else 'edge_follow', {}
+            ).get("edges", [])
+            for edge in edges:
+                username = edge['node']['username']
+                full_name = edge['node']['full_name']
+                data = f"{username}|{full_name}"
+
+                if data not in Uuid:
                     xx += 1
-                    Uuid.append(xy)
-                    print(f'\r Collected ID : {b}{len(Uuid)}', end='')
-                    open(namefile, 'w').write('\n'.join(Uuid))
-            end = req['data']['user'][khm]['page_info']['has_next_page']
-            if end is True:
-                after = req['data']['user'][khm]['page_info']['end_cursor']
-                process_user(typess, uid, kuki, after)
-        except:
-            pass
+                    Uuid.append(data)
+                    print(f"\r[INFO] Collected ID: {len(Uuid)}", end="")
+                    with open(namefile, 'a') as file:
+                        file.write(f"{data}\n")
+
+                    # Rekursif ke user baru
+                    process_user(username, namefile, kuki, typess, xyz)
+
+            # Periksa apakah ada halaman berikutnya
+            page_info = response.get("data", {}).get("user", {}).get(
+                'edge_followed_by' if typess else 'edge_follow', {}
+            ).get("page_info", {})
+            if not page_info.get("has_next_page"):
+                break
+
+            after = page_info.get("end_cursor", "")
+            time.sleep(2)  # Delay untuk menghindari rate-limiting
+    except Exception as e:
+        print(f"\n[ERROR] Terjadi kesalahan: {e}")
+
 def Metode(namefile): 
     print(f"Kamu berhasi Dump username {len(Uuid)} dan tersimpan di {namefile}")
     exit()
+    
+    
+    
+menu()
