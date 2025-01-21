@@ -375,7 +375,7 @@ def Graphql(typess, userid, cokie, after):
             if xy not in Uuid:
                 xx += 1
                 Uuid.append(xy)
-                prints(f'\r[bold white]└──╭➣ Mendapatkan ID : {b}{len(Uuid)}', end='')
+                print(f'\r└──╭➣ Mendapatkan ID : {b}{len(Uuid)}', end='')
                 open('dump.txt', 'w').write('\n'.join(Uuid))
         end = req['data']['user'][khm]['page_info']['has_next_page']
         if end is True:
