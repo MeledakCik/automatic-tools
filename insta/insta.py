@@ -301,9 +301,9 @@ def menu():
     os.system('clear')
     tabel1 = f"[bold white]01\n02\n03\n00"
     tabel2 = (
-        f"[bold white]Crack Dari Pengikut\nCrack Dari Mengikuti\nDump Komentar\nGanti Cookie"
+        f"[bold white]Crack Dari Pengikut\nCrack Dari Mengikuti\nDump Komentar\nAuto Coment\nGanti Cookie"
     )
-    tabel3 = f"[bold white]ON\nON\nON\nON"
+    tabel3 = f"[bold white]ON\nON\nON\nON\nON"
     colume_tabel = me()
     colume_tabel.add_column("NO", style="bold green", justify='center')
     colume_tabel.add_column("PILIHAN", style="bold green", justify='center', width=55)
@@ -317,11 +317,56 @@ def menu():
         dumps(aset, False)
     elif x in ['03','3']:
         komentar(aset)
+    elif x in ['04','4']:
+        auto_komen(aset)
     elif x in ['00','0']:
         os.system('rm -rf .Cokies-IG.txt')
         print("berhasil menghapus cookies")
         exit()
-        
+
+def auto_komen(cokie):
+    prints(Panel.fit("[bold white]Masukkan link postingan atau reels. Bisa dipisahkan dengan koma.", style="bold blue"))
+    links = input('└──╭➣ Masukkan Link: ').split(',')
+    comment = input('└──╭➣ Masukkan Komentar: ')
+    dav = []
+    session = requests.Session()
+    try:
+        for link in links:
+            response = session.get(link, cookies=cokie)
+            if response.status_code != 200:
+                prints(f"[bold red]Gagal mengambil data dari link: {link}")
+                continue
+            media_id = re.search('"media_id":"(\d+)"', response.text)
+            if media_id:
+                dav.append(media_id.group(1))
+            else:
+                prints(f"[bold red]Media ID tidak ditemukan untuk link: {link}")
+        for media_id in dav:
+            start_coment(session, cokie, media_id, comment)
+    except Exception as e:
+        prints(Panel.fit(f"[bold red]Error: {str(e)}", style="bold red"))
+
+def start_coment(session, cokie, media_id, comment):
+    try:
+        url = f"https://i.instagram.com/api/v1/web/comments/{media_id}/add/"
+        payload = {"comment_text": comment}
+        headers = {
+            'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+            'x-csrftoken': cokie.get('csrftoken', ''),
+            'x-requested-with': 'XMLHttpRequest',
+            'content-type': 'application/x-www-form-urlencoded',
+            'referer': 'https://i.instagram.com/',
+        }
+        response = session.post(url, cookies=cokie, headers=headers, data=payload)
+        if response.status_code == 200:
+            data = response.json()
+            prints(f"[bold green]Berhasil komentar pada media ID: {media_id} - {data.get('status', 'ok')}")
+        else:
+            prints(f"[bold red]Gagal komentar pada media ID: {media_id} - {response.status_code}")
+    except Exception as e:
+        prints(f"[bold red]Error saat komentar: {str(e)}")
+
+
 def komentar(cokie, dav=[]):
 	prints(Panel.fit('[bold white]Masukan link postingan atau reels. bisa di pisahkan dengan koma',style='bold blue'))
 	link = input(f'└──╭➣ Masukan Link :').split(',')
