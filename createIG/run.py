@@ -3,23 +3,23 @@ import random
 import string
 import time
 import names
-from curl_cffi import requests as req
+import requests as req
 
 proxies = None
-
 requests=req.Session()
 requests.impersonate='chrome110'
+
 def get_headers(Country,Language):
     while True:
         try:
             an_agent=f'Mozilla/5.0 (Linux; Android {random.randint(9,13)}; {"".join(random.choices(string.ascii_uppercase, k=3))}{random.randint(111,999)}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36'
-            r=requests.get('https://www.instagram.com/',headers={
+            r=requests.get('https://i.instagram.com/',headers={
                 'user-agent': an_agent
             },proxies=proxies,timeout=30)
             js_datr = r.cookies['datr']
             mid=r.text.split('{"mid":{"value":"')[1].split('",')[0]
             headers1 = {
-                'authority': 'www.instagram.com',
+                'authority': 'i.instagram.com',
                 'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
                 'accept-language': f'{Language}-{Country},en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
                 'cookie': f'dpr=3; csrftoken={r.cookies["csrftoken"]}; mid={mid}; ig_nrcb=1; ig_did={r.cookies["ig_did"]}; datr={js_datr}',
@@ -35,17 +35,17 @@ def get_headers(Country,Language):
                 'user-agent': an_agent,
                 'viewport-width': '980',
             }
-            response1 = requests.get('https://www.instagram.com/', headers=headers1,proxies=proxies,timeout=30)
+            response1 = requests.get('https://i.instagram.com/', headers=headers1,proxies=proxies,timeout=30)
             appid=response1.text.split('APP_ID":"')[1].split('"')[0]
             rollout=response1.text.split('rollout_hash":"')[1].split('"')[0]
             headers = {
-                'authority': 'www.instagram.com',
+                'authority': 'i.instagram.com',
                 'accept': '*/*',
                 'accept-language': f'{Language}-{Country},en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
                 'content-type': 'application/x-www-form-urlencoded',
                 'cookie': f'dpr=3; csrftoken={r.cookies["csrftoken"]}; mid={mid}; ig_nrcb=1; ig_did={r.cookies["ig_did"]}; datr={js_datr}',
-                'origin': 'https://www.instagram.com',
-                'referer': 'https://www.instagram.com/accounts/signup/email/',
+                'origin': 'https://i.instagram.com',
+                'referer': 'https://i.instagram.com/accounts/signup/email/',
                 'sec-ch-prefers-color-scheme': 'light',
                 'sec-ch-ua': '"Chromium";v="111", "Not(A:Brand";v="8"',
                 'sec-ch-ua-mobile': '?1',
@@ -69,7 +69,7 @@ def get_headers(Country,Language):
 
 def Get_UserName(Headers,Name,Email):
     try:
-        updict = {"referer": 'https://www.instagram.com/accounts/signup/birthday/'}
+        updict = {"referer": 'https://i.instagram.com/accounts/signup/birthday/'}
         Headers = {key: updict.get(key, Headers[key]) for key in Headers}
         while True:
             data = {
@@ -77,7 +77,7 @@ def Get_UserName(Headers,Name,Email):
                 'name': Name+str(random.randint(1,99)),
             }
             response = requests.post(
-                'https://www.instagram.com/api/v1/web/accounts/username_suggestions/',
+                'https://i.instagram.com/api/v1/web/accounts/username_suggestions/',
                 headers=Headers,
                 data=data,
                 proxies=proxies,
@@ -100,7 +100,7 @@ def Send_SMS(Headers,Email):
             'email': Email,
 }
         response = requests.post(
-            'https://www.instagram.com/api/v1/accounts/send_verify_email/',
+            'https://i.instagram.com/api/v1/accounts/send_verify_email/',
             headers=Headers,
             data=data,
             proxies=proxies,
@@ -113,7 +113,7 @@ def Send_SMS(Headers,Email):
 
 def Validate_Code(Headers,Email,Code):
     try:
-        updict = {"referer": 'https://www.instagram.com/accounts/signup/emailConfirmation/'}
+        updict = {"referer": 'https://i.instagram.com/accounts/signup/emailConfirmation/'}
         Headers = {key: updict.get(key, Headers[key]) for key in Headers}
         data = {
             'code': Code,
@@ -121,7 +121,7 @@ def Validate_Code(Headers,Email,Code):
             'email': Email,
         }
         response = requests.post(
-            'https://www.instagram.com/api/v1/accounts/check_confirmation_code/',
+            'https://i.instagram.com/api/v1/accounts/check_confirmation_code/',
             headers=Headers,
             data=data,
             proxies=proxies,
@@ -137,7 +137,7 @@ def Create_Acc(Headers,Email,SignUpCode):
         firstname=names.get_first_name()
         UserName=Get_UserName(headers,firstname,Email)
         Password=firstname.strip()+'@'+str(random.randint(111,999))
-        updict = {"referer": 'https://www.instagram.com/accounts/signup/username/'}
+        updict = {"referer": 'https://i.instagram.com/accounts/signup/username/'}
         Headers = {key: updict.get(key, Headers[key]) for key in Headers}
         data = {
             'enc_password': f'#PWD_INSTAGRAM_BROWSER:0:{round(time.time())}:{Password}',
@@ -154,7 +154,7 @@ def Create_Acc(Headers,Email,SignUpCode):
         }
         print(data)
         response = requests.post(
-            'https://www.instagram.com/api/v1/web/accounts/web_create_ajax/',
+            'https://i.instagram.com/api/v1/web/accounts/web_create_ajax/',
             headers=Headers,
             data=data,
             proxies=proxies,

