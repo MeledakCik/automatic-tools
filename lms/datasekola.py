@@ -349,38 +349,13 @@ def kehadiran():
 
 # -------------[ MENU KELAS ]------------- #
 
-def kelas():
-    console.print(Panel.fit("👨‍🎓 [bold green]Mengecek Data Kelas Beserta Profilnya[/bold green]"))
-    print("")
-    try:
-        token = open('.token.txt', 'r').read().strip()
-        cookie = open('.cookie.txt', 'r').read().strip()
-    except IOError:
-        console.print(Panel.fit("[bold red]Token atau cookie tidak ditemukan. Silakan login ulang!"))
-        return
-    headers = {
-        "Authorization": f"Bearer {token}",
-        "Cookie": cookie,
-    }
-
-    url = "https://lms.smkn4padalarang.sch.id/user/index.php?id=33&perpage=5000"
-    response = session.get(url, headers=headers, verify=False)
-    
-    if response.status_code != 200:
-        console.print(Panel.fit(f"[bold red]Gagal mengambil data kelas. HTTP Status: {response.status_code}"))
-        return
-
-    soup = BeautifulSoup(response.text, 'html.parser')
-    participants = soup.find_all('th', class_='cell c1')
-    names_and_links = []
-    
+def getTagKelas(headers,names_and_links,participants):
     for participant in participants:
         a_tag = participant.find('a', href=True)
         if a_tag:
             name = a_tag.text.strip()
             link = a_tag['href']
             names_and_links.append((name, link))
-    
     if names_and_links:
         for idx, (name, link) in enumerate(names_and_links, start=1):
             try:
@@ -419,6 +394,7 @@ def kelas():
                     "nama": name,
                     "link": link
                 }
+                
                 try:
                     with open("user/data.json", "r") as file:
                         existing_data = json.load(file)
@@ -435,6 +411,31 @@ def kelas():
                 console.print(Panel.fit(f"[bold red]Terjadi kesalahan: {e}"))
     else:
         console.print(Panel.fit("[bold yellow]Tidak ada peserta ditemukan!"))
+
+def kelas():
+    console.print(Panel.fit("👨‍🎓 [bold green]Mengecek Data Kelas Beserta Profilnya[/bold green]"))
+    print("")
+    try:
+        token = open('.token.txt', 'r').read().strip()
+        cookie = open('.cookie.txt', 'r').read().strip()
+    except IOError:
+        console.print(Panel.fit("[bold red]Token atau cookie tidak ditemukan. Silakan login ulang!"))
+        return
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Cookie": cookie,
+    }
+    url = "https://lms.smkn4padalarang.sch.id/user/index.php?id=33&perpage=5000"
+    response = session.get(url, headers=headers, verify=False)
+    if response.status_code != 200:
+        console.print(Panel.fit(f"[bold red]Gagal mengambil data kelas. HTTP Status: {response.status_code}"))
+        return
+    soup = BeautifulSoup(response.text, 'html.parser')
+    participants = soup.find_all('th', class_='cell c1')
+    names_and_links = []
+    getTagKelas(headers,names_and_links,participants)
+    
+    
 
 # -------------[ MENU REPORT ]------------- #
 
